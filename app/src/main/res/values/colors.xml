@@ -9,4 +9,6 @@
     <color name="colorTertiary">#6CF8A9</color>
     <color name="colorTertiaryLight">#D6FEE7</color>
     <color name="colorTertiaryDark">#1FE675</color>
+    <color name="white">#FFFFFF</color>
+    <color name="black">#000000</color>
 </resources>

@@ -8,9 +8,9 @@
 
     // Signup and Login
     <string name="sign_up">Sign up</string>
-    <string name="dont_have_account">"Don't have an account?"</string>
+    <string name="dont_have_account">Dont have an account? Signup</string>
     <string name="log_in">Log in</string>
-    <string name="already_have_account">Already have an account?</string>
+    <string name="already_have_account">Already have an account? Login</string>
 
     <string name="name">Name</string>
     <string name="email">Email</string>
@@ -19,12 +19,62 @@
 
 
     // Account set up pages
+    // Set up step 1.
+    <string name="account_type">What kind of account are you creating?</string>
+    <string name="investor">Investor Account</string>
+    <string name="investor_description">Build wealth with strategic investments from up and coming businesses</string>
+    <string name="business">Business Account</string>
+    <string name="business_description">Fuel your innovation and secure funding for entrepreneurial ventures </string>
+
+    // Set up step 2: Business form
+    <string name="about_business">Tell us about your business</string>
+    <string name="business_name">Business name</string>
+    <string name="industry">Industry</string>
+    <string name="year_founded">Year Founded</string>
+    <string name="company_desc">Company description</string>
+
+    <string name="back">Back</string>
+    <string name="next">Next</string>
+    <string name="finish">Finish</string>
+
+    // Set up step 3: Business form
+    <string name="business_contact">Business Contact Information</string>
+    <string name="phone">Phone Number</string>
+    <string name="address">Address</string>
+    <string name="box">P.O Box</string>
+
+    // Set up step 4: Business form
+    <string name="logo">Company Logo</string>
 
 
+    // Set up step 2: Investor form
+    <string name="investor_type">Investor type</string>
+    <string name="investor_type1">Individual Investor</string>
+    <string name="investor_type2">Investing Company</string>
+    <string name="investor_name">Name or Company Name</string>
+    <string name="dec">Description</string>
+
+    // Set up step 3: Investor form
+    <string name="pick_industry">Pick 3 industries you are interested in</string>
+
+    // Set up step 4: Investor form
+    <string name="profile">Profile Photo</string>
 
 
+    // Match Strings
+    <string name="match">Match</string>
+    <string name="matched">Matched</string>
+    <string name="pending">Pending Matches</string>
+    <string name="cong">Congratulations</string>
+    <string name="match_made">Match Made!</string>
+
+    // Chat Strings
+    <string name="chat">Chat</string>
+    <string name="chats">Chats</string>
+    <string name="continue_browsing">Continue Browsing</string>
+    <string name="search">Search</string>
 
 
-
+    <string name="doc">Proposal Documents</string>
 
 </resources>
