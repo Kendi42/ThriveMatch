@@ -12,7 +12,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="24dp"
         android:layout_marginEnd="32dp"
         android:src="@drawable/login_page_graphic"
         app:layout_constraintEnd_toEndOf="parent"
@@ -34,37 +34,49 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView4" />
 
-
-    <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/et_login_email"
-        android:layout_width="match_parent"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/outlinedTextField_login_email"
+        app:boxBackgroundColor="@color/white"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:layout_marginTop="32dp"
         android:layout_marginEnd="32dp"
-        android:ems="10"
-        android:inputType="textEmailAddress"
-        android:text="@string/email"
+        android:hint="@string/email"
+        app:startIconDrawable="@drawable/email_icon"
+        app:boxStrokeColor="@color/colorPrimary"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_login" />
+        app:layout_constraintTop_toBottomOf="@+id/tv_login">
 
-    <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/et_login_pass"
-        android:layout_width="match_parent"
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textEmailAddress" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/outlinedTextField_lgin_pass"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="32dp"
         android:layout_marginEnd="32dp"
-        android:ems="10"
-        android:inputType="textPassword"
-        android:text="@string/pass"
-
+        android:hint="@string/pass"
+        app:boxBackgroundColor="@color/white"
+        app:boxStrokeColor="@color/colorPrimary"
+        app:startIconDrawable="@drawable/lock_icon"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/et_login_email" />
+        app:layout_constraintTop_toBottomOf="@+id/outlinedTextField_login_email">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPassword" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <!-- TODO: Round Login Button -->
 
     <Button
         android:id="@+id/btn_login"
@@ -73,11 +85,12 @@
         android:layout_marginStart="80dp"
         android:layout_marginTop="32dp"
         android:layout_marginEnd="80dp"
-        android:text="@string/sign_up"
+        android:text="@string/log_in"
+
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/et_login_pass" />
+        app:layout_constraintTop_toBottomOf="@+id/outlinedTextField_lgin_pass" />
 
     <TextView
         android:id="@+id/tv_dont_have_account"

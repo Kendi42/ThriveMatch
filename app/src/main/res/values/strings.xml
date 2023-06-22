@@ -2,11 +2,11 @@
     <string name="app_name">ThriveMatch</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
-    // Welcome Page
+    <!--    // Welcome Page-->
     <string name="welcome_page_title">Investment Alchemy In Action</string>
     <string name="welcome_message">Find your perfect investment match and witness the magic of shared growth</string>
 
-    // Signup and Login
+    <!--    // Signup and Login-->
     <string name="sign_up">Sign up</string>
     <string name="dont_have_account">Dont have an account? Signup</string>
     <string name="log_in">Log in</string>
@@ -18,15 +18,15 @@
     <string name="confirm_pass">Confirm Password</string>
 
 
-    // Account set up pages
-    // Set up step 1.
+    <!--    // Account set up pages-->
+    <!--    // Set up step 1.-->
     <string name="account_type">What kind of account are you creating?</string>
     <string name="investor">Investor Account</string>
     <string name="investor_description">Build wealth with strategic investments from up and coming businesses</string>
     <string name="business">Business Account</string>
     <string name="business_description">Fuel your innovation and secure funding for entrepreneurial ventures </string>
 
-    // Set up step 2: Business form
+    <!--    // Set up step 2: Business form-->
     <string name="about_business">Tell us about your business</string>
     <string name="business_name">Business name</string>
     <string name="industry">Industry</string>
@@ -37,38 +37,43 @@
     <string name="next">Next</string>
     <string name="finish">Finish</string>
 
-    // Set up step 3: Business form
+    <!--    // Set up step 3: Business form-->
     <string name="business_contact">Business Contact Information</string>
     <string name="phone">Phone Number</string>
     <string name="address">Address</string>
     <string name="box">P.O Box</string>
 
-    // Set up step 4: Business form
+    <!--    // Set up step 4: Business form-->
     <string name="logo">Company Logo</string>
 
 
-    // Set up step 2: Investor form
+    <!--    // Set up step 2: Investor form-->
+    <string name="about_investor">Tell us about yourself</string>
     <string name="investor_type">Investor type</string>
-    <string name="investor_type1">Individual Investor</string>
-    <string name="investor_type2">Investing Company</string>
+
+    <string-array name="investor_type_array">
+        <item>Individual Investor</item>
+        <item>Investing Company</item>
+    </string-array>
+
     <string name="investor_name">Name or Company Name</string>
     <string name="dec">Description</string>
 
-    // Set up step 3: Investor form
+    <!--    // Set up step 3: Investor form-->
     <string name="pick_industry">Pick 3 industries you are interested in</string>
 
-    // Set up step 4: Investor form
+    <!--    // Set up step 4: Investor form-->
     <string name="profile">Profile Photo</string>
 
 
-    // Match Strings
+    <!--    // Match Strings-->
     <string name="match">Match</string>
     <string name="matched">Matched</string>
     <string name="pending">Pending Matches</string>
     <string name="cong">Congratulations</string>
     <string name="match_made">Match Made!</string>
 
-    // Chat Strings
+    <!--    // Chat Strings-->
     <string name="chat">Chat</string>
     <string name="chats">Chats</string>
     <string name="continue_browsing">Continue Browsing</string>

@@ -5,26 +5,25 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.fragment.findNavController
 import com.example.thrivematch.R
+import com.example.thrivematch.databinding.FragmentWelcomePageBinding
 
-class WelcomePageFragment : Fragment() {
+class WelcomePageFragment : Fragment(R.layout.fragment_welcome_page) {
+    private lateinit var binding:FragmentWelcomePageBinding
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        binding= FragmentWelcomePageBinding.bind(view)
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+        binding.btnToSignupFromWelcome.setOnClickListener{
+            findNavController().navigate(R.id.action_welcomePageFragment_to_signupFragment)
+        }
 
-//
-//        toggleButton.addOnButtonCheckedListener { toggleButton, checkedId, isChecked ->
-//            // Respond to button selection
-//        }
-    }
+        binding.btnToLoginFromWelcome.setOnClickListener{
+            findNavController().navigate(R.id.action_welcomePageFragment_to_loginFragment)
+        }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_welcome_page, container, false)
     }
 
 }

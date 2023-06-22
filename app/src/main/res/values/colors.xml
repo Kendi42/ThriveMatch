@@ -11,4 +11,8 @@
     <color name="colorTertiaryDark">#1FE675</color>
     <color name="white">#FFFFFF</color>
     <color name="black">#000000</color>
+    <color name="darkGray">#7E8593</color>
+    <color name="lightGray">#D9D9D9</color>
+
+
 </resources>
