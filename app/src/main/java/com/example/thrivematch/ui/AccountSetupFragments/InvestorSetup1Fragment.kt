@@ -1,4 +1,4 @@
-package com.example.thrivematch.ui
+package com.example.thrivematch.ui.AccountSetupFragments
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -16,8 +16,11 @@ class InvestorSetup1Fragment : Fragment(R.layout.fragment_investor_setup1) {
         super.onViewCreated(view, savedInstanceState)
         binding= FragmentInvestorSetup1Binding.bind(view)
 
-        binding.btnBack1.setOnClickListener{
+        binding.btnBackInvestor1.setOnClickListener{
             findNavController().navigate(R.id.action_investorSetup1Fragment_to_accountTypeFragment)
+        }
+        binding.btnNextInvestor1.setOnClickListener {
+            findNavController().navigate(R.id.action_investorSetup1Fragment_to_investorSetup2Fragment)
         }
 
     }

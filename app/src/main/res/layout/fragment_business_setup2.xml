@@ -4,10 +4,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".ui.AccountSetupFragments.BusinessSetup1Fragment">
+    tools:context=".ui.AccountSetupFragments.BusinessSetup2Fragment">
 
     <ProgressBar
-        android:id="@+id/progressBar_business1"
+        android:id="@+id/progressBar_business2"
         style="?android:attr/progressBarStyleHorizontal"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -21,35 +21,77 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/tv_about_business"
+        android:id="@+id/tv_business_contact"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:layout_marginTop="32dp"
         android:layout_marginEnd="32dp"
-        android:text="@string/about_business"
+        android:text="@string/business_contact"
         android:textAlignment="center"
         android:textColor="@color/black"
         android:textSize="24sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/progressBar_business1" />
+        app:layout_constraintTop_toBottomOf="@+id/progressBar_business2" />
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/outlinedTextField_business_name"
+        android:id="@+id/outlinedTextField_business_phone"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:layout_marginTop="64dp"
         android:layout_marginEnd="32dp"
-        android:hint="@string/business_name"
+        android:hint="@string/phone"
         app:boxBackgroundColor="@color/white"
         app:boxStrokeColor="@color/colorPrimary"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_about_business"
-        app:startIconDrawable="@drawable/business_icon">
+        app:layout_constraintTop_toBottomOf="@+id/tv_business_contact"
+        app:startIconDrawable="@drawable/phone_icon">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="phone" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/outlinedTextField_business_email"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="32dp"
+        android:hint="@string/email"
+        app:boxBackgroundColor="@color/white"
+        app:boxStrokeColor="@color/colorPrimary"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/outlinedTextField_business_phone"
+        app:startIconDrawable="@drawable/email_icon">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textEmailAddress" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/outlinedTextField_business_address"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="32dp"
+        android:hint="@string/address"
+        app:boxBackgroundColor="@color/white"
+        app:boxStrokeColor="@color/colorPrimary"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/outlinedTextField_business_email"
+        app:startIconDrawable="@drawable/location_icon">
 
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
@@ -58,77 +100,29 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/textInputLayout_industry"
-        style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
+        android:id="@+id/outlinedTextField_business_box"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:layout_marginTop="32dp"
         android:layout_marginEnd="32dp"
-        app:boxBackgroundColor="@color/white"
-
-        app:boxStrokeColor="@color/colorPrimary"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/outlinedTextField_business_name"
-        app:startIconDrawable="@drawable/work_icon">
-
-        <AutoCompleteTextView
-            android:id="@+id/autocomplete_investorType"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/industry" />
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/outlinedTextField_date_founded"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="32dp"
-        android:layout_marginEnd="32dp"
-        android:hint="@string/year_founded"
+        android:hint="@string/box"
         app:boxBackgroundColor="@color/white"
         app:boxStrokeColor="@color/colorPrimary"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textInputLayout_industry"
-        app:startIconDrawable="@drawable/calendar_icon">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/et_dateFounded"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:cursorVisible="false"
-            android:focusable="false"
-            android:inputType="date" />
-    </com.google.android.material.textfield.TextInputLayout>
-
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/outlinedTextField_business_desc"
-        app:boxBackgroundColor="@color/white"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="32dp"
-        android:layout_marginEnd="32dp"
-        android:hint="@string/company_desc"
-        app:startIconDrawable="@drawable/pen_icon"
-        app:boxStrokeColor="@color/colorPrimary"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/outlinedTextField_date_founded">
+        app:layout_constraintTop_toBottomOf="@+id/outlinedTextField_business_address"
+        app:startIconDrawable="@drawable/inbox_icon">
 
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="textMultiLine"
-            android:maxLines="5"/>
+            android:inputType="text" />
     </com.google.android.material.textfield.TextInputLayout>
+
 
     <Button
-        android:id="@+id/btn_next2"
+        android:id="@+id/btn_next3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="64dp"
@@ -138,11 +132,11 @@
         android:text="@string/next"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/outlinedTextField_business_desc"
+        app:layout_constraintTop_toBottomOf="@+id/outlinedTextField_business_box"
         app:layout_constraintVertical_bias="1.0" />
 
     <Button
-        android:id="@+id/btn_back2"
+        android:id="@+id/btn_back3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="64dp"
@@ -155,7 +149,7 @@
         app:layout_constraintEnd_toStartOf="@+id/btn_next2"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/outlinedTextField_business_desc"
+        app:layout_constraintTop_toBottomOf="@+id/outlinedTextField_business_box"
         app:layout_constraintVertical_bias="1.0" />
 
 

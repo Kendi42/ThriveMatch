@@ -17,7 +17,7 @@
     </fragment>
     <fragment
         android:id="@+id/welcomePageFragment"
-        android:name="com.example.thrivematch.ui.WelcomePageFragment"
+        android:name="com.example.thrivematch.ui.AuthenticationFragments.WelcomePageFragment"
         android:label="fragment_welcome_page"
         tools:layout="@layout/fragment_welcome_page" >
         <action
@@ -29,7 +29,7 @@
     </fragment>
     <fragment
         android:id="@+id/signupFragment"
-        android:name="com.example.thrivematch.ui.SignupFragment"
+        android:name="com.example.thrivematch.ui.AuthenticationFragments.SignupFragment"
         android:label="fragment_signup"
         tools:layout="@layout/fragment_signup" >
         <action
@@ -41,7 +41,7 @@
     </fragment>
     <fragment
         android:id="@+id/loginFragment"
-        android:name="com.example.thrivematch.ui.LoginFragment"
+        android:name="com.example.thrivematch.ui.AuthenticationFragments.LoginFragment"
         android:label="fragment_login"
         tools:layout="@layout/fragment_login" >
         <action
@@ -50,7 +50,7 @@
     </fragment>
     <fragment
         android:id="@+id/accountTypeFragment"
-        android:name="com.example.thrivematch.ui.AccountTypeFragment"
+        android:name="com.example.thrivematch.ui.AccountSetupFragments.AccountTypeFragment"
         android:label="fragment_account_type"
         tools:layout="@layout/fragment_account_type" >
         <action
@@ -62,20 +62,44 @@
     </fragment>
     <fragment
         android:id="@+id/investorSetup1Fragment"
-        android:name="com.example.thrivematch.ui.InvestorSetup1Fragment"
+        android:name="com.example.thrivematch.ui.AccountSetupFragments.InvestorSetup1Fragment"
         android:label="fragment_investor_setup1"
         tools:layout="@layout/fragment_investor_setup1" >
         <action
             android:id="@+id/action_investorSetup1Fragment_to_accountTypeFragment"
             app:destination="@id/accountTypeFragment" />
+        <action
+            android:id="@+id/action_investorSetup1Fragment_to_investorSetup2Fragment"
+            app:destination="@id/investorSetup2Fragment" />
     </fragment>
     <fragment
         android:id="@+id/businessSetup1Fragment"
-        android:name="com.example.thrivematch.ui.BusinessSetup1Fragment"
+        android:name="com.example.thrivematch.ui.AccountSetupFragments.BusinessSetup1Fragment"
         android:label="fragment_business_setup1"
         tools:layout="@layout/fragment_business_setup1" >
         <action
             android:id="@+id/action_businessSetup1Fragment_to_accountTypeFragment"
             app:destination="@id/accountTypeFragment" />
+        <action
+            android:id="@+id/action_businessSetup1Fragment_to_businessSetup2Fragment"
+            app:destination="@id/businessSetup2Fragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/investorSetup2Fragment"
+        android:name="com.example.thrivematch.ui.AccountSetupFragments.InvestorSetup2Fragment"
+        android:label="fragment_investor_setup2"
+        tools:layout="@layout/fragment_investor_setup2" >
+        <action
+            android:id="@+id/action_investorSetup2Fragment_to_investorSetup1Fragment"
+            app:destination="@id/investorSetup1Fragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/businessSetup2Fragment"
+        android:name="com.example.thrivematch.ui.AccountSetupFragments.BusinessSetup2Fragment"
+        android:label="fragment_business_setup2"
+        tools:layout="@layout/fragment_business_setup2" >
+        <action
+            android:id="@+id/action_businessSetup2Fragment_to_businessSetup1Fragment"
+            app:destination="@id/businessSetup1Fragment" />
     </fragment>
 </navigation>

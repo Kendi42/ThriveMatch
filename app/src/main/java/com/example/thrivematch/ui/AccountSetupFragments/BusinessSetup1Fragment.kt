@@ -1,4 +1,4 @@
-package com.example.thrivematch.ui
+package com.example.thrivematch.ui.AccountSetupFragments
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -22,6 +22,9 @@ class BusinessSetup1Fragment : Fragment(R.layout.fragment_business_setup1) {
 
         binding.btnBack2.setOnClickListener{
             findNavController().navigate(R.id.action_businessSetup1Fragment_to_accountTypeFragment)
+        }
+        binding.btnNext2.setOnClickListener {
+            findNavController().navigate(R.id.action_businessSetup1Fragment_to_businessSetup2Fragment)
         }
 
         binding.etDateFounded.setOnClickListener {
