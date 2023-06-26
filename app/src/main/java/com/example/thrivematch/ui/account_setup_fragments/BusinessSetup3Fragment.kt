@@ -20,6 +20,7 @@ import androidx.core.content.ContextCompat
 import androidx.navigation.fragment.findNavController
 import com.example.thrivematch.R
 import com.example.thrivematch.databinding.FragmentBusinessSetup3Binding
+import com.example.thrivematch.ui.HomeActivity
 
 class BusinessSetup3Fragment : Fragment(R.layout.fragment_business_setup3) {
     private var selectedImage: Uri? =null
@@ -35,10 +36,15 @@ class BusinessSetup3Fragment : Fragment(R.layout.fragment_business_setup3) {
         binding.btnBackBusiness3.setOnClickListener {
             findNavController().navigate(R.id.action_businessSetup3Fragment_to_businessSetup2Fragment)
         }
+        binding.btnFinishBusiness3.setOnClickListener {
+            val intent = Intent(requireContext(), HomeActivity::class.java)
+            startActivity(intent)
+        }
 
         binding.ivUploadLogo.setOnClickListener{
             showMenuDialog()
         }
+
 
     }
 

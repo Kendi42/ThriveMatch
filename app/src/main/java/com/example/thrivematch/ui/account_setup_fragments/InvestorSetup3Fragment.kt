@@ -18,6 +18,7 @@ import androidx.core.content.ContextCompat.checkSelfPermission
 import androidx.navigation.fragment.findNavController
 import com.example.thrivematch.R
 import com.example.thrivematch.databinding.FragmentInvestorSetup3Binding
+import com.example.thrivematch.ui.HomeActivity
 
 class InvestorSetup3Fragment : Fragment(R.layout.fragment_investor_setup3) {
 
@@ -33,6 +34,11 @@ class InvestorSetup3Fragment : Fragment(R.layout.fragment_investor_setup3) {
         binding.btnBackInvestor3.setOnClickListener {
             findNavController().navigate(R.id.action_investorSetup3Fragment_to_investorSetup2Fragment)
         }
+        binding.btnFinishInvestor3.setOnClickListener {
+            val intent = Intent(requireContext(), HomeActivity::class.java)
+            startActivity(intent)
+        }
+
 
         binding.ivUploadProfile.setOnClickListener{
             showMenuDialog()

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/home_graph"
+    app:startDestination="@id/homeFragment">
+
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="com.example.thrivematch.ui.home_fragments.HomeFragment"
+        android:label="fragment_home"
+        tools:layout="@layout/fragment_home" />
+    <fragment
+        android:id="@+id/likedFragment"
+        android:name="com.example.thrivematch.ui.home_fragments.LikedFragment"
+        android:label="fragment_liked"
+        tools:layout="@layout/fragment_liked" />
+    <fragment
+        android:id="@+id/matchedFragment"
+        android:name="com.example.thrivematch.ui.home_fragments.MatchedFragment"
+        android:label="fragment_matched"
+        tools:layout="@layout/fragment_matched" />
+</navigation>
