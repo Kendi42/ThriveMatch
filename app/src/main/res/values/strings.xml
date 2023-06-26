@@ -44,7 +44,7 @@
     <string name="box">P.O Box</string>
 
     <!--    // Set up step 4: Business form-->
-    <string name="logo">Company Logo</string>
+    <string name="logo">Upload company logo</string>
 
 
     <!--    // Set up step 2: Investor form-->
@@ -63,7 +63,8 @@
     <string name="pick_industry">Pick 3 industries you are interested in</string>
 
     <!--    // Set up step 4: Investor form-->
-    <string name="profile">Profile Photo</string>
+    <string name="profile">Upload profile photo</string>
+    <string name="select_image">Tap to select image</string>
 
 
     <!--    // Match Strings-->
@@ -81,5 +82,14 @@
 
 
     <string name="doc">Proposal Documents</string>
+    <string name="ok">Okay</string>
+    <string name="take_picture">Take Picture</string>
+    <string name="take_picture_description">Center your camera</string>
+
+
+    <!--Bottom Navigation Strings-->
+    <string name="liked">Liked</string>
+    <string name="home">Home</string>
+
 
 </resources>

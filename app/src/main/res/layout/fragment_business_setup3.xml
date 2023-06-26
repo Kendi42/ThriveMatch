@@ -4,10 +4,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".ui.account_setup_fragments.InvestorSetup2Fragment">
+    tools:context=".ui.account_setup_fragments.BusinessSetup3Fragment">
 
     <ProgressBar
-        android:id="@+id/progressBar_investor2"
+        android:id="@+id/progressBar_business3"
         style="?android:attr/progressBarStyleHorizontal"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -20,45 +20,41 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+
     <TextView
-        android:id="@+id/tv_pick_industries"
+        android:id="@+id/tv_company_logo"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:layout_marginTop="32dp"
         android:layout_marginEnd="32dp"
-        android:text="@string/pick_industry"
+        android:text="@string/logo"
         android:textAlignment="center"
         android:textColor="@color/black"
         android:textSize="24sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/progressBar_investor2" />
+        app:layout_constraintTop_toBottomOf="@+id/progressBar_business3" />
+
+    <ImageView
+        android:id="@+id/iv_upload_logo"
+        android:layout_width="0dp"
+        android:layout_height="300sp"
+        android:layout_marginStart="64dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="64dp"
+        android:src="@drawable/ic_baseline_add_24"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_company_logo" />
 
 
-        <com.google.android.material.chip.ChipGroup
-            android:id="@+id/chipGroup_interests"
-            style="@style/Widget.MaterialComponents.ChipGroup"
 
-            android:layout_width="wrap_content"
-            android:layout_height="0dp"
-            android:padding="20sp"
-            android:layout_marginStart="32dp"
-            android:layout_marginTop="32dp"
-            android:layout_marginEnd="32dp"
-            android:foregroundGravity="center"
-            app:chipSpacingHorizontal="20dp"
-            app:chipSpacingVertical="10dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_pick_industries">
-
-        </com.google.android.material.chip.ChipGroup>
 
 
     <Button
-        android:id="@+id/btn_next_investor2"
+        android:id="@+id/btn_finish_business3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
@@ -66,14 +62,16 @@
         android:layout_marginBottom="32dp"
         android:paddingStart="20dp"
         android:paddingEnd="20dp"
-        android:text="@string/next"
+        android:text="@string/finish"
+        android:backgroundTint="@color/colorTertiary"
+        android:textColor="@color/black"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/chipGroup_interests"
+        app:layout_constraintTop_toBottomOf="@+id/iv_upload_logo"
         app:layout_constraintVertical_bias="1.0" />
 
     <Button
-        android:id="@+id/btn_back_investor2"
+        android:id="@+id/btn_back_business3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="64dp"
@@ -84,14 +82,11 @@
         android:paddingEnd="20dp"
         android:text="@string/back"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/btn_next_investor2"
+        app:layout_constraintEnd_toStartOf="@+id/btn_finish_business3"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/chipGroup_interests"
+        app:layout_constraintTop_toBottomOf="@+id/iv_upload_logo"
         app:layout_constraintVertical_bias="1.0" />
-
-
-
 
 
 

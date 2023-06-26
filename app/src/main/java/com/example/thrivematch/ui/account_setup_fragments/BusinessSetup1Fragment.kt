@@ -1,10 +1,8 @@
-package com.example.thrivematch.ui.AccountSetupFragments
+package com.example.thrivematch.ui.account_setup_fragments
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import com.example.thrivematch.R
 import com.example.thrivematch.databinding.FragmentBusinessSetup1Binding
@@ -20,10 +18,13 @@ class BusinessSetup1Fragment : Fragment(R.layout.fragment_business_setup1) {
         super.onViewCreated(view, savedInstanceState)
         binding= FragmentBusinessSetup1Binding.bind(view)
 
-        binding.btnBack2.setOnClickListener{
+        //Progress Bar
+        binding.progressBarBusiness1.progress= 50
+
+        binding.btnBackBusiness1.setOnClickListener{
             findNavController().navigate(R.id.action_businessSetup1Fragment_to_accountTypeFragment)
         }
-        binding.btnNext2.setOnClickListener {
+        binding.btnNextBusiness1.setOnClickListener {
             findNavController().navigate(R.id.action_businessSetup1Fragment_to_businessSetup2Fragment)
         }
 

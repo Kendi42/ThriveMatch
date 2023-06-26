@@ -1,15 +1,9 @@
-package com.example.thrivematch.ui.AccountSetupFragments
+package com.example.thrivematch.ui.account_setup_fragments
 
 import android.os.Bundle
 import android.util.Log
-import android.util.TypedValue
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import android.widget.Toast
-import androidx.core.content.ContextCompat
-import androidx.core.view.setPadding
 import androidx.navigation.fragment.findNavController
 import com.example.thrivematch.R
 import com.example.thrivematch.databinding.FragmentInvestorSetup2Binding
@@ -28,6 +22,10 @@ class InvestorSetup2Fragment : Fragment(R.layout.fragment_investor_setup2) {
         val selectedInterests: MutableList<String> = mutableListOf()
 
         binding = FragmentInvestorSetup2Binding.bind(view)
+
+        //Progress Bar
+        binding.progressBarInvestor2.progress= 75
+
         val tags = arrayOf(
             "Agriculture", "Technology", "Construction",
             "Energy", "Transportation", "Ecommerce",
@@ -40,7 +38,7 @@ class InvestorSetup2Fragment : Fragment(R.layout.fragment_investor_setup2) {
             val chip = Chip(requireContext())
             chip.text = tag
             chip.textSize= 16f
-            chip.setPadding(50, 80, 50, 80)
+            chip.setPadding(30, 50, 30, 50)
             chip.setChipBackgroundColorResource(R.color.colorSecondaryLight)
 
             chip.setOnClickListener {
@@ -63,6 +61,10 @@ class InvestorSetup2Fragment : Fragment(R.layout.fragment_investor_setup2) {
             // Add chip to the ChipGroup
             binding.chipGroupInterests.addView(chip)
             Log.i("Chips", chipClickedMap.toString())
+
+            binding.btnNextInvestor2.setOnClickListener {
+                findNavController().navigate(R.id.action_investorSetup2Fragment_to_investorSetup3Fragment)
+            }
 
             binding.btnBackInvestor2.setOnClickListener {
                 findNavController().navigate(R.id.action_investorSetup2Fragment_to_investorSetup1Fragment)
