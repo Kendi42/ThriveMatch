@@ -9,7 +9,11 @@
         android:id="@+id/homeFragment"
         android:name="com.example.thrivematch.ui.home_fragments.HomeFragment"
         android:label="fragment_home"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_homeFragment_to_startupDetailsFragment"
+            app:destination="@id/startupDetailsFragment" />
+    </fragment>
     <fragment
         android:id="@+id/likedFragment"
         android:name="com.example.thrivematch.ui.home_fragments.LikedFragment"
@@ -20,4 +24,9 @@
         android:name="com.example.thrivematch.ui.home_fragments.MatchedFragment"
         android:label="fragment_matched"
         tools:layout="@layout/fragment_matched" />
+    <fragment
+        android:id="@+id/startupDetailsFragment"
+        android:name="com.example.thrivematch.ui.more_info_fragments.StartupDetailsFragment"
+        android:label="fragment_startup_details"
+        tools:layout="@layout/fragment_more_info" />
 </navigation>

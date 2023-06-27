@@ -45,17 +45,31 @@
 
     </androidx.appcompat.widget.Toolbar>
 
-    <FrameLayout
-        android:id="@+id/activity_home_frame_layout"
+<!--    <FrameLayout-->
+<!--        android:id="@+id/activity_home_frame_layout"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="0dp"-->
+<!--        android:layout_marginTop="24dp"-->
+<!--        app:layout_constraintBottom_toTopOf="@+id/bottomNavigationView"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/toolbar_activity_home">-->
+
+    <fragment
+        android:id="@+id/fragmentContainerView2"
+        android:name="androidx.navigation.fragment.NavHostFragment"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="16dp"
+        app:defaultNavHost="true"
         app:layout_constraintBottom_toTopOf="@+id/bottomNavigationView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar_activity_home">
+        app:layout_constraintTop_toBottomOf="@+id/toolbar_activity_home"
+        app:navGraph="@navigation/home_graph" />
 
-    </FrameLayout>
+
+<!--        </FrameLayout>-->
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNavigationView"
@@ -64,5 +78,34 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:menu="@menu/bottom_navigation_menu" />
+
+<!--    <ImageView-->
+<!--        android:id="@+id/iv_left_swipe_indicator"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginTop="32dp"-->
+<!--        android:layout_marginBottom="32dp"-->
+<!--        android:background="@drawable/left_swipe_indicator_shape"-->
+<!--        android:padding="20sp"-->
+<!--        app:layout_constraintBottom_toTopOf="@+id/bottomNavigationView"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/toolbar_activity_home"-->
+<!--        app:layout_constraintVertical_bias="0.3"-->
+<!--        app:srcCompat="@drawable/x_icon"-->
+<!--        app:tint="@color/black" />-->
+
+<!--    <ImageView-->
+<!--        android:id="@+id/iv_right_swipe_indicator"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginTop="32dp"-->
+<!--        android:layout_marginBottom="32dp"-->
+<!--        android:background="@drawable/right_swipe_indicator_shape"-->
+<!--        android:padding="20sp"-->
+<!--        app:layout_constraintBottom_toTopOf="@+id/bottomNavigationView"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/toolbar_activity_home"-->
+<!--        app:layout_constraintVertical_bias="0.30"-->
+<!--        app:srcCompat="@drawable/heart_icon" />-->
 
 </androidx.constraintlayout.widget.ConstraintLayout>

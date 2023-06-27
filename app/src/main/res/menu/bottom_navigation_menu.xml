@@ -2,17 +2,17 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/home_page"
+        android:id="@+id/homeFragment"
         android:enabled="true"
         android:icon="@drawable/home_icon"
         android:title="@string/home"/>
     <item
-        android:id="@+id/heart_page"
+        android:id="@+id/likedFragment"
         android:enabled="true"
         android:icon="@drawable/heart_icon"
         android:title="@string/liked"/>
     <item
-        android:id="@+id/chat_page"
+        android:id="@+id/matchedFragment"
         android:enabled="true"
         android:icon="@drawable/chat_icon"
         android:title="@string/chat"/>

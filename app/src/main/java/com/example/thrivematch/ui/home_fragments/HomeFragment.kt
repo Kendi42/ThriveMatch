@@ -5,6 +5,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.navigation.fragment.findNavController
 import com.example.thrivematch.R
 import com.example.thrivematch.data.CardSwipeItem
 import com.example.thrivematch.databinding.FragmentHomeBinding
@@ -18,10 +20,33 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         
         val cardStackView = binding.cardStackView
         val cardItems= createSampleCardItems()
-        val adapter= CardSwipeAdapter(cardItems)
+        val adapter= CardSwipeAdapter(cardSwipeItem=cardItems, listener = {
+            setOnCardItemClicked(it)
+        })
         cardStackView.adapter= adapter
 
+
+        binding.ivLeftSwipeIndicator.setOnClickListener {
+            Toast.makeText(requireActivity(), "Disliked", Toast.LENGTH_SHORT).show()
+        }
+        binding.ivRightSwipeIndicator.setOnClickListener {
+            Toast.makeText(requireActivity(), "Liked", Toast.LENGTH_SHORT).show()
+        }
+
+
     }
+
+    private fun setOnCardItemClicked(it: CardSwipeItem) {
+        if (it.name.contains("Bloom", ignoreCase = true)){
+            Toast.makeText(requireActivity(), it.name, Toast.LENGTH_SHORT).show()
+            findNavController().navigate(R.id.action_homeFragment_to_startupDetailsFragment)
+        }else{
+            Toast.makeText(requireActivity(), it.description, Toast.LENGTH_SHORT).show()
+        }
+
+    }
+
+
 
     private fun createSampleCardItems(): List<CardSwipeItem> {
 
@@ -43,6 +68,15 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
                 industry = "Technology",
                 description = "We ignite the tech industry with disruptive solutions. Invest in Jozzby and fuel the future of limitless possibilities.",
                 imageURL = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS1aHK5iVcTAAOzjFUaxsUjJrp1atZtWHmwSHqrg7TXlQ&s"
+            )
+        )
+
+        cardItems.add(
+            CardSwipeItem(
+                name = "BTech",
+                industry = "Technology",
+                description = "We ignite the tech industry with disruptive solutions. Invest in Btech and fuel the future of limitless possibilities.",
+                imageURL = "https://cdn.dribbble.com/userupload/7733577/file/original-a2f0a453abc9ef61612d721aeb8a39da.jpg?compress=1&resize=2048x1536"
             )
         )
 
