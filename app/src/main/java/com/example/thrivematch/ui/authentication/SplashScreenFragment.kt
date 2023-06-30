@@ -1,4 +1,4 @@
-package com.example.thrivematch.ui
+package com.example.thrivematch.ui.authentication
 
 import android.os.Bundle
 import android.os.Handler

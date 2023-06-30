@@ -1,4 +1,4 @@
-package com.example.thrivematch.ui
+package com.example.thrivematch.ui.adapters
 
 import android.view.LayoutInflater
 import android.view.View
@@ -8,10 +8,10 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.thrivematch.R
-import com.example.thrivematch.data.CardSwipeItem
+import com.example.thrivematch.data.models.CardSwipeItemModel
 import com.google.android.material.card.MaterialCardView
 
-class CardSwipeAdapter(private val cardSwipeItem: List<CardSwipeItem>, private val listener:((CardSwipeItem)-> Unit)) : RecyclerView.Adapter<CardSwipeAdapter.ViewHolder>() {
+class CardSwipeAdapter(private val cardSwipeItem: List<CardSwipeItemModel>, private val listener:((CardSwipeItemModel)-> Unit)) : RecyclerView.Adapter<CardSwipeAdapter.ViewHolder>() {
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         val tvName: TextView = itemView.findViewById(R.id.tv_card_name)

@@ -7,26 +7,26 @@
 
     <fragment
         android:id="@+id/homeFragment"
-        android:name="com.example.thrivematch.ui.home_fragments.HomeFragment"
+        android:name="com.example.thrivematch.ui.home.HomeFragment"
         android:label="fragment_home"
         tools:layout="@layout/fragment_home" >
         <action
-            android:id="@+id/action_homeFragment_to_startupDetailsFragment"
-            app:destination="@id/startupDetailsFragment" />
+            android:id="@+id/action_homeFragment_to_moreInfoFragment"
+            app:destination="@id/moreInfoFragment" />
     </fragment>
     <fragment
         android:id="@+id/likedFragment"
-        android:name="com.example.thrivematch.ui.home_fragments.LikedFragment"
+        android:name="com.example.thrivematch.ui.home.LikedFragment"
         android:label="fragment_liked"
         tools:layout="@layout/fragment_liked" />
     <fragment
         android:id="@+id/matchedFragment"
-        android:name="com.example.thrivematch.ui.home_fragments.MatchedFragment"
+        android:name="com.example.thrivematch.ui.home.MatchedFragment"
         android:label="fragment_matched"
         tools:layout="@layout/fragment_matched" />
     <fragment
-        android:id="@+id/startupDetailsFragment"
-        android:name="com.example.thrivematch.ui.more_info_fragments.StartupDetailsFragment"
-        android:label="fragment_startup_details"
+        android:id="@+id/moreInfoFragment"
+        android:name="com.example.thrivematch.ui.more_info.StartupDetailsFragment"
+        android:label="fragment_more_info"
         tools:layout="@layout/fragment_more_info" />
 </navigation>

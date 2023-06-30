@@ -1,4 +1,4 @@
-package com.example.thrivematch.ui.authentication_fragments
+package com.example.thrivematch.ui.authentication
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment

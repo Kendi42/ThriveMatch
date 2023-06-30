@@ -1,4 +1,4 @@
-package com.example.thrivematch.ui.account_setup_fragments
+package com.example.thrivematch.ui.account_setup
 
 import android.Manifest
 import android.app.Activity
@@ -7,46 +7,101 @@ import android.content.ContentValues
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
+import android.util.Base64
 import android.util.Log
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.example.thrivematch.R
+import com.example.thrivematch.data.models.BusinessModel
+import com.example.thrivematch.data.models.InvestorModel
 import com.example.thrivematch.databinding.FragmentBusinessSetup3Binding
 import com.example.thrivematch.ui.HomeActivity
+import com.example.thrivematch.util.CommonSharedPreferences
+import com.example.thrivematch.util.Constants
 
 class BusinessSetup3Fragment : Fragment(R.layout.fragment_business_setup3) {
     private var selectedImage: Uri? =null
     private lateinit var binding:FragmentBusinessSetup3Binding
+    private val sharedViewModel: SharedAccountSetupViewModel by activityViewModels()
+    private lateinit var commonSharedPreferences: CommonSharedPreferences
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding= FragmentBusinessSetup3Binding.bind(view)
+        commonSharedPreferences = CommonSharedPreferences(requireContext())
+
 
         //Progress Bar
         binding.progressBarBusiness3.progress= 100
 
+        // Navigation Buttons
         binding.btnBackBusiness3.setOnClickListener {
             findNavController().navigate(R.id.action_businessSetup3Fragment_to_businessSetup2Fragment)
         }
         binding.btnFinishBusiness3.setOnClickListener {
+            submitBusinessData()
             val intent = Intent(requireContext(), HomeActivity::class.java)
             startActivity(intent)
         }
 
+        // Image View Data Persistence
+        if(commonSharedPreferences.getStringData(Constants.BUSINESSPHOTO) != ""){
+            try {
+                val decodedBytes = Base64.decode(
+                    commonSharedPreferences.getStringData(Constants.BUSINESSPHOTO),
+                    Base64.DEFAULT
+                )
+                val bitmap = BitmapFactory.decodeByteArray(decodedBytes, 0, decodedBytes.size)
+                binding.ivUploadLogo.setImageBitmap(bitmap)
+            }catch(e:Exception){
+                Log.e("ImageConversion", "Failed to decode Base64 to image: ${e.message}", e)
+            }
+        }
+        // Image Upload
         binding.ivUploadLogo.setOnClickListener{
             showMenuDialog()
         }
 
 
     }
+
+    private fun submitBusinessData() {
+        val businessData = BusinessModel(
+            businessName=commonSharedPreferences.getStringData(Constants.BUSINESSNAME),
+            industry= commonSharedPreferences.getStringData(Constants.INDUSTRY),
+            dateFounded= commonSharedPreferences.getStringData(Constants.DATEFOUNDED),
+            companyDescription= commonSharedPreferences.getStringData(Constants.COMPANYDESCRIPTION),
+            phoneNumber= commonSharedPreferences.getStringData(Constants.BUSINESSPHONE),
+            email= commonSharedPreferences.getStringData(Constants.BUSINESSEMAIL),
+            address= commonSharedPreferences.getStringData(Constants.BUSINESSADDRESS),
+            poBox= commonSharedPreferences.getStringData(Constants.BUSINESSPOBOX),
+            photo= commonSharedPreferences.getStringData(Constants.BUSINESSPHOTO)
+        )
+
+        sharedViewModel.setBusinessData(businessData)
+    }
+
+    private fun convertImageToBase64(imageUri: Uri): String? {
+        try {
+            val inputStream = requireActivity().contentResolver.openInputStream(imageUri)
+            val bytes = inputStream?.readBytes()
+            inputStream?.close()
+            return bytes?.let { Base64.encodeToString(it, Base64.DEFAULT) }
+        } catch (e: Exception) {
+            Log.e("ImageConversion", "Failed to convert image to Base64: ${e.message}", e)
+        }
+        return null
+    }
+
 
     private fun showMenuDialog() {
 
@@ -70,11 +125,9 @@ class BusinessSetup3Fragment : Fragment(R.layout.fragment_business_setup3) {
         }
         builder.show()
 
-
-
     }
 
-
+    // Taking Picture
     private fun openCameraInterface() {
         val values = ContentValues()
         values.put(MediaStore.Images.Media.TITLE, R.string.take_picture)
@@ -107,7 +160,6 @@ class BusinessSetup3Fragment : Fragment(R.layout.fragment_business_setup3) {
         val dialog = builder.create()
         dialog.show()
     }
-
     private fun requestCameraPermission(): Boolean {
         var permissionGranted= false
 
@@ -130,7 +182,7 @@ class BusinessSetup3Fragment : Fragment(R.layout.fragment_business_setup3) {
         return permissionGranted
     }
 
-
+    // Gallery Option
     private fun openImageChooser() {
         Intent(Intent.ACTION_PICK).also{
             it.type = "image/*"
@@ -142,6 +194,7 @@ class BusinessSetup3Fragment : Fragment(R.layout.fragment_business_setup3) {
         }
     }
 
+    // On Activity Result
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
@@ -157,6 +210,10 @@ class BusinessSetup3Fragment : Fragment(R.layout.fragment_business_setup3) {
                     binding.ivUploadLogo.setImageURI(selectedImage)
                 }
             }
+
+            // Saving Photo as Bit 64 code
+            commonSharedPreferences.saveStringData(Constants.BUSINESSPHOTO, selectedImage?.let {convertImageToBase64(it) }.toString() )
+
         } else {
             showAlert("Failed to upload picture")
         }

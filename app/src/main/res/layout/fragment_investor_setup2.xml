@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".ui.account_setup_fragments.InvestorSetup2Fragment">
+    tools:context=".ui.account_setup.InvestorSetup2Fragment">
 
     <ProgressBar
         android:id="@+id/progressBar_investor2"
@@ -37,24 +37,24 @@
         app:layout_constraintTop_toBottomOf="@+id/progressBar_investor2" />
 
 
-        <com.google.android.material.chip.ChipGroup
-            android:id="@+id/chipGroup_interests"
-            style="@style/Widget.MaterialComponents.ChipGroup"
+    <com.google.android.material.chip.ChipGroup
+        android:id="@+id/chipGroup_interests"
+        style="@style/Widget.MaterialComponents.ChipGroup"
 
-            android:layout_width="wrap_content"
-            android:layout_height="0dp"
-            android:padding="20sp"
-            android:layout_marginStart="32dp"
-            android:layout_marginTop="32dp"
-            android:layout_marginEnd="32dp"
-            android:foregroundGravity="center"
-            app:chipSpacingHorizontal="20dp"
-            app:chipSpacingVertical="10dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_pick_industries">
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="32dp"
+        android:foregroundGravity="center"
+        android:padding="20sp"
+        app:chipSpacingHorizontal="20dp"
+        app:chipSpacingVertical="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_pick_industries">
 
-        </com.google.android.material.chip.ChipGroup>
+    </com.google.android.material.chip.ChipGroup>
 
 
     <Button

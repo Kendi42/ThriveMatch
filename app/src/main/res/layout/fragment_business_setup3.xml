@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".ui.account_setup_fragments.BusinessSetup3Fragment">
+    tools:context=".ui.account_setup.BusinessSetup3Fragment">
 
     <ProgressBar
         android:id="@+id/progressBar_business3"

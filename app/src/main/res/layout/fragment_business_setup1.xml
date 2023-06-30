@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".ui.account_setup_fragments.BusinessSetup1Fragment">
+    tools:context=".ui.account_setup.BusinessSetup1Fragment">
 
     <ProgressBar
         android:id="@+id/progressBar_business1"
@@ -52,6 +52,7 @@
         app:startIconDrawable="@drawable/business_icon">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/et_business_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="text" />
@@ -74,7 +75,7 @@
         app:startIconDrawable="@drawable/work_icon">
 
         <com.google.android.material.textfield.MaterialAutoCompleteTextView
-            android:id="@+id/autocomplete_investorType"
+            android:id="@+id/autocomplete_industry_options"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/industry" />
@@ -121,10 +122,11 @@
         app:layout_constraintTop_toBottomOf="@+id/outlinedTextField_date_founded">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/et_business_description"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="textMultiLine"
-            android:maxLines="5"/>
+            android:maxLines="5" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <Button

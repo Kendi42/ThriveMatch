@@ -1,16 +1,14 @@
-package com.example.thrivematch.ui.home_fragments
+package com.example.thrivematch.ui.home
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.widget.Toast
 import androidx.navigation.fragment.findNavController
 import com.example.thrivematch.R
-import com.example.thrivematch.data.CardSwipeItem
+import com.example.thrivematch.data.models.CardSwipeItemModel
 import com.example.thrivematch.databinding.FragmentHomeBinding
-import com.example.thrivematch.ui.CardSwipeAdapter
+import com.example.thrivematch.ui.adapters.CardSwipeAdapter
 
 class HomeFragment : Fragment(R.layout.fragment_home) {
     private lateinit var binding: FragmentHomeBinding
@@ -32,28 +30,20 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         binding.ivRightSwipeIndicator.setOnClickListener {
             Toast.makeText(requireActivity(), "Liked", Toast.LENGTH_SHORT).show()
         }
-
-
     }
 
-    private fun setOnCardItemClicked(it: CardSwipeItem) {
-        if (it.name.contains("Bloom", ignoreCase = true)){
+    private fun setOnCardItemClicked(it: CardSwipeItemModel) {
             Toast.makeText(requireActivity(), it.name, Toast.LENGTH_SHORT).show()
-            findNavController().navigate(R.id.action_homeFragment_to_startupDetailsFragment)
-        }else{
-            Toast.makeText(requireActivity(), it.description, Toast.LENGTH_SHORT).show()
-        }
-
+            findNavController().navigate(R.id.action_homeFragment_to_moreInfoFragment)
     }
 
 
+    private fun createSampleCardItems(): List<CardSwipeItemModel> {
 
-    private fun createSampleCardItems(): List<CardSwipeItem> {
-
-        val cardItems = mutableListOf<CardSwipeItem>()
+        val cardItems = mutableListOf<CardSwipeItemModel>()
         // Adding sample data to the list
          cardItems.add(
-             CardSwipeItem(
+             CardSwipeItemModel(
                  name = "Bloom Energy",
                  industry = "Sustainable Energy",
                  description = "Harnessing the limitless potential of the sun, we're empowering individuals and businesses with clean, reliable, and sustainable energy solutions.",
@@ -63,7 +53,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
          )
 
         cardItems.add(
-            CardSwipeItem(
+            CardSwipeItemModel(
                 name = "Jozzby",
                 industry = "Technology",
                 description = "We ignite the tech industry with disruptive solutions. Invest in Jozzby and fuel the future of limitless possibilities.",
@@ -72,7 +62,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         )
 
         cardItems.add(
-            CardSwipeItem(
+            CardSwipeItemModel(
                 name = "BTech",
                 industry = "Technology",
                 description = "We ignite the tech industry with disruptive solutions. Invest in Btech and fuel the future of limitless possibilities.",

@@ -1,4 +1,4 @@
-package com.example.thrivematch
+package com.example.thrivematch.ui.adapters
 
 import android.view.LayoutInflater
 import android.view.View
@@ -7,7 +7,8 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.example.thrivematch.data.PendingMatchModel
+import com.example.thrivematch.R
+import com.example.thrivematch.data.models.PendingMatchModel
 
 class PendingMatchRecyclerViewAdapter(private val itemList: List<PendingMatchModel>) :
     RecyclerView.Adapter<PendingMatchRecyclerViewAdapter.ViewHolder>() {

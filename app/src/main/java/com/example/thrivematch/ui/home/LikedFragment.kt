@@ -1,16 +1,13 @@
-package com.example.thrivematch.ui.home_fragments
+package com.example.thrivematch.ui.home
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.thrivematch.PendingMatchRecyclerViewAdapter
+import com.example.thrivematch.ui.adapters.PendingMatchRecyclerViewAdapter
 import com.example.thrivematch.R
-import com.example.thrivematch.data.CardSwipeItem
-import com.example.thrivematch.data.PendingMatchModel
+import com.example.thrivematch.data.models.PendingMatchModel
 import com.example.thrivematch.databinding.FragmentLikedBinding
 
 class LikedFragment : Fragment(R.layout.fragment_liked) {

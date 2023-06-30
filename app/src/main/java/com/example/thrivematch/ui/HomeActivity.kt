@@ -3,15 +3,11 @@ package com.example.thrivematch.ui
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
-import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI.setupWithNavController
 import com.example.thrivematch.R
 import com.example.thrivematch.databinding.ActivityHomeBinding
-import com.example.thrivematch.ui.home_fragments.HomeFragment
-import com.example.thrivematch.ui.home_fragments.LikedFragment
-import com.example.thrivematch.ui.home_fragments.MatchedFragment
 
 class HomeActivity : AppCompatActivity() {
 

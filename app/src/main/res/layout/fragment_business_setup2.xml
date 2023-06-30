@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".ui.account_setup_fragments.BusinessSetup2Fragment">
+    tools:context=".ui.account_setup.BusinessSetup2Fragment">
 
     <ProgressBar
         android:id="@+id/progressBar_business2"
@@ -52,6 +52,7 @@
         app:startIconDrawable="@drawable/phone_icon">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/et_phone_number"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="phone" />
@@ -73,6 +74,7 @@
         app:startIconDrawable="@drawable/email_icon">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/et_business_email"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="textEmailAddress" />
@@ -94,6 +96,7 @@
         app:startIconDrawable="@drawable/location_icon">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/et_business_address"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="text" />
@@ -115,6 +118,7 @@
         app:startIconDrawable="@drawable/inbox_icon">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/et_po_box"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="text" />

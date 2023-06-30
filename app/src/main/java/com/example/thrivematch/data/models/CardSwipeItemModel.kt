@@ -1,6 +1,6 @@
-package com.example.thrivematch.data
+package com.example.thrivematch.data.models
 
-data class CardSwipeItem(
+data class CardSwipeItemModel(
 //    val id: String,
     val name: String,
     val industry: String,

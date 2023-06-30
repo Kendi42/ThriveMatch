@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".ui.account_setup_fragments.InvestorSetup1Fragment">
+    tools:context=".ui.account_setup.InvestorSetup1Fragment">
 
     <ProgressBar
         android:id="@+id/progressBar_investor1"
@@ -52,6 +52,7 @@
         app:startIconDrawable="@drawable/person_icon">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/et_investor_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="text" />
@@ -73,10 +74,11 @@
         app:startIconDrawable="@drawable/pen_icon">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/et_investor_description"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="textMultiLine"
 
+            android:inputType="textMultiLine"
             android:maxLines="5" />
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -128,7 +130,7 @@
         app:startIconDrawable="@drawable/investor_type_icon">
 
         <com.google.android.material.textfield.MaterialAutoCompleteTextView
-             android:id="@+id/autocomplete_investorType"
+             android:id="@+id/autocomplete_investor_type"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/investor_type" />
