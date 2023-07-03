@@ -8,12 +8,21 @@ import androidx.lifecycle.viewModelScope
 import com.example.thrivematch.data.network.Resource
 import com.example.thrivematch.data.repository.AuthRepository
 import com.example.thrivematch.data.response.LoginResponse
+import com.example.thrivematch.data.response.SignupResponse
 import kotlinx.coroutines.launch
 
 class AuthenticationViewModel(private val repository: AuthRepository): ViewModel(){
     private val _loginResponse : MutableLiveData<Resource<LoginResponse>> = MutableLiveData()
     val loginResponse: LiveData<Resource<LoginResponse>>
         get()= _loginResponse
+
+    private val _signupResponse : MutableLiveData<Resource<SignupResponse>> = MutableLiveData()
+    val signupResponse: LiveData<Resource<SignupResponse>>
+        get()= _signupResponse
+
+
+
+
 
     fun login(
         email: String,
@@ -28,7 +37,8 @@ class AuthenticationViewModel(private val repository: AuthRepository): ViewModel
         name: String,
         email: String,
         password: String
-    ) {
+    ) = viewModelScope.launch{
+        _signupResponse.value = repository.signup(name=name, email=email, password = password)
         Log.i("Signup Data", "$name, $email, $password")
     }
 

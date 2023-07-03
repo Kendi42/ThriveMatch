@@ -79,7 +79,6 @@
             android:layout_height="wrap_content"
             app:helperText="Required"
             app:errorEnabled="true"
-            android:maxLength="8"
             android:inputType="textPassword" />
     </com.google.android.material.textfield.TextInputLayout>
 

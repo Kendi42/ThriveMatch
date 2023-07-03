@@ -68,11 +68,11 @@ class LoginFragment : BaseFragment<AuthenticationViewModel,FragmentLoginBinding,
     }
 
     private fun login() {
-        binding.loginProgressBar.isVisible= true
         val email= binding.etLoginEmail.text.toString().trim()
         val password= binding.etLoginPassword.text.toString().trim()
 
         if(formValidation.checkIfEmailIsValid(email)==null){
+            binding.loginProgressBar.isVisible= true
             viewModel.login(email, password)
         }
         else{
