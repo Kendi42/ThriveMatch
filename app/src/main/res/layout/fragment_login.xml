@@ -53,6 +53,8 @@
             android:id="@+id/et_login_email"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            app:helperText="Required"
+            app:errorEnabled="true"
             android:inputType="textEmailAddress" />
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -75,6 +77,9 @@
             android:id="@+id/et_login_password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            app:helperText="Required"
+            app:errorEnabled="true"
+            android:maxLength="8"
             android:inputType="textPassword" />
     </com.google.android.material.textfield.TextInputLayout>
 

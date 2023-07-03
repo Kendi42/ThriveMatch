@@ -5,7 +5,7 @@ object Constants {
     const val INVESTORNAME= "investor_name"
     const val INVESTORDESCRIPTION= "investor_description"
     const val INVESTORINTERESTS="investor_interests"
-    const val INVESTORPHOTO= ""
+    const val INVESTORPHOTO= "investor_photo"
     const val BUSINESSNAME= "business_name"
     const val INDUSTRY = "business_industry"
     const val DATEFOUNDED= "date_founded"
@@ -14,7 +14,9 @@ object Constants {
     const val BUSINESSEMAIL= "business_email"
     const val BUSINESSADDRESS= "business_address"
     const val BUSINESSPOBOX= "business_po_box"
-    const val BUSINESSPHOTO= ""
+    const val BUSINESSPHOTO= "business_photo"
+
+    const val AUTHTOKEN= "auth_token"
 
 
 

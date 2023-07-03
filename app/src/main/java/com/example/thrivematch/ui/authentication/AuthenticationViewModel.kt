@@ -18,8 +18,10 @@ class AuthenticationViewModel(private val repository: AuthRepository): ViewModel
     fun login(
         email: String,
         password: String
-    ) = viewModelScope.launch{
-        Log.i("Login Data", "$email, $password")
+    )= viewModelScope.launch{
+        _loginResponse.value = repository.login(email=email, password = password)
+        Log.i("Login Response", _loginResponse.toString())
+
     }
 
     fun signup(
@@ -29,6 +31,5 @@ class AuthenticationViewModel(private val repository: AuthRepository): ViewModel
     ) {
         Log.i("Signup Data", "$name, $email, $password")
     }
-
 
 }
