@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.example.thrivematch.R
 import com.example.thrivematch.util.CommonSharedPreferences
+import com.example.thrivematch.util.Constants
 
 class AuthenticationActivity : AppCompatActivity() {
     private lateinit var commonSharedPreferences: CommonSharedPreferences
