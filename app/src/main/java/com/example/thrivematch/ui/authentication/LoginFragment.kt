@@ -26,6 +26,7 @@ import com.example.thrivematch.ui.base.BaseFragment
 import com.example.thrivematch.util.CommonSharedPreferences
 import com.example.thrivematch.util.Constants
 import com.example.thrivematch.util.FormValidation
+import com.example.thrivematch.util.handleApiError
 import kotlinx.coroutines.launch
 
 class LoginFragment : BaseFragment<AuthenticationViewModel,FragmentLoginBinding, AuthRepository >() {
@@ -49,11 +50,7 @@ class LoginFragment : BaseFragment<AuthenticationViewModel,FragmentLoginBinding,
                     val intent = Intent(requireActivity(), HomeActivity::class.java)
                     startActivity(intent)
                 }
-                is Resource.Failure -> {
-                    Toast.makeText(requireContext(), "Login Failure. Try again", Toast.LENGTH_SHORT).show()
-                    Log.e("Login Failure", it.toString())
-
-                }
+                is Resource.Failure -> handleApiError(it){ login() }
             }
         })
 
@@ -62,7 +59,6 @@ class LoginFragment : BaseFragment<AuthenticationViewModel,FragmentLoginBinding,
         }
         binding.btnLogin.setOnClickListener {
             login()
-
         }
 
     }

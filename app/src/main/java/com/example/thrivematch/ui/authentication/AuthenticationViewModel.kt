@@ -9,9 +9,10 @@ import com.example.thrivematch.data.network.Resource
 import com.example.thrivematch.data.repository.AuthRepository
 import com.example.thrivematch.data.response.LoginResponse
 import com.example.thrivematch.data.response.SignupResponse
+import com.example.thrivematch.ui.base.BaseViewModel
 import kotlinx.coroutines.launch
 
-class AuthenticationViewModel(private val repository: AuthRepository): ViewModel(){
+class AuthenticationViewModel(private val repository: AuthRepository): BaseViewModel(repository){
     private val _loginResponse : MutableLiveData<Resource<LoginResponse>> = MutableLiveData()
     val loginResponse: LiveData<Resource<LoginResponse>>
         get()= _loginResponse

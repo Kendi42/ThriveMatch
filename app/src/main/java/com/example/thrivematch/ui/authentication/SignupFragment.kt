@@ -16,6 +16,7 @@ import com.example.thrivematch.data.repository.AuthRepository
 import com.example.thrivematch.databinding.FragmentSignupBinding
 import com.example.thrivematch.ui.base.BaseFragment
 import com.example.thrivematch.util.FormValidation
+import com.example.thrivematch.util.handleApiError
 
 class SignupFragment : BaseFragment<AuthenticationViewModel, FragmentSignupBinding, AuthRepository>(){
     private lateinit var formValidation: FormValidation
@@ -25,7 +26,6 @@ class SignupFragment : BaseFragment<AuthenticationViewModel, FragmentSignupBindi
         formValidation= FormValidation()
         binding.signupProgressBar.isVisible= false
 
-
         viewModel.signupResponse.observe(viewLifecycleOwner, Observer{
             binding.signupProgressBar.isVisible= false
             when(it){
@@ -33,11 +33,10 @@ class SignupFragment : BaseFragment<AuthenticationViewModel, FragmentSignupBindi
                     Toast.makeText(requireContext(),"Signup Success", Toast.LENGTH_SHORT).show()
                     findNavController().navigate(R.id.action_signupFragment_to_accountTypeFragment)
                 }
-                is Resource.Failure ->{
-                    Toast.makeText(requireContext(),"Signup Failure. Try again", Toast.LENGTH_SHORT).show()
-                }
+                is Resource.Failure ->handleApiError(it){ signup() }
             }
         })
+
         binding.tvAlreadyHaveAccount.setOnClickListener{
             findNavController().navigate(R.id.action_signupFragment_to_loginFragment)
         }

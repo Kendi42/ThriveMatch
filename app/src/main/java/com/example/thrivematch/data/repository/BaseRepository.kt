@@ -2,6 +2,7 @@ package com.example.thrivematch.data.repository
 
 import android.util.Log
 import com.example.thrivematch.data.network.Resource
+import com.example.thrivematch.data.network.UserApi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import retrofit2.HttpException
@@ -26,5 +27,9 @@ abstract class BaseRepository {
                 }
             }
         }
+    }
+
+    suspend fun logout(api: UserApi)= safeApiCall {
+        api.logout()
     }
 }

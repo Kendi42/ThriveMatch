@@ -7,12 +7,14 @@ import android.content.ContentValues
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.graphics.ImageDecoder
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.os.Environment
 import android.provider.MediaStore
-import android.util.Base64
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.View
@@ -25,9 +27,16 @@ import com.example.thrivematch.databinding.FragmentInvestorSetup3Binding
 import com.example.thrivematch.ui.HomeActivity
 import com.example.thrivematch.util.CommonSharedPreferences
 import com.example.thrivematch.util.Constants
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import java.io.ByteArrayOutputStream
+import java.io.File
+import java.io.FileOutputStream
+import java.text.SimpleDateFormat
+import java.util.*
 
 class InvestorSetup3Fragment : Fragment(R.layout.fragment_investor_setup3) {
-
     private lateinit var commonSharedPreferences: CommonSharedPreferences
     private val sharedViewModel: SharedAccountSetupViewModel by activityViewModels()
     private var selectedImage: Uri? = null
@@ -36,7 +45,6 @@ class InvestorSetup3Fragment : Fragment(R.layout.fragment_investor_setup3) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentInvestorSetup3Binding.bind(view)
-
 
         commonSharedPreferences = CommonSharedPreferences(requireContext())
 
@@ -55,16 +63,11 @@ class InvestorSetup3Fragment : Fragment(R.layout.fragment_investor_setup3) {
 
         // Image View Data Persistence
         if(commonSharedPreferences.getStringData(Constants.INVESTORPHOTO) != ""){
-            try {
-                val decodedBytes = Base64.decode(
-                    commonSharedPreferences.getStringData(Constants.INVESTORPHOTO),
-                    Base64.DEFAULT
-                )
-                val bitmap = BitmapFactory.decodeByteArray(decodedBytes, 0, decodedBytes.size)
-                binding.ivUploadProfile.setImageBitmap(bitmap)
-            }catch(e:Exception){
-                Log.e("ImageConversion", "Failed to decode Base64 to image: ${e.message}", e)
-            }
+            val imagePath = commonSharedPreferences.getStringData(Constants.INVESTORPHOTO)
+            val imageFile = File(imagePath)
+            val bitmap = BitmapFactory.decodeFile(imageFile.absolutePath)
+            binding.ivUploadProfile.setImageBitmap(bitmap)
+
         }
 
         //Image Upload OnClick Listener
@@ -86,6 +89,7 @@ class InvestorSetup3Fragment : Fragment(R.layout.fragment_investor_setup3) {
             sharedViewModel.setInvestorData(investorData)
         }
 
+    // Image Chooser Dialog
     private fun showMenuDialog() {
         val options = arrayOf("Take Photo", "Choose from Gallery")
         val builder = AlertDialog.Builder(requireContext())
@@ -93,7 +97,6 @@ class InvestorSetup3Fragment : Fragment(R.layout.fragment_investor_setup3) {
         builder.setItems(options) { dialog, item ->
             when (item) {
                 0 -> {
-//                    Toast.makeText(requireContext(), "Camera Chosen", Toast.LENGTH_SHORT).show()
                     val permissionGranted = requestCameraPermission()
                     if (permissionGranted) {
                         openCameraInterface()
@@ -103,46 +106,8 @@ class InvestorSetup3Fragment : Fragment(R.layout.fragment_investor_setup3) {
         builder.show()
     }
 
-    private fun openCameraInterface() {
-        val values = ContentValues()
-        values.put(MediaStore.Images.Media.TITLE, R.string.take_picture)
-        values.put(MediaStore.Images.Media.DESCRIPTION, R.string.take_picture_description)
-        selectedImage = requireActivity().contentResolver?.insert(
-            MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
-            values
-        )
-        // Create camera intent
-        val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-        intent.putExtra(MediaStore.EXTRA_OUTPUT, selectedImage)
-        // Launch intent
-        startActivityForResult(intent, IMAGE_CAPTURE_CODE)
-
-    }
-
-    override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<out String>,
-        grantResults: IntArray
-    ) {
-        if (requestCode == CAMERA_PERMISSION_CODE) {
-            if (grantResults.size == 1 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                // Permission was granted
-                openCameraInterface()
-            } else {
-                // Permission was denied
-                showAlert("Camera permission was denied. Unable to take a picture.")
-            }
-        }
-    }
-
-    private fun showAlert(message: String) {
-        val builder = AlertDialog.Builder(activity as Context)
-        builder.setMessage(message)
-        builder.setPositiveButton(R.string.ok, null)
-        val dialog = builder.create()
-        dialog.show()
-    }
-
+    // Camera Functions
+    // Permissions
     private fun requestCameraPermission(): Boolean {
         var permissionGranted = false
 
@@ -163,7 +128,48 @@ class InvestorSetup3Fragment : Fragment(R.layout.fragment_investor_setup3) {
         return permissionGranted
     }
 
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        if (requestCode == CAMERA_PERMISSION_CODE) {
+            if (grantResults.size == 1 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                // Permission was granted
+                openCameraInterface()
+            } else {
+                // Permission was denied
+                showAlert("Camera permission was denied. Unable to take a picture.")
+            }
+        }
+    }
+    // Opening Camera
+    private fun openCameraInterface() {
+        val values = ContentValues()
+        values.put(MediaStore.Images.Media.TITLE, R.string.take_picture)
+        values.put(MediaStore.Images.Media.DESCRIPTION, R.string.take_picture_description)
+        selectedImage = requireActivity().contentResolver?.insert(
+            MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
+            values
+        )
+        // Create camera intent
+        val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, selectedImage)
+        // Launch intent
+        startActivityForResult(intent, IMAGE_CAPTURE_CODE)
+    }
 
+    private fun showAlert(message: String) {
+        val builder = AlertDialog.Builder(activity as Context)
+        builder.setMessage(message)
+        builder.setPositiveButton(R.string.ok, null)
+        val dialog = builder.create()
+        dialog.show()
+    }
+
+
+    // Gallery Functions
+    // Opening Gallery
     private fun openImageChooser() {
         Intent(Intent.ACTION_PICK).also {
             it.type = "image/*"
@@ -175,25 +181,58 @@ class InvestorSetup3Fragment : Fragment(R.layout.fragment_investor_setup3) {
         }
     }
 
-    private fun convertImageToBase64(imageUri: Uri): String? {
-        try {
-            val inputStream = requireActivity().contentResolver.openInputStream(imageUri)
-            val bytes = inputStream?.readBytes()
-            inputStream?.close()
-            return bytes?.let { Base64.encodeToString(it, Base64.DEFAULT) }
-        } catch (e: Exception) {
-            Log.e("ImageConversion", "Failed to convert image to Base64: ${e.message}", e)
-        }
-        return null
+
+    private fun getImageBitmap(context: Context, selectedImage: Uri): Bitmap? {
+        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+                ImageDecoder.decodeBitmap(
+                    ImageDecoder.createSource(
+                        context.contentResolver,
+                        selectedImage))
+            } else {
+                context
+                    .contentResolver
+                    .openInputStream(selectedImage)?.use { inputStream ->
+                        BitmapFactory.decodeStream(inputStream)
+                    }
+
+            }
     }
 
+    private fun convertBitmapToFile(destinationFile: File, bitmap: Bitmap?) {
+        CoroutineScope(Dispatchers.IO).launch {
+        //create a file to write bitmap data
+        destinationFile.createNewFile()
+        //Convert bitmap to byte array
+        val bos = ByteArrayOutputStream()
+        bitmap?.compress(Bitmap.CompressFormat.JPEG, 50, bos)
+        val bitmapData = bos.toByteArray()
+        //write the bytes in file
+        val fos = FileOutputStream(destinationFile)
+        fos.write(bitmapData)
+        fos.flush()
+        fos.close()
+    }
+    }
 
+    private fun createImageFile(): File? {
+        val timeStamp: String = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(Date())
+        val storageDir: File? = requireContext().getExternalFilesDir(Environment.DIRECTORY_PICTURES)
+        return try {
+            File.createTempFile(
+                "JPEG_${timeStamp}_", /* prefix */
+                ".jpg", /* suffix */
+                storageDir /* directory */
+            )
+        } catch (e: Exception) {
+            Log.e("InvestorSetup3Fragment", "Failed to create image file: ${e.message}", e)
+            null
+        }
+    }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
         if (resultCode == Activity.RESULT_OK) {
-
             when (requestCode) {
                 REQUEST_CODE_IMAGE_PICKER -> {
                     Log.i("cam", "REQUEST_CODE_IMAGE_PICKER")
@@ -205,14 +244,21 @@ class InvestorSetup3Fragment : Fragment(R.layout.fragment_investor_setup3) {
                     binding.ivUploadProfile.setImageURI(selectedImage)
                 }
             }
-            // Saving Photo as Bit 64 code
-            commonSharedPreferences.saveStringData(Constants.INVESTORPHOTO, selectedImage?.let {convertImageToBase64(it) }.toString() )
+            val selectedImageBitmap: Bitmap? = selectedImage?.let { getImageBitmap(requireContext(), it) }
+            val selectedImageFilePath = createImageFile()
 
-
+            if (selectedImageFilePath != null && selectedImageBitmap != null) {
+                convertBitmapToFile(selectedImageFilePath, selectedImageBitmap)
+                commonSharedPreferences.saveStringData(Constants.INVESTORPHOTO, selectedImageFilePath.toString())
+            }
+            else {
+                showAlert("Something went wrong. Try again")
+            }
         } else {
             showAlert("Failed to upload picture")
         }
     }
+
 
     companion object {
         private const val REQUEST_CODE_IMAGE_PICKER = 100

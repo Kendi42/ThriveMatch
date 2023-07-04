@@ -7,10 +7,13 @@ import android.content.ContentValues
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.graphics.ImageDecoder
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.os.Environment
 import android.provider.MediaStore
 import android.util.Base64
 import android.util.Log
@@ -26,6 +29,14 @@ import com.example.thrivematch.databinding.FragmentBusinessSetup3Binding
 import com.example.thrivematch.ui.HomeActivity
 import com.example.thrivematch.util.CommonSharedPreferences
 import com.example.thrivematch.util.Constants
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import java.io.ByteArrayOutputStream
+import java.io.File
+import java.io.FileOutputStream
+import java.text.SimpleDateFormat
+import java.util.*
 
 class BusinessSetup3Fragment : Fragment(R.layout.fragment_business_setup3) {
     private var selectedImage: Uri? =null
@@ -55,16 +66,10 @@ class BusinessSetup3Fragment : Fragment(R.layout.fragment_business_setup3) {
 
         // Image View Data Persistence
         if(commonSharedPreferences.getStringData(Constants.BUSINESSPHOTO) != ""){
-            try {
-                val decodedBytes = Base64.decode(
-                    commonSharedPreferences.getStringData(Constants.BUSINESSPHOTO),
-                    Base64.DEFAULT
-                )
-                val bitmap = BitmapFactory.decodeByteArray(decodedBytes, 0, decodedBytes.size)
-                binding.ivUploadLogo.setImageBitmap(bitmap)
-            }catch(e:Exception){
-                Log.e("ImageConversion", "Failed to decode Base64 to image: ${e.message}", e)
-            }
+            val imagePath = commonSharedPreferences.getStringData(Constants.BUSINESSPHOTO)
+            val imageFile = File(imagePath)
+            val bitmap = BitmapFactory.decodeFile(imageFile.absolutePath)
+            binding.ivUploadLogo.setImageBitmap(bitmap)
         }
         // Image Upload
         binding.ivUploadLogo.setOnClickListener{
@@ -89,19 +94,6 @@ class BusinessSetup3Fragment : Fragment(R.layout.fragment_business_setup3) {
 
         sharedViewModel.setBusinessData(businessData)
     }
-
-    private fun convertImageToBase64(imageUri: Uri): String? {
-        try {
-            val inputStream = requireActivity().contentResolver.openInputStream(imageUri)
-            val bytes = inputStream?.readBytes()
-            inputStream?.close()
-            return bytes?.let { Base64.encodeToString(it, Base64.DEFAULT) }
-        } catch (e: Exception) {
-            Log.e("ImageConversion", "Failed to convert image to Base64: ${e.message}", e)
-        }
-        return null
-    }
-
 
     private fun showMenuDialog() {
 
@@ -194,6 +186,54 @@ class BusinessSetup3Fragment : Fragment(R.layout.fragment_business_setup3) {
         }
     }
 
+    // URI to file
+    private fun getImageBitmap(context: Context, selectedImage: Uri): Bitmap? {
+        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+            ImageDecoder.decodeBitmap(
+                ImageDecoder.createSource(
+                    context.contentResolver,
+                    selectedImage))
+        } else {
+            context
+                .contentResolver
+                .openInputStream(selectedImage)?.use { inputStream ->
+                    BitmapFactory.decodeStream(inputStream)
+                }
+
+        }
+    }
+
+    private fun convertBitmapToFile(destinationFile: File, bitmap: Bitmap?) {
+        CoroutineScope(Dispatchers.IO).launch {
+            //create a file to write bitmap data
+            destinationFile.createNewFile()
+            //Convert bitmap to byte array
+            val bos = ByteArrayOutputStream()
+            bitmap?.compress(Bitmap.CompressFormat.JPEG, 50, bos)
+            val bitmapData = bos.toByteArray()
+            //write the bytes in file
+            val fos = FileOutputStream(destinationFile)
+            fos.write(bitmapData)
+            fos.flush()
+            fos.close()
+        }
+    }
+
+    private fun createImageFile(): File? {
+        val timeStamp: String = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(Date())
+        val storageDir: File? = requireContext().getExternalFilesDir(Environment.DIRECTORY_PICTURES)
+        return try {
+            File.createTempFile(
+                "JPEG_${timeStamp}_", /* prefix */
+                ".jpg", /* suffix */
+                storageDir /* directory */
+            )
+        } catch (e: Exception) {
+            Log.e("InvestorSetup3Fragment", "Failed to create image file: ${e.message}", e)
+            null
+        }
+    }
+
     // On Activity Result
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
@@ -210,10 +250,15 @@ class BusinessSetup3Fragment : Fragment(R.layout.fragment_business_setup3) {
                     binding.ivUploadLogo.setImageURI(selectedImage)
                 }
             }
-
-            // Saving Photo as Bit 64 code
-            commonSharedPreferences.saveStringData(Constants.BUSINESSPHOTO, selectedImage?.let {convertImageToBase64(it) }.toString() )
-
+            val selectedImageBitmap: Bitmap? = selectedImage?.let { getImageBitmap(requireContext(), it) }
+            val selectedImageFilePath = createImageFile()
+            if (selectedImageFilePath != null && selectedImageBitmap != null) {
+                convertBitmapToFile(selectedImageFilePath, selectedImageBitmap)
+                commonSharedPreferences.saveStringData(Constants.BUSINESSPHOTO, selectedImageFilePath.toString())
+            }
+            else {
+                showAlert("Something went wrong. Try again")
+            }
         } else {
             showAlert("Failed to upload picture")
         }

@@ -123,7 +123,6 @@
         android:layout_marginEnd="32dp"
         app:boxBackgroundColor="@color/white"
         app:boxStrokeColor="@color/colorPrimary"
-
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_about_yourself"

@@ -13,11 +13,11 @@ class AuthenticationActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_authentication)
         commonSharedPreferences = CommonSharedPreferences(this)
-
+        commonSharedPreferences.clearSharedPreferences()
     }
 
     override fun onDestroy() {
-        commonSharedPreferences.clearSharedPreferences()
+
         super.onDestroy()
     }
 

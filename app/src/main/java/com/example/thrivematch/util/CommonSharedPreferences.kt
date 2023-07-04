@@ -7,15 +7,14 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 
 
-private const val FIELDAPP_PREFERENCE_DATA = "my_preference"
-private const val FIELDAPP_PASTROLIST_DATA = "FIELDAPP_PASTROLIST_PREFERENCE"
+private const val THRIVEMATCH_DATA = "THRIVEMATCH_DATA"
 
 class CommonSharedPreferences(context: Context) {
     val applicationContext: Context = context.applicationContext
 
     private var sharedPreferences: SharedPreferences =
         context.getSharedPreferences(
-            FIELDAPP_PASTROLIST_DATA,
+            THRIVEMATCH_DATA,
             Context.MODE_PRIVATE
         )
 
