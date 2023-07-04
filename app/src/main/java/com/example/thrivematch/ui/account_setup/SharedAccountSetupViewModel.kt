@@ -12,6 +12,7 @@ class SharedAccountSetupViewModel: ViewModel() {
 
     //Investor Account Setup
     var investorData = MutableLiveData<InvestorModel>()
+
     fun setInvestorData(submittedInvestorData: InvestorModel) = viewModelScope.launch {
         investorData.value = submittedInvestorData
         Log.i("Investor Data", investorData.value.toString())

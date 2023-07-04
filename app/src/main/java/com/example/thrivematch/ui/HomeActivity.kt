@@ -17,24 +17,11 @@ class HomeActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding= ActivityHomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
-//        replaceFragment(HomeFragment())
 
         setSupportActionBar(binding.toolbarActivityHome)
         supportActionBar?.setDisplayHomeAsUpEnabled(false)
         supportActionBar?.setDisplayShowTitleEnabled(false)
 
-      /*  binding.bottomNavigationView.setOnItemSelectedListener {
-            when(it.itemId){
-                R.id.home_page -> replaceFragment(HomeFragment())
-                R.id.heart_page -> replaceFragment(LikedFragment())
-                R.id.chat_page-> replaceFragment(MatchedFragment())
-
-                else ->{
-
-                }
-            }
-            true
-        }*/
 
         val navController = findNavController(R.id.fragmentContainerView2)
         val appBarConfiguration = AppBarConfiguration(topLevelDestinationIds = setOf())
@@ -50,10 +37,4 @@ class HomeActivity : AppCompatActivity() {
 
     }
 
-//    private fun replaceFragment(fragment: Fragment){
-//        val fragmentManager= supportFragmentManager
-//        val fragmentTransaction = fragmentManager.beginTransaction()
-//        fragmentTransaction.replace(R.id.activity_home_frame_layout, fragment)
-//        fragmentTransaction.commit()
-//    }
 }

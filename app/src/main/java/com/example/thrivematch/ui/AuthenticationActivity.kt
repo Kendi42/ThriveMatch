@@ -17,7 +17,6 @@ class AuthenticationActivity : AppCompatActivity() {
     }
 
     override fun onDestroy() {
-
         super.onDestroy()
     }
 
