@@ -37,8 +37,55 @@ class HomeRepository : BaseRepository(){
                 imageURL = "https://cdn.dribbble.com/userupload/7733577/file/original-a2f0a453abc9ef61612d721aeb8a39da.jpg?compress=1&resize=2048x1536"
             )
         )
+
+        cardItems.add(
+            CardSwipeItemModel(
+                name = "CryptoFund",
+                industry = "Finance",
+                description = "Cryptofund is a pioneering financial company that specializes in digital asset investments, offering innovative solutions and expert guidance in the ever-evolving world of cryptocurrencies.",
+                imageURL = "https://cdn.dribbble.com/userupload/5454883/file/original-9725b8fe236a2dff4180dce8884d265a.jpg?compress=1&resize=1504x1128"
+            )
+        )
+
+        cardItems.add(
+            CardSwipeItemModel(
+                name = "Ovido",
+                industry = "Entertainment",
+                description = " With a focus on pushing boundaries and redefining entertainment, Ovido delivers innovative games, immersive virtual reality experiences, and engaging multimedia productions, creating unforgettable moments of joy and adventure.",
+                imageURL = "https://cdn.dribbble.com/userupload/5831416/file/original-ca76f9b0181d2345353b6b3642743ab4.jpg?compress=1&resize=1504x1128"
+            )
+        )
+
+        cardItems.add(
+            CardSwipeItemModel(
+                name = "Drivable",
+                industry = "Transportation",
+                description = "Drivable is a forward-thinking transportation company that revolutionizes the way people move and commute. With a focus on sustainable and efficient solutions, they provide cutting-edge technologies and services for electric vehicles",
+                imageURL = "https://cdn.dribbble.com/userupload/8098458/file/original-a2252dbb9fbd1b6fc989cea4156f9519.jpg?compress=1&resize=1338x1003&vertical=center"
+            )
+        )
+
+                cardItems.add(
+            CardSwipeItemModel(
+                name = "ArrowHealth",
+                industry = "HealthCare",
+                description = "With a focus on leveraging cutting-edge advancements such as artificial intelligence and telemedicine, we at ArrowHealth aim to improve accessibility, efficiency, and quality of healthcare services",
+                imageURL = "https://cdn.dribbble.com/userupload/7889038/file/original-8a3114ac067714ed900bb8437175ec7c.jpg?compress=1&resize=1504x1128"
+            )
+        )
+
         // Add more dating card items to the list
+        //        cardItems.add(
+//            CardSwipeItemModel(
+//                name = "",
+//                industry = "",
+//                description = "",
+//                imageURL = ""
+//            )
+//        )
+
         return cardItems
 
     }
+
 }

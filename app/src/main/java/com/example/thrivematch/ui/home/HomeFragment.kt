@@ -1,6 +1,8 @@
 package com.example.thrivematch.ui.home
 
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.View
@@ -132,8 +134,10 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
     }
 
     private fun setOnCardItemClicked(it: CardSwipeItemModel) {
-            Toast.makeText(requireActivity(), it.name, Toast.LENGTH_SHORT).show()
+        Handler(Looper.getMainLooper()).postDelayed({
             findNavController().navigate(R.id.action_homeFragment_to_moreInfoFragment)
+        }, 500L)
+
     }
 
 }
