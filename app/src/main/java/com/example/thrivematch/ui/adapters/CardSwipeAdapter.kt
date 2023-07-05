@@ -1,5 +1,6 @@
 package com.example.thrivematch.ui.adapters
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,7 +12,8 @@ import com.example.thrivematch.R
 import com.example.thrivematch.data.models.CardSwipeItemModel
 import com.google.android.material.card.MaterialCardView
 
-class CardSwipeAdapter(private val cardSwipeItem: List<CardSwipeItemModel>, private val listener:((CardSwipeItemModel)-> Unit)) : RecyclerView.Adapter<CardSwipeAdapter.ViewHolder>() {
+class CardSwipeAdapter(private var cardSwipeItem: List<CardSwipeItemModel>, private val listener:((CardSwipeItemModel)-> Unit)) : RecyclerView.Adapter<CardSwipeAdapter.ViewHolder>() {
+
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         val tvName: TextView = itemView.findViewById(R.id.tv_card_name)
@@ -21,7 +23,10 @@ class CardSwipeAdapter(private val cardSwipeItem: List<CardSwipeItemModel>, priv
         val cvCardSwipe: MaterialCardView = itemView.findViewById(R.id.cv_card_swipe)
     }
 
-
+    fun setCardSwipeItems(newCardSwipeItems: List<CardSwipeItemModel>) {
+        cardSwipeItem = newCardSwipeItems
+        notifyDataSetChanged()
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context)

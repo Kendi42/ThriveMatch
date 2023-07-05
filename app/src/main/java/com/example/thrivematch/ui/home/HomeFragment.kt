@@ -7,6 +7,7 @@ import android.view.View
 import android.view.animation.AccelerateInterpolator
 import android.widget.Toast
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DefaultItemAnimator
@@ -24,25 +25,28 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
     private lateinit var binding: FragmentHomeBinding
     private lateinit var cardStackLayoutManager: CardStackLayoutManager
     private val viewModel: HomeViewModel by activityViewModels()
-    private var cardItems: MutableList<CardSwipeItemModel> = mutableListOf()
+    private lateinit var adapter: CardSwipeAdapter
+    private var cardItems: List<CardSwipeItemModel> = emptyList()
+
+
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         binding=FragmentHomeBinding.bind(view)
         initCardStackLayoutManager()
         binding.cardStackView.layoutManager= cardStackLayoutManager
         val cardStackView = binding.cardStackView
+        adapter = CardSwipeAdapter(emptyList()) { newcardSwipeItem ->
+            setOnCardItemClicked(newcardSwipeItem)
+        }
 
-        cardItems= viewModel.getUnseenCards()
-        val adapter= CardSwipeAdapter(cardSwipeItem=cardItems, listener = {
-            setOnCardItemClicked(it)
-        })
-        cardStackView.adapter= adapter
+        Log.i("Top Position", cardStackLayoutManager.topPosition.toString())
+        binding.cardStackView.adapter = adapter
+        updateCardView()
 
         binding.ivLeftSwipeIndicator.setOnClickListener {
-            if(cardStackLayoutManager.topPosition != cardItems.size){
+            if(cardStackLayoutManager.topPosition < cardItems.size){
                 binding.ivLeftSwipeIndicator.setBackgroundResource(R.drawable.selected_left_swipe_indicator_shape)
             }
             val setting = SwipeAnimationSetting.Builder()
@@ -55,7 +59,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         }
 
         binding.ivRightSwipeIndicator.setOnClickListener {
-            if(cardStackLayoutManager.topPosition != cardItems.size){
+            if(cardStackLayoutManager.topPosition < cardItems.size){
                 binding.ivRightSwipeIndicator.setBackgroundResource(R.drawable.selected_right_swipe_indicator_shape)
             }
             cardStackLayoutManager.setDirections(Direction.HORIZONTAL)
@@ -68,11 +72,6 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
             cardStackView.swipe()
         }
 
-    }
-
-
-    private fun saveLikedCard(position: Int) {
-        viewModel.saveLikedCard(cardItems[position])
     }
 
     private fun initCardStackLayoutManager() {
@@ -89,16 +88,19 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
             }
 
             override fun onCardSwiped(direction: Direction?) {
+                Log.i("Top Position CardSwiped", cardStackLayoutManager.topPosition.toString())
+
                 if(direction == Direction.Left){
                     binding.ivLeftSwipeIndicator.setBackgroundResource(R.drawable.left_swipe_indicator_shape)
-
                 }
                 // Saving liked cards
                 else if(direction == Direction.Right){
-                    saveLikedCard(cardStackLayoutManager.topPosition-1)
+                    Log.i("Top Position SwipeRight", cardStackLayoutManager.topPosition.toString())
+                    viewModel.saveLikedCard(cardItems[0])
                     binding.ivRightSwipeIndicator.setBackgroundResource(R.drawable.right_swipe_indicator_shape)
                 }
-                viewModel.alterUnseenCards(cardStackLayoutManager.topPosition-1)
+                viewModel.alterUnseenCards()
+                updateCardView()
             }
 
             override fun onCardRewound() {
@@ -119,11 +121,19 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
 
     }
 
+    private fun updateCardView() {
+        viewModel.unseenCardItems.observe(viewLifecycleOwner, Observer{ newCardItems ->
+            cardItems = newCardItems
+            Log.i("Card Items (HF)", cardItems.toString())
+            Log.i("newCard Items (HF)", newCardItems.toString())
+
+            adapter.setCardSwipeItems(newCardItems)
+        })
+    }
+
     private fun setOnCardItemClicked(it: CardSwipeItemModel) {
             Toast.makeText(requireActivity(), it.name, Toast.LENGTH_SHORT).show()
             findNavController().navigate(R.id.action_homeFragment_to_moreInfoFragment)
     }
-
-
 
 }
