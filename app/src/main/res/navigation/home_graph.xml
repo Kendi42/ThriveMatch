@@ -33,4 +33,19 @@
             android:id="@+id/action_moreInfoFragment_to_homeFragment"
             app:destination="@id/homeFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/myAccountFragment"
+        android:name="com.example.thrivematch.ui.side_nav_fragments.myAccountFragment"
+        android:label="fragment_my_account"
+        tools:layout="@layout/fragment_my_account" />
+    <fragment
+        android:id="@+id/documentUploadFragment"
+        android:name="com.example.thrivematch.ui.side_nav_fragments.DocumentUploadFragment"
+        android:label="fragment_document_upload"
+        tools:layout="@layout/fragment_document_upload" />
+    <fragment
+        android:id="@+id/subscriptionFragment"
+        android:name="com.example.thrivematch.ui.side_nav_fragments.SubscriptionFragment"
+        android:label="fragment_subscription"
+        tools:layout="@layout/fragment_subscription" />
 </navigation>
