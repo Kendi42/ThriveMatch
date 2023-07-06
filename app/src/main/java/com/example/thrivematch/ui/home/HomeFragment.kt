@@ -134,9 +134,11 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
     }
 
     private fun setOnCardItemClicked(it: CardSwipeItemModel) {
+//        Toast.makeText(requireActivity(), it.name, Toast.LENGTH_SHORT).show()
+        viewModel.setSelectedCard(it)
         Handler(Looper.getMainLooper()).postDelayed({
             findNavController().navigate(R.id.action_homeFragment_to_moreInfoFragment)
-        }, 500L)
+        }, 350L)
 
     }
 

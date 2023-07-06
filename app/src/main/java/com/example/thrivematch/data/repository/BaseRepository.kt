@@ -21,7 +21,6 @@ abstract class BaseRepository {
                     else ->{
                         Log.e("HTTP Exception", throwable.toString())
                         Log.e("HTTP Exception", throwable.message.toString())
-
                         Resource.Failure(true, null, null)
                     }
                 }

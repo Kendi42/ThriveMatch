@@ -28,8 +28,11 @@ class HomeActivity : AppCompatActivity() {
         navController.addOnDestinationChangedListener { _, destination, _ ->
             if (destination.id == R.id.homeFragment|| destination.id == R.id.likedFragment || destination.id == R.id.matchedFragment) {
                 binding!!.bottomNavigationView.visibility = View.VISIBLE
+                binding.toolbarActivityHome.visibility = View.VISIBLE
             } else {
                 binding!!.bottomNavigationView.visibility = View.GONE
+                binding.toolbarActivityHome.visibility = View.GONE
+
             }
         }
 
