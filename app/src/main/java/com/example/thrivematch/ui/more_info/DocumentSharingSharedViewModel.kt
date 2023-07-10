@@ -21,8 +21,8 @@ class DocumentSharingSharedViewModel : ViewModel(){
     fun getDocumentList():LinkedList<PdfFileModel>{
         return repository.getDocumentList()
     }
-    fun deleteDocumentFromList(documentForDeletion: PdfFileModel)= viewModelScope.launch {
-        repository.deleteDocumentFromList(documentForDeletion)
+    fun deleteDocumentFromList(position: Int)= viewModelScope.launch {
+        repository.deleteDocumentFromList(position)
     }
 
 }

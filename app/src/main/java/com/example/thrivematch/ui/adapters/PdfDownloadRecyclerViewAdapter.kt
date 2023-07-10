@@ -8,14 +8,11 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
-import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.core.content.ContextCompat.startActivity
 import androidx.core.content.FileProvider
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
 import com.example.thrivematch.R
 import com.example.thrivematch.data.models.PdfFileModel
-import com.example.thrivematch.data.models.PendingMatchModel
 import java.io.File
 
 class PdfDownloadRecyclerViewAdapter (private val itemList: List<PdfFileModel>, private val context: Context) :
@@ -30,7 +27,7 @@ class PdfDownloadRecyclerViewAdapter (private val itemList: List<PdfFileModel>, 
     // Create the ViewHolder and inflate the item layout
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.pdf_item, parent, false)
+            .inflate(R.layout.pdf_item_moreinfo_rv, parent, false)
         return ViewHolder(view)
     }
 
@@ -52,8 +49,6 @@ class PdfDownloadRecyclerViewAdapter (private val itemList: List<PdfFileModel>, 
                 Toast.makeText(context, "PDF file not found", Toast.LENGTH_SHORT).show()
             }
         }
-
-
 
         }
 

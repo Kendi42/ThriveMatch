@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.lifecycle.viewModelScope
 import com.example.thrivematch.data.models.PdfFileModel
 import kotlinx.coroutines.launch
+import java.text.ParsePosition
 import java.util.*
 
 class DocumentSharingRepository: BaseRepository() {
@@ -19,8 +20,8 @@ class DocumentSharingRepository: BaseRepository() {
         return pdfDocumentList
     }
 
-    suspend fun deleteDocumentFromList(documentForDeletion: PdfFileModel){
-        pdfDocumentList.remove(documentForDeletion)
+    suspend fun deleteDocumentFromList(position: Int){
+        pdfDocumentList.removeAt(position)
         Log.i("PDFs after Deletion", pdfDocumentList.toString())
 
     }

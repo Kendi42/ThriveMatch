@@ -102,8 +102,10 @@
         Add your relevant documents to display on your profile. You can add up to 5 files </string>
 
     <string name="recent_uploads">Recent Uploads</string>
-
-
+    <string name="upload_document">Upload Document</string>
+    <string name="document_name">Document Name</string>
+    <string name="download">Download</string>
+    <string name="delete">Delete</string>
 
 
 </resources>

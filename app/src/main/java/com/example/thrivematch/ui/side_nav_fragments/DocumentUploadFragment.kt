@@ -30,6 +30,7 @@ import com.example.thrivematch.data.models.PdfFileModel
 import com.example.thrivematch.databinding.FragmentDocumentUploadBinding
 import com.example.thrivematch.databinding.FragmentMoreInfoBinding
 import com.example.thrivematch.ui.account_setup.SharedAccountSetupViewModel
+import com.example.thrivematch.ui.adapters.DocumentCenterPdfsRecylerViewAdapter
 import com.example.thrivematch.ui.adapters.PdfDownloadRecyclerViewAdapter
 import com.example.thrivematch.ui.home.HomeViewModel
 import com.example.thrivematch.ui.more_info.DocumentSharingSharedViewModel
@@ -41,10 +42,11 @@ import java.io.FileOutputStream
 import java.text.SimpleDateFormat
 import java.util.*
 
-class DocumentUploadFragment : Fragment(R.layout.fragment_document_upload) {
+class DocumentUploadFragment : Fragment(R.layout.fragment_document_upload),
+    DocumentCenterPdfsRecylerViewAdapter.DocumentItemClickListener {
     private lateinit var binding: FragmentDocumentUploadBinding
     private lateinit var recyclerView: RecyclerView
-    private lateinit var adapter: PdfDownloadRecyclerViewAdapter
+    private lateinit var adapter: DocumentCenterPdfsRecylerViewAdapter
     private var documentNames: LinkedList<String> = LinkedList()
     private var fileDetails: LinkedList<PdfFileModel> = LinkedList()
     private val sharedViewModel: DocumentSharingSharedViewModel by activityViewModels()
@@ -57,7 +59,7 @@ class DocumentUploadFragment : Fragment(R.layout.fragment_document_upload) {
         fileDetails= sharedViewModel.getDocumentList()
 
         recyclerView = binding.recyclerView
-        adapter = PdfDownloadRecyclerViewAdapter(fileDetails, requireActivity())
+        adapter = DocumentCenterPdfsRecylerViewAdapter(fileDetails, requireActivity(), this)
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
 
@@ -134,6 +136,12 @@ class DocumentUploadFragment : Fragment(R.layout.fragment_document_upload) {
             Log.e("InvestorSetup3Fragment", "Failed to create PDF file: ${e.message}", e)
             null
         }
+    }
+
+    override fun onDeleteDocument(position: Int) {
+        sharedViewModel.deleteDocumentFromList(position)
+        fileDetails= sharedViewModel.getDocumentList()
+        adapter.notifyDataSetChanged()
     }
 
 
