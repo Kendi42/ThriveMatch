@@ -29,8 +29,10 @@ import com.example.thrivematch.data.models.CardSwipeItemModel
 import com.example.thrivematch.data.models.PdfFileModel
 import com.example.thrivematch.databinding.FragmentDocumentUploadBinding
 import com.example.thrivematch.databinding.FragmentMoreInfoBinding
+import com.example.thrivematch.ui.account_setup.SharedAccountSetupViewModel
 import com.example.thrivematch.ui.adapters.PdfDownloadRecyclerViewAdapter
 import com.example.thrivematch.ui.home.HomeViewModel
+import com.example.thrivematch.ui.more_info.DocumentSharingSharedViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -45,12 +47,14 @@ class DocumentUploadFragment : Fragment(R.layout.fragment_document_upload) {
     private lateinit var adapter: PdfDownloadRecyclerViewAdapter
     private var documentNames: LinkedList<String> = LinkedList()
     private var fileDetails: LinkedList<PdfFileModel> = LinkedList()
+    private val sharedViewModel: DocumentSharingSharedViewModel by activityViewModels()
 
     private lateinit var pdfUri: Uri
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding= FragmentDocumentUploadBinding.bind(view)
+        fileDetails= sharedViewModel.getDocumentList()
 
         recyclerView = binding.recyclerView
         adapter = PdfDownloadRecyclerViewAdapter(fileDetails, requireActivity())
@@ -89,10 +93,8 @@ class DocumentUploadFragment : Fragment(R.layout.fragment_document_upload) {
                             if (destinationFile != null) {
                                 convertPdfToFile(destinationFile, requireContext(), pdfUri)
                                 val filePath = destinationFile.path
-                                fileDetails.addFirst(
-                                    PdfFileModel(fileName = pdfName, filePath = filePath)
-                                )
-                                Log.d("DocumentUploadFragment", "File Name, $pdfName, File path: $filePath")
+                                sharedViewModel.saveUploadedDocument( PdfFileModel(fileName = pdfName, filePath = filePath))
+                                fileDetails= sharedViewModel.getDocumentList()
                                 adapter.notifyDataSetChanged()
                             }
                             else{

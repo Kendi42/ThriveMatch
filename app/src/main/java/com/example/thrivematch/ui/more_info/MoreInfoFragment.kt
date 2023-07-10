@@ -10,18 +10,20 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.thrivematch.R
+import com.example.thrivematch.data.models.PdfFileModel
 import com.example.thrivematch.databinding.FragmentMoreInfoBinding
 import com.example.thrivematch.ui.adapters.PdfDownloadRecyclerViewAdapter
 import com.example.thrivematch.ui.adapters.PendingMatchRecyclerViewAdapter
 import com.example.thrivematch.ui.home.HomeViewModel
+import java.util.*
 
 class StartupDetailsFragment : Fragment(R.layout.fragment_more_info) {
     private lateinit var binding:FragmentMoreInfoBinding
     private val viewModel: HomeViewModel by activityViewModels()
     private lateinit var recyclerView: RecyclerView
     private lateinit var adapter: PdfDownloadRecyclerViewAdapter
-
-
+    private var fileDetails: LinkedList<PdfFileModel> = LinkedList()
+    private val sharedViewModel: DocumentSharingSharedViewModel by activityViewModels()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -38,15 +40,15 @@ class StartupDetailsFragment : Fragment(R.layout.fragment_more_info) {
             binding.tvMoreInfoDescription.text = selectedCardData.description
         }
 
-        val sampleDocuments = listOf("Business Proposal", "Unique Value Proposition", "Financial Statements 2022-2023", "Company Manifesto", "Organizational Structure", "History of Company")
+        fileDetails= sharedViewModel.getDocumentList()
 
-//        recyclerView = binding.rvPdfs
-//        adapter = PdfDownloadRecyclerViewAdapter(sampleDocuments)
-//        recyclerView.adapter = adapter
-//        recyclerView.layoutManager = LinearLayoutManager(requireContext())
-//
+        recyclerView = binding.rvPdfs
+        adapter = PdfDownloadRecyclerViewAdapter(fileDetails, requireActivity())
+        recyclerView.adapter = adapter
+        recyclerView.layoutManager = LinearLayoutManager(requireContext())
 
         binding.btnMoreInfoMatch.setOnClickListener {
+
         }
 
     }
