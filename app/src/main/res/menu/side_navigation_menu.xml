@@ -7,7 +7,7 @@
         <item
             android:id="@+id/homeFragment"
             android:enabled="true"
-            android:icon="@drawable/person_icon"
+            android:icon="@drawable/home_icon"
             android:title="@string/home"/>
         <item
             android:id="@+id/myAccountFragment"

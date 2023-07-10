@@ -40,11 +40,11 @@ class StartupDetailsFragment : Fragment(R.layout.fragment_more_info) {
 
         val sampleDocuments = listOf("Business Proposal", "Unique Value Proposition", "Financial Statements 2022-2023", "Company Manifesto", "Organizational Structure", "History of Company")
 
-        recyclerView = binding.rvPdfs
-        adapter = PdfDownloadRecyclerViewAdapter(sampleDocuments)
-        recyclerView.adapter = adapter
-        recyclerView.layoutManager = LinearLayoutManager(requireContext())
-
+//        recyclerView = binding.rvPdfs
+//        adapter = PdfDownloadRecyclerViewAdapter(sampleDocuments)
+//        recyclerView.adapter = adapter
+//        recyclerView.layoutManager = LinearLayoutManager(requireContext())
+//
 
         binding.btnMoreInfoMatch.setOnClickListener {
         }
