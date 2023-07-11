@@ -23,8 +23,6 @@ class AuthenticationViewModel(private val repository: AuthRepository): BaseViewM
 
 
 
-
-
     fun login(
         email: String,
         password: String

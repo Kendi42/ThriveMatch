@@ -87,4 +87,8 @@ dependencies {
 
     implementation 'androidx.preference:preference-ktx:1.2.0'
 
+    // RetroMock
+    implementation "co.infinum:retromock:1.1.0"
+
+
 }

@@ -1,5 +1,6 @@
 package com.example.thrivematch.data.network
 
+import co.infinum.retromock.Retromock
 import com.example.thrivematch.BuildConfig
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -16,7 +17,7 @@ class RemoteDataSource {
         api: Class<Api>,
         authToken: String? = null
     ): Api{
-        return Retrofit.Builder()
+        val retrofit= Retrofit.Builder()
             .baseUrl(BASE_URL)
             .client( // Logging interceptor
                 OkHttpClient.Builder().also { client ->
@@ -28,7 +29,13 @@ class RemoteDataSource {
                     }.build())
             .addConverterFactory(GsonConverterFactory.create())
             .build()
-            .create(api)
 
+
+        // Create Retromock instance and wrap the Retrofit instance
+        val retromock = Retromock.Builder()
+            .retrofit(retrofit)
+            .build()
+        // Create the mocked AuthAPI
+        return retromock.create(api)
     }
 }

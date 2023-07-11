@@ -16,17 +16,29 @@ import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
 import android.util.Log
+import android.view.LayoutInflater
 import androidx.fragment.app.Fragment
 import android.view.View
+import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.content.ContextCompat.checkSelfPermission
+import androidx.core.view.isVisible
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.example.thrivematch.R
 import com.example.thrivematch.data.models.InvestorModel
+import com.example.thrivematch.data.network.AccountSetupAPI
+import com.example.thrivematch.data.network.Resource
+import com.example.thrivematch.data.repository.AccountSetupRepository
+import com.example.thrivematch.data.repository.AuthRepository
 import com.example.thrivematch.databinding.FragmentInvestorSetup3Binding
+import com.example.thrivematch.databinding.FragmentLoginBinding
 import com.example.thrivematch.ui.HomeActivity
+import com.example.thrivematch.ui.authentication.AuthenticationViewModel
+import com.example.thrivematch.ui.base.BaseFragment
 import com.example.thrivematch.util.CommonSharedPreferences
 import com.example.thrivematch.util.Constants
+import com.example.thrivematch.util.handleApiError
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -36,20 +48,36 @@ import java.io.FileOutputStream
 import java.text.SimpleDateFormat
 import java.util.*
 
-class InvestorSetup3Fragment : Fragment(R.layout.fragment_investor_setup3) {
+class InvestorSetup3Fragment :
+    BaseFragment<SharedAccountSetupViewModel, FragmentInvestorSetup3Binding, AccountSetupRepository>() {
     private lateinit var commonSharedPreferences: CommonSharedPreferences
-    private val sharedViewModel: SharedAccountSetupViewModel by activityViewModels()
     private var selectedImage: Uri? = null
-    private lateinit var binding: FragmentInvestorSetup3Binding
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentInvestorSetup3Binding.bind(view)
-
         commonSharedPreferences = CommonSharedPreferences(requireContext())
 
-        //Progress Bar
+        //Linear Progress Bar
         binding.progressBarInvestor3.progress = 100
+
+        // Radial Progress Bar
+        binding.investorSetupProgressBar.isVisible= false
+
+        // Observe Account Setup Response
+        viewModel.accountSetupResponse.observe(viewLifecycleOwner, androidx.lifecycle.Observer{
+            binding.investorSetupProgressBar.isVisible= false
+            when(it){
+                is Resource.Success ->{
+                    Toast.makeText(requireContext(),"Account Setup Success", Toast.LENGTH_SHORT).show()
+                    Log.i("Account Setup Success", it.toString())
+                    val intent = Intent(requireContext(), HomeActivity::class.java)
+                    startActivity(intent)
+                }
+                is Resource.Failure -> handleApiError(it){ submitInvestorData() }
+            }
+
+        })
 
         //Navigation Buttons
         binding.btnBackInvestor3.setOnClickListener {
@@ -57,8 +85,7 @@ class InvestorSetup3Fragment : Fragment(R.layout.fragment_investor_setup3) {
         }
         binding.btnFinishInvestor3.setOnClickListener {
             submitInvestorData()
-            val intent = Intent(requireContext(), HomeActivity::class.java)
-            startActivity(intent)
+
         }
 
         // Image View Data Persistence
@@ -86,7 +113,8 @@ class InvestorSetup3Fragment : Fragment(R.layout.fragment_investor_setup3) {
                 selectedInterests = commonSharedPreferences.getStringArray(Constants.INVESTORINTERESTS),
                 photo= commonSharedPreferences.getStringData(Constants.INVESTORPHOTO)
             )
-            sharedViewModel.setInvestorData(investorData)
+            binding.investorSetupProgressBar.isVisible= true
+            viewModel.setInvestorData(investorData)
         }
 
     // Image Chooser Dialog
@@ -265,4 +293,14 @@ class InvestorSetup3Fragment : Fragment(R.layout.fragment_investor_setup3) {
         private const val CAMERA_PERMISSION_CODE = 1000
         private const val IMAGE_CAPTURE_CODE = 1001
     }
+
+    override fun getViewModel() = SharedAccountSetupViewModel::class.java
+
+    override fun getFragmentBinding(
+        inflater: LayoutInflater,
+        container: ViewGroup?
+    )= FragmentInvestorSetup3Binding.inflate(inflater, container, false)
+
+
+    override fun getFragmentRepository() = AccountSetupRepository(remoteDataSource.buildApi(AccountSetupAPI::class.java))
 }

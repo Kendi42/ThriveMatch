@@ -58,9 +58,9 @@ class LoginFragment : BaseFragment<AuthenticationViewModel,FragmentLoginBinding,
             findNavController().navigate(R.id.action_loginFragment_to_signupFragment)
         }
         binding.btnLogin.setOnClickListener {
-            //login()
-            val intent = Intent(requireActivity(), HomeActivity::class.java)
-            startActivity(intent)
+            login()
+//            val intent = Intent(requireActivity(), HomeActivity::class.java)
+//            startActivity(intent)
 
         }
 
