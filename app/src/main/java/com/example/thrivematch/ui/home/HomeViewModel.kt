@@ -34,6 +34,7 @@ class HomeViewModel(private val repository: HomeRepository): BaseViewModel(repos
     }
 
     fun getLikedCards(): MutableList<PendingMatchModel>{
+        Log.i("Liked from getLikedVM", likedCardsList.toString())
         return likedCardsList.map { cardSwipeItem ->
             convertToPendingMatch(cardSwipeItem)
         }.toMutableList()
