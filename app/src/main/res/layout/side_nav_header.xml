@@ -15,12 +15,13 @@
         android:layout_marginStart="32dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="32dp"
+        android:background="@mipmap/ic_launcher_foreground"
         android:scaleType="centerCrop"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:shapeAppearanceOverlay="@style/roundedImageViewRounded"
-        tools:srcCompat="@tools:sample/avatars" />
+        tools:srcCompat="@mipmap/ic_launcher_foreground" />
 
     <TextView
         android:id="@+id/tv_sidenav_name"
@@ -28,9 +29,9 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:layout_marginEnd="32dp"
-        android:text="@string/name"
+        android:text="@string/app_name"
         android:textColor="@color/black"
-        android:textSize="20sp"
+        android:textSize="24sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

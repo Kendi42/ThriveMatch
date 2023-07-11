@@ -42,7 +42,9 @@ class SignupFragment : BaseFragment<AuthenticationViewModel, FragmentSignupBindi
         }
 
         binding.btnSignup.setOnClickListener{
-            signup()
+//            signup()
+            findNavController().navigate(R.id.action_signupFragment_to_accountTypeFragment)
+
         }
     }
 
