@@ -4,20 +4,26 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.example.thrivematch.data.models.CardSwipeItemModel
 import com.example.thrivematch.data.models.PendingMatchModel
 import com.example.thrivematch.data.repository.HomeRepository
+import com.example.thrivematch.ui.base.BaseViewModel
+import kotlinx.coroutines.launch
 
-class HomeViewModel: ViewModel() {
-    private val repository: HomeRepository = HomeRepository()
+class HomeViewModel(private val repository: HomeRepository): BaseViewModel(repository) {
     private var likedCardsList: MutableList<CardSwipeItemModel> = mutableListOf()
     private val _cardItems: MutableLiveData<MutableList<CardSwipeItemModel>> = MutableLiveData()
     val unseenCardItems: LiveData<MutableList<CardSwipeItemModel>> = getAllCards()
+
     val cardItems: LiveData<MutableList<CardSwipeItemModel>>
         get()= _cardItems
     private var selectedCard: CardSwipeItemModel? = null
+
     private fun getAllCards(): LiveData<MutableList<CardSwipeItemModel>>{
-        _cardItems.value = repository.getBusinessCardData()
+        viewModelScope.launch {
+            _cardItems.value = repository.getBusinessCardData()
+        }
         return _cardItems
     }
 

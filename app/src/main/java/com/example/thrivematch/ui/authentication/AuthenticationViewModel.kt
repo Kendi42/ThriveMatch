@@ -28,7 +28,7 @@ class AuthenticationViewModel(private val repository: AuthRepository): BaseViewM
         password: String
     )= viewModelScope.launch{
         _loginResponse.value = repository.login(email=email, password = password)
-        Log.i("Login Response", _loginResponse.toString())
+        Log.i("Login Response", _loginResponse.value.toString())
 
     }
 

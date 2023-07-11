@@ -11,7 +11,7 @@ import retrofit2.http.POST
 
 interface AuthAPI {
     @Mock
-    @MockResponse(body = "{\"message\":\"login successful !!\",\"success\":true,\"token\":\"eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VyMTBAZ21haWwuY29tIiwiaWF0IjoxNjg4MTMxNDg1LCJleHAiOjE2ODgyMTc4ODUsInVzZXJ0eXBlIjoiVVNFUiJ9.dUkbN3iZdhRablbnRC6DA16alEX6Lhvwx4m_d9rbETE\",\"user\":{\"email\":\"{email}\",\"id\"{:id},\"username\":\"{username}\"}}")
+    @MockResponse(body = "{\"message\":\"login successful !!\",\"success\":true,\"token\":\"eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VyMTBAZ21haWwuY29tIiwiaWF0IjoxNjg4MTMxNDg1LCJleHAiOjE2ODgyMTc4ODUsInVzZXJ0eXBlIjoiVVNFUiJ9.dUkbN3iZdhRablbnRC6DA16alEX6Lhvwx4m_d9rbETE\",\"user\":{\"email\":\"user10@gmail.com\",\"id\":8,\"username\":\"user10\"}}")
     @POST("v1/userLogin")
     suspend fun login(
         @Body loginRequest: LoginRequest
