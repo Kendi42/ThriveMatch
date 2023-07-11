@@ -17,18 +17,27 @@ import android.os.Environment
 import android.provider.MediaStore
 import android.util.Base64
 import android.util.Log
+import android.view.LayoutInflater
 import androidx.fragment.app.Fragment
 import android.view.View
+import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.content.ContextCompat
+import androidx.core.view.isVisible
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.example.thrivematch.R
 import com.example.thrivematch.data.models.BusinessModel
 import com.example.thrivematch.data.models.InvestorModel
+import com.example.thrivematch.data.network.AccountSetupAPI
+import com.example.thrivematch.data.network.Resource
+import com.example.thrivematch.data.repository.AccountSetupRepository
 import com.example.thrivematch.databinding.FragmentBusinessSetup3Binding
 import com.example.thrivematch.ui.HomeActivity
+import com.example.thrivematch.ui.base.BaseFragment
 import com.example.thrivematch.util.CommonSharedPreferences
 import com.example.thrivematch.util.Constants
+import com.example.thrivematch.util.handleApiError
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -38,10 +47,8 @@ import java.io.FileOutputStream
 import java.text.SimpleDateFormat
 import java.util.*
 
-class BusinessSetup3Fragment : Fragment(R.layout.fragment_business_setup3) {
+class BusinessSetup3Fragment : BaseFragment<SharedAccountSetupViewModel, FragmentBusinessSetup3Binding, AccountSetupRepository>(){
     private var selectedImage: Uri? =null
-    private lateinit var binding:FragmentBusinessSetup3Binding
-    private val sharedViewModel: SharedAccountSetupViewModel by activityViewModels()
     private lateinit var commonSharedPreferences: CommonSharedPreferences
 
 
@@ -51,8 +58,28 @@ class BusinessSetup3Fragment : Fragment(R.layout.fragment_business_setup3) {
         commonSharedPreferences = CommonSharedPreferences(requireContext())
 
 
-        //Progress Bar
+        //Linear Progress Bar
         binding.progressBarBusiness3.progress= 100
+
+        // Radial Progress Bar
+        binding.businessSetupProgressBar.isVisible = false
+
+        // Observe Account Setup Response
+        viewModel.accountSetupResponse.observe(viewLifecycleOwner, androidx.lifecycle.Observer{
+            binding.businessSetupProgressBar.isVisible = false
+            when(it){
+                is Resource.Success ->{
+                    Toast.makeText(requireContext(),"Account Setup Success", Toast.LENGTH_SHORT).show()
+                    Log.i("Account Setup Success", it.toString())
+                    val intent = Intent(requireContext(), HomeActivity::class.java)
+                    startActivity(intent)
+                }
+                is Resource.Failure -> handleApiError(it){ submitBusinessData() }
+            }
+
+        })
+
+
 
         // Navigation Buttons
         binding.btnBackBusiness3.setOnClickListener {
@@ -60,8 +87,6 @@ class BusinessSetup3Fragment : Fragment(R.layout.fragment_business_setup3) {
         }
         binding.btnFinishBusiness3.setOnClickListener {
             submitBusinessData()
-            val intent = Intent(requireContext(), HomeActivity::class.java)
-            startActivity(intent)
         }
 
         // Image View Data Persistence
@@ -91,8 +116,8 @@ class BusinessSetup3Fragment : Fragment(R.layout.fragment_business_setup3) {
             poBox= commonSharedPreferences.getStringData(Constants.BUSINESSPOBOX),
             photo= commonSharedPreferences.getStringData(Constants.BUSINESSPHOTO)
         )
-
-        sharedViewModel.setBusinessData(businessData)
+        binding.businessSetupProgressBar.isVisible= true
+        viewModel.setBusinessData(businessData)
     }
 
     private fun showMenuDialog() {
@@ -270,4 +295,12 @@ class BusinessSetup3Fragment : Fragment(R.layout.fragment_business_setup3) {
         private const val IMAGE_CAPTURE_CODE = 1001
     }
 
+    override fun getViewModel()= SharedAccountSetupViewModel::class.java
+
+    override fun getFragmentBinding(
+        inflater: LayoutInflater,
+        container: ViewGroup?
+    )= FragmentBusinessSetup3Binding.inflate(inflater, container, false)
+
+    override fun getFragmentRepository() =AccountSetupRepository(remoteDataSource.buildApi(AccountSetupAPI::class.java))
 }
