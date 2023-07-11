@@ -12,7 +12,6 @@ import retrofit2.HttpException
 class AuthRepository(
     private val api:AuthAPI
     ): BaseRepository() {
-
     suspend fun login(email: String, password: String) = safeApiCall{
         api.login(LoginRequest(email = email, password = password))
     }
