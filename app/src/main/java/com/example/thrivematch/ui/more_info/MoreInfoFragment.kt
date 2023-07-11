@@ -33,6 +33,7 @@ class StartupDetailsFragment : Fragment(R.layout.fragment_more_info) {
         binding.ivMoreInfoBackArrow.setOnClickListener {
             findNavController().navigate(R.id.action_moreInfoFragment_to_homeFragment)
         }
+
         if(selectedCardData != null){
             Glide.with(requireContext()).load(selectedCardData.imageURL).into(binding.ivMoreinfoPhoto)
             binding.tvMoreInfoName.text = selectedCardData.name

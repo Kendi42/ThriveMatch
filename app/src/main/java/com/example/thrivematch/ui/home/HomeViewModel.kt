@@ -27,7 +27,7 @@ class HomeViewModel(private val repository: HomeRepository): BaseViewModel(repos
         return _cardItems
     }
 
-    fun saveLikedCard(savedCard: CardSwipeItemModel){
+     fun saveLikedCard(savedCard: CardSwipeItemModel){
         Log.i("Saved Liked Card (VM)", savedCard.name)
         likedCardsList.add(savedCard)
         Log.i("Liked from Viewmodel", likedCardsList.toString())

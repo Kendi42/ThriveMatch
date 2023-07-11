@@ -34,9 +34,6 @@ class HomeFragment:BaseFragment<HomeViewModel, FragmentHomeBinding,HomeRepositor
     private lateinit var adapter: CardSwipeAdapter
     private var cardItems: List<CardSwipeItemModel> = emptyList()
 
-
-
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding=FragmentHomeBinding.bind(view)
