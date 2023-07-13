@@ -11,15 +11,21 @@ import com.example.thrivematch.data.models.PendingMatchModel
 import com.example.thrivematch.data.repository.HomeRepository
 import com.example.thrivematch.ui.base.BaseViewModel
 import com.example.thrivematch.util.CommonSharedPreferences
+import com.example.thrivematch.util.Constants
+import com.google.gson.Gson
 import kotlinx.coroutines.launch
 
-class HomeViewModel(private val repository: HomeRepository): BaseViewModel(repository) {
+class HomeViewModel(private val repository: HomeRepository,
+                    private val sharedPreferences: CommonSharedPreferences
+                    ): BaseViewModel(repository) {
     var likedCardsList: MutableLiveData<MutableList<PendingMatchModel>?> = MutableLiveData()
+
     init {
         viewModelScope.launch {
             likedCardsList.value = getLikedCards()
         }
     }
+    val gson = Gson()
     private val _cardItems: MutableLiveData<MutableList<CardSwipeItemModel>> = MutableLiveData()
     val unseenCardItems: LiveData<MutableList<CardSwipeItemModel>> = getAllCards()
     val cardItems: LiveData<MutableList<CardSwipeItemModel>>
@@ -46,14 +52,22 @@ class HomeViewModel(private val repository: HomeRepository): BaseViewModel(repos
         Log.i("Unseen Cards Altered", "Position to be removed: 0")
         unseenCardItems.value?.removeAt(0)
         Log.i("Unseen Cards Altered", "New unseen Cards ${unseenCardItems.value}")
-
     }
 
     fun setSelectedCard(it: CardSwipeItemModel) {
         selectedCard = it
+        sharedPreferences.saveStringData(Constants.SELECTEDCARD, gson.toJson(selectedCard))
     }
+
     fun getSelectedCard(): CardSwipeItemModel? {
+        val stringData= sharedPreferences.getStringData(Constants.SELECTEDCARD)
+        selectedCard=convertStringToCardSwipeItemModel(stringData)
         return selectedCard
+    }
+
+    private fun convertStringToCardSwipeItemModel(stringData: String): CardSwipeItemModel? {
+
+        return gson.fromJson(stringData, CardSwipeItemModel::class.java)
     }
 
 

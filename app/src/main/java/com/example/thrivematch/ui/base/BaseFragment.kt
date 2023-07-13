@@ -30,9 +30,9 @@ abstract class BaseFragment<VM: BaseViewModel, B: ViewBinding, R: BaseRepository
         savedInstanceState: Bundle?
     ): View? {
         binding= getFragmentBinding(inflater, container)
-        val factory = ViewModelFactory(getFragmentRepository())
-        viewModel= ViewModelProvider(this, factory)[getViewModel()]
         commonSharedPreferences = CommonSharedPreferences(requireContext())
+        val factory = ViewModelFactory(getFragmentRepository(), commonSharedPreferences)
+        viewModel= ViewModelProvider(this, factory)[getViewModel()]
 
         return binding.root
 

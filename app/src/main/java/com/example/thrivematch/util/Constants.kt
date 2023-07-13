@@ -15,7 +15,8 @@ object Constants {
     const val BUSINESSADDRESS= "business_address"
     const val BUSINESSPOBOX= "business_po_box"
     const val BUSINESSPHOTO= "business_photo"
-    const val LIKED = "liked"
+    const val SELECTEDCARD= "selected_card"
+
 
     const val AUTHTOKEN= "auth_token"
 

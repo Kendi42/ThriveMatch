@@ -1,8 +1,10 @@
 package com.example.thrivematch.ui.more_info
 
 import android.os.Bundle
+import android.view.LayoutInflater
 import androidx.fragment.app.Fragment
 import android.view.View
+import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
@@ -11,15 +13,16 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.thrivematch.R
 import com.example.thrivematch.data.models.PdfFileModel
+import com.example.thrivematch.data.network.HomeDataAPI
+import com.example.thrivematch.data.repository.HomeRepository
 import com.example.thrivematch.databinding.FragmentMoreInfoBinding
 import com.example.thrivematch.ui.adapters.PdfDownloadRecyclerViewAdapter
 import com.example.thrivematch.ui.adapters.PendingMatchRecyclerViewAdapter
+import com.example.thrivematch.ui.base.BaseFragment
 import com.example.thrivematch.ui.home.HomeViewModel
 import java.util.*
 
-class StartupDetailsFragment : Fragment(R.layout.fragment_more_info) {
-    private lateinit var binding:FragmentMoreInfoBinding
-    private val viewModel: HomeViewModel by activityViewModels()
+class StartupDetailsFragment: BaseFragment<HomeViewModel, FragmentMoreInfoBinding, HomeRepository>() {
     private lateinit var recyclerView: RecyclerView
     private lateinit var adapter: PdfDownloadRecyclerViewAdapter
     private var fileDetails: LinkedList<PdfFileModel> = LinkedList()
@@ -40,6 +43,10 @@ class StartupDetailsFragment : Fragment(R.layout.fragment_more_info) {
             binding.tvMoreInfoIndustry.text = selectedCardData.industry
             binding.tvMoreInfoDescription.text = selectedCardData.description
         }
+        else{
+            findNavController().navigate(R.id.action_moreInfoFragment_to_homeFragment)
+            Toast.makeText(requireActivity(), "Selected Card is Empty", Toast.LENGTH_SHORT).show()
+        }
 
         fileDetails= sharedViewModel.getDocumentList()
 
@@ -53,5 +60,14 @@ class StartupDetailsFragment : Fragment(R.layout.fragment_more_info) {
         }
 
     }
+
+    override fun getViewModel()= HomeViewModel::class.java
+
+    override fun getFragmentBinding(
+        inflater: LayoutInflater,
+        container: ViewGroup?
+    )=FragmentMoreInfoBinding.inflate(inflater, container, false)
+
+    override fun getFragmentRepository()=HomeRepository(remoteDataSource.buildApi(HomeDataAPI::class.java))
 
 }
