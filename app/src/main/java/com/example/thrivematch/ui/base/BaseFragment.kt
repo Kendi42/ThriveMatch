@@ -35,7 +35,6 @@ abstract class BaseFragment<VM: BaseViewModel, B: ViewBinding, R: BaseRepository
         viewModel= ViewModelProvider(this, factory)[getViewModel()]
 
         return binding.root
-
     }
 
     fun logout()= lifecycleScope.launch {

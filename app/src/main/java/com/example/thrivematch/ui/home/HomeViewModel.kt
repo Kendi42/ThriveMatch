@@ -19,13 +19,12 @@ class HomeViewModel(private val repository: HomeRepository,
                     private val sharedPreferences: CommonSharedPreferences
                     ): BaseViewModel(repository) {
     var likedCardsList: MutableLiveData<MutableList<PendingMatchModel>?> = MutableLiveData()
-
     init {
         viewModelScope.launch {
             likedCardsList.value = getLikedCards()
         }
     }
-    val gson = Gson()
+    private val gson = Gson()
     private val _cardItems: MutableLiveData<MutableList<CardSwipeItemModel>> = MutableLiveData()
     val unseenCardItems: LiveData<MutableList<CardSwipeItemModel>> = getAllCards()
     val cardItems: LiveData<MutableList<CardSwipeItemModel>>
@@ -42,7 +41,6 @@ class HomeViewModel(private val repository: HomeRepository,
     fun saveLikedCard(savedCard: CardSwipeItemModel) = viewModelScope.launch{
         repository.saveLikedCard(savedCard)
     }
-
     suspend fun getLikedCards(): MutableList<PendingMatchModel>{
         Log.i("Inside getlikedvm", "Inside get liked cards vm")
         return repository.getLikedCards()
@@ -66,9 +64,6 @@ class HomeViewModel(private val repository: HomeRepository,
     }
 
     private fun convertStringToCardSwipeItemModel(stringData: String): CardSwipeItemModel? {
-
         return gson.fromJson(stringData, CardSwipeItemModel::class.java)
     }
-
-
 }
