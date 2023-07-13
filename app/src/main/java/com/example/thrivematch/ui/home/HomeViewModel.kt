@@ -1,6 +1,7 @@
 package com.example.thrivematch.ui.home
 
 import android.util.Log
+import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -9,13 +10,18 @@ import com.example.thrivematch.data.models.CardSwipeItemModel
 import com.example.thrivematch.data.models.PendingMatchModel
 import com.example.thrivematch.data.repository.HomeRepository
 import com.example.thrivematch.ui.base.BaseViewModel
+import com.example.thrivematch.util.CommonSharedPreferences
 import kotlinx.coroutines.launch
 
 class HomeViewModel(private val repository: HomeRepository): BaseViewModel(repository) {
-    private var likedCardsList: MutableList<CardSwipeItemModel> = mutableListOf()
+    var likedCardsList: MutableLiveData<MutableList<PendingMatchModel>?> = MutableLiveData()
+    init {
+        viewModelScope.launch {
+            likedCardsList.value = getLikedCards()
+        }
+    }
     private val _cardItems: MutableLiveData<MutableList<CardSwipeItemModel>> = MutableLiveData()
     val unseenCardItems: LiveData<MutableList<CardSwipeItemModel>> = getAllCards()
-
     val cardItems: LiveData<MutableList<CardSwipeItemModel>>
         get()= _cardItems
     private var selectedCard: CardSwipeItemModel? = null
@@ -27,17 +33,13 @@ class HomeViewModel(private val repository: HomeRepository): BaseViewModel(repos
         return _cardItems
     }
 
-     fun saveLikedCard(savedCard: CardSwipeItemModel){
-        Log.i("Saved Liked Card (VM)", savedCard.name)
-        likedCardsList.add(savedCard)
-        Log.i("Liked from Viewmodel", likedCardsList.toString())
+    fun saveLikedCard(savedCard: CardSwipeItemModel) = viewModelScope.launch{
+        repository.saveLikedCard(savedCard)
     }
 
-    fun getLikedCards(): MutableList<PendingMatchModel>{
-        Log.i("Liked from getLikedVM", likedCardsList.toString())
-        return likedCardsList.map { cardSwipeItem ->
-            convertToPendingMatch(cardSwipeItem)
-        }.toMutableList()
+    suspend fun getLikedCards(): MutableList<PendingMatchModel>{
+        Log.i("Inside getlikedvm", "Inside get liked cards vm")
+        return repository.getLikedCards()
     }
 
     fun alterUnseenCards(){
@@ -52,13 +54,6 @@ class HomeViewModel(private val repository: HomeRepository): BaseViewModel(repos
     }
     fun getSelectedCard(): CardSwipeItemModel? {
         return selectedCard
-    }
-
-    private fun convertToPendingMatch(cardSwipeItem: CardSwipeItemModel): PendingMatchModel {
-        return PendingMatchModel(
-            imageURL = cardSwipeItem.imageURL,
-            name = cardSwipeItem.name
-        )
     }
 
 

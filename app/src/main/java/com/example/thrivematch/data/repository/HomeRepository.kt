@@ -1,12 +1,15 @@
 package com.example.thrivematch.data.repository
 
+import android.util.Log
 import com.example.thrivematch.data.models.CardSwipeItemModel
+import com.example.thrivematch.data.models.PendingMatchModel
 import com.example.thrivematch.data.network.AccountSetupAPI
 import com.example.thrivematch.data.network.HomeDataAPI
 
 class HomeRepository(
     private val api: HomeDataAPI
 ) : BaseRepository(){
+    private var likedCardsList: MutableList<CardSwipeItemModel> = mutableListOf()
 
     suspend fun getBusinessCardData(): MutableList<CardSwipeItemModel>{
         val startupData= api.getStartupCardData().startups // type is List<StartupDataResponse.Startup>
@@ -20,8 +23,19 @@ class HomeRepository(
         }.toMutableList()
 
         return cardSwipeItems
-
     }
+
+    suspend fun saveLikedCard(savedCard: CardSwipeItemModel){
+        val response= api.saveLikedCard(savedCard)
+        Log.i("Save Response", response.toString())
+    }
+
+    suspend fun getLikedCards(): MutableList<PendingMatchModel>{
+        Log.i("LikedCardsRepo", api.getLikedCards().toString())
+       return api.getLikedCards()
+    }
+
+
 
 
 //    private fun createSampleBusinessData(): MutableList<CardSwipeItemModel> {

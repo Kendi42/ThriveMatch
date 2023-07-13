@@ -1,14 +1,22 @@
 package com.example.thrivematch.data.network
 
+import android.util.Log
 import co.infinum.retromock.meta.Mock
+import co.infinum.retromock.meta.MockBehavior
 import co.infinum.retromock.meta.MockResponse
+import com.example.thrivematch.data.models.CardSwipeItemModel
 import com.example.thrivematch.data.models.InvestorModel
+import com.example.thrivematch.data.models.PendingMatchModel
+import com.example.thrivematch.data.request.SignupRequest
 import com.example.thrivematch.data.response.AccountSetupResponse
+import com.example.thrivematch.data.response.SignupResponse
 import com.example.thrivematch.data.response.StartupDataResponse
 import retrofit2.http.Body
 import retrofit2.http.POST
 
 interface HomeDataAPI {
+//    var likedCardsList: MutableList<CardSwipeItemModel>
+
     @Mock
     @MockResponse(body =
     "{\"message\":\"Account Setup Successfully !!\"," +
@@ -21,7 +29,34 @@ interface HomeDataAPI {
             "{\"description\":\"Drivable is a forward-thinking transportation company that revolutionizes the way people move and commute. With a focus on sustainable and efficient solutions, they provide cutting-edge technologies and services for electric vehicles\",\"industry\":\"Transportation\",\"name\":\"Drivable\",\"picturePath\":\"https://cdn.dribbble.com/userupload/8098458/file/original-a2252dbb9fbd1b6fc989cea4156f9519.jpg?compress=1&resize=1338x1003&vertical=center\"}," +
             "{\"description\":\"With a focus on leveraging cutting-edge advancements such as artificial intelligence and telemedicine, we at ArrowHealth aim to improve accessibility, efficiency, and quality of healthcare services\",\"industry\":\"HealthCare\",\"name\":\"ArrowHealth\",\"picturePath\":\"https://cdn.dribbble.com/userupload/7889038/file/original-8a3114ac067714ed900bb8437175ec7c.jpg?compress=1&resize=1504x1128\"}]," +
             "\"success\":true}")
+    @MockBehavior(durationMillis = 0, durationDeviation = 0)
     @POST("v1/getStartupData")
     suspend fun getStartupCardData(
     ): StartupDataResponse
+
+    @Mock
+    @MockResponse(body = "{\"message\":\"Successfully Saved !!\",\"success\":true}")
+    @POST("v1/saveLikedCard")
+    suspend fun saveLikedCard(
+        @Body savedCard: CardSwipeItemModel
+    ): SignupResponse
+
+    @Mock
+    @POST("v1/getLikedCards")
+    @MockResponse(body = "[{\"imageURL\":\"https://img.freepik.com/free-vector/green-alternative-energy-power-logo_126523-2775.jpg?size=626&ext=jpg&ga=GA1.2.1090819380.1686834206&semt=ais\",\"name\":\"Bloom Energy\"}," +
+            "{\"imageURL\":\"https://cdn.dribbble.com/userupload/7733577/file/original-a2f0a453abc9ef61612d721aeb8a39da.jpg?compress=1&resize=2048x1536\",\"name\":\"BTech\"}]")
+    @MockBehavior(durationMillis = 0, durationDeviation = 0)
+    suspend fun getLikedCards(): MutableList<PendingMatchModel>
+
+//    private fun convertToPendingMatch(cardSwipeItem: CardSwipeItemModel): PendingMatchModel {
+//        return PendingMatchModel(
+//            imageURL = cardSwipeItem.imageURL,
+//            name = cardSwipeItem.name
+//        )
+//    }
+
+
+
+
+
 }

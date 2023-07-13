@@ -99,6 +99,7 @@ class HomeFragment:BaseFragment<HomeViewModel, FragmentHomeBinding,HomeRepositor
                 // Saving liked cards
                 else if(direction == Direction.Right){
                     Log.i("Top Position SwipeRight", cardStackLayoutManager.topPosition.toString())
+
                     viewModel.saveLikedCard(cardItems[0])
                     binding.ivRightSwipeIndicator.setBackgroundResource(R.drawable.right_swipe_indicator_shape)
                 }
