@@ -9,5 +9,5 @@ sealed class Resource<out T> {
         val errorCode: Int?,
         val errorBody: ResponseBody?
     ) : Resource<Nothing>()
-//    object Loading: Resource<Nothing>()
+    data class Loading <out T> (val value: T?= null): Resource<T>()
 }

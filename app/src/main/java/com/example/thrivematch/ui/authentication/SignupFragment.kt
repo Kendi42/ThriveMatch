@@ -34,6 +34,9 @@ class SignupFragment : BaseFragment<AuthenticationViewModel, FragmentSignupBindi
                     findNavController().navigate(R.id.action_signupFragment_to_accountTypeFragment)
                 }
                 is Resource.Failure ->handleApiError(it){ signup() }
+                is Resource.Loading->{
+
+                }
             }
         })
 

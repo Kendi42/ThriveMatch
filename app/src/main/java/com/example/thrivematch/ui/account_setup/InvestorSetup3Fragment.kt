@@ -75,6 +75,9 @@ class InvestorSetup3Fragment :
                     startActivity(intent)
                 }
                 is Resource.Failure -> handleApiError(it){ submitInvestorData() }
+                is Resource.Loading->{
+
+                }
             }
 
         })

@@ -75,7 +75,12 @@ class BusinessSetup3Fragment : BaseFragment<SharedAccountSetupViewModel, Fragmen
                     startActivity(intent)
                 }
                 is Resource.Failure -> handleApiError(it){ submitBusinessData() }
+
+                is Resource.Loading->{
+
+                }
             }
+
 
         })
 

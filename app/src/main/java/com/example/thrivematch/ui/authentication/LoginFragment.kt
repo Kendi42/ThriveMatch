@@ -51,6 +51,8 @@ class LoginFragment : BaseFragment<AuthenticationViewModel,FragmentLoginBinding,
                     startActivity(intent)
                 }
                 is Resource.Failure -> handleApiError(it){ login() }
+
+                is Resource.Loading->{}
             }
         })
 

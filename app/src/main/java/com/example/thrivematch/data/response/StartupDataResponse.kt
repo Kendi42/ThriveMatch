@@ -3,6 +3,7 @@ package com.example.thrivematch.data.response
 
 import com.google.gson.annotations.SerializedName
 
+
 data class StartupDataResponse(
     @SerializedName("message")
     val message: String, // All startups
