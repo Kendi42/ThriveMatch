@@ -19,6 +19,7 @@ import com.example.thrivematch.R
 import com.example.thrivematch.data.network.AuthAPI
 import com.example.thrivematch.data.network.Resource
 import com.example.thrivematch.data.repository.AuthRepository
+import com.example.thrivematch.data.roomdb.database.AppDatabase
 import com.example.thrivematch.databinding.FragmentLoginBinding
 import com.example.thrivematch.ui.HomeActivity
 import com.example.thrivematch.ui.account_setup.SharedAccountSetupViewModel
@@ -61,8 +62,6 @@ class LoginFragment : BaseFragment<AuthenticationViewModel,FragmentLoginBinding,
         }
         binding.btnLogin.setOnClickListener {
             login()
-//            val intent = Intent(requireActivity(), HomeActivity::class.java)
-//            startActivity(intent)
 
         }
 
@@ -89,6 +88,5 @@ class LoginFragment : BaseFragment<AuthenticationViewModel,FragmentLoginBinding,
         container: ViewGroup?
     )= FragmentLoginBinding.inflate(inflater, container, false)
 
-
-    override fun getFragmentRepository()= AuthRepository(remoteDataSource.buildApi(AuthAPI::class.java))
+    override fun getFragmentRepository()= AuthRepository(remoteDataSource.buildApi(AuthAPI::class.java), AppDatabase.invoke(requireContext()))
 }

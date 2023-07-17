@@ -31,7 +31,6 @@ class AuthenticationViewModel(private val repository: AuthRepository): BaseViewM
         Log.i("Login Response", _loginResponse.value.toString())
 
     }
-
     fun signup(
         name: String,
         email: String,

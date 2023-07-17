@@ -13,7 +13,10 @@ interface UserDao {
     suspend fun createNewUser(user: User)
 
     @Query("SELECT * FROM UserData WHERE uid=$ROOM_DB_CURRENT_USER_ID")
-    fun getCurrentUser(): Flow<User>
+    fun getCurrentUser(): User?
+
+    @Query("SELECT * FROM UserData WHERE email = :email")
+    suspend fun getUserByEmail(email: String): User
 
     @Delete
     fun deleteCurrentUser(user: User) // Todo: Shouldn't this delete the whole db

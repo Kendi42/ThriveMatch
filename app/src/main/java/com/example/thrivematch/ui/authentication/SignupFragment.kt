@@ -13,6 +13,7 @@ import com.example.thrivematch.R
 import com.example.thrivematch.data.network.AuthAPI
 import com.example.thrivematch.data.network.Resource
 import com.example.thrivematch.data.repository.AuthRepository
+import com.example.thrivematch.data.roomdb.database.AppDatabase
 import com.example.thrivematch.databinding.FragmentSignupBinding
 import com.example.thrivematch.ui.base.BaseFragment
 import com.example.thrivematch.util.FormValidation
@@ -75,6 +76,6 @@ class SignupFragment : BaseFragment<AuthenticationViewModel, FragmentSignupBindi
         container: ViewGroup?
     ) = FragmentSignupBinding.inflate(inflater, container, false)
 
-    override fun getFragmentRepository()= AuthRepository(remoteDataSource.buildApi(AuthAPI::class.java))
+    override fun getFragmentRepository()= AuthRepository(remoteDataSource.buildApi(AuthAPI::class.java), AppDatabase.invoke(requireContext()))
 
 }

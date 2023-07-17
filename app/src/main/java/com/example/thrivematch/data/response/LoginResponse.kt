@@ -15,7 +15,7 @@ data class LoginResponse(
     @SerializedName("token")
     val token: String, // eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VyMTBAZ21haWwuY29tIiwiaWF0IjoxNjg4MTMxNDg1LCJleHAiOjE2ODgyMTc4ODUsInVzZXJ0eXBlIjoiVVNFUiJ9.dUkbN3iZdhRablbnRC6DA16alEX6Lhvwx4m_d9rbETE
     @SerializedName("user")
-    val user: User
+    var user: User
 )
 
 @Entity(tableName = "UserData")
