@@ -1,30 +1,42 @@
 package com.example.thrivematch.data.repository
 
 import android.util.Log
+import androidx.room.withTransaction
 import com.example.thrivematch.data.models.CardSwipeItemModel
 import com.example.thrivematch.data.models.PendingMatchModel
 import com.example.thrivematch.data.network.AccountSetupAPI
 import com.example.thrivematch.data.network.HomeDataAPI
+import com.example.thrivematch.data.network.networkBoundResource
+import com.example.thrivematch.data.roomdb.dao.SwipeCardDao
+import com.example.thrivematch.data.roomdb.database.AppDatabase
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.delay
 
 class HomeRepository(
-    private val api: HomeDataAPI
+    private val api: HomeDataAPI,
+    private val appDatabase: AppDatabase
 ) : BaseRepository(){
     private var likedCardsList: MutableList<CardSwipeItemModel> = mutableListOf()
+    suspend fun getBusinessCardData() = networkBoundResource(
+        query = {
+            Log.d("Where are we", "query")
+             appDatabase.swipeCardDao().getAllCards()
+        },
+        fetch = {
+            Log.d("Where are we", "fetch")
 
-    suspend fun getBusinessCardData(): MutableList<CardSwipeItemModel>{
-        val startupData= api.getStartupCardData().startups // type is List<StartupDataResponse.Startup>
-        val cardSwipeItems = startupData.map { startup ->
-            CardSwipeItemModel(
-                name = startup.name,
-                industry = startup.industry,
-                description = startup.description,
-                imageURL = startup.picturePath
-            )
-        }.toMutableList()
+            delay(2000)
+            api.getStartupCardData()
+        },
+        saveFetchResult = {swipeCards ->
+            Log.d("Where are we", "savefetchresult")
 
-        return cardSwipeItems
-    }
+            appDatabase.withTransaction {
 
+                // Todo: Delete and update the cards
+            }
+        }
+    )
     suspend fun saveLikedCard(savedCard: CardSwipeItemModel){
         val response= api.saveLikedCard(savedCard)
         Log.i("Save Response", response.toString())
@@ -34,6 +46,7 @@ class HomeRepository(
         Log.i("LikedCardsRepo", api.getLikedCards().toString())
        return api.getLikedCards()
     }
+}
 
 
 
@@ -117,4 +130,3 @@ class HomeRepository(
 //
 //    }
 
-}

@@ -19,6 +19,7 @@ import com.example.thrivematch.R
 import com.example.thrivematch.data.models.CardSwipeItemModel
 import com.example.thrivematch.data.network.HomeDataAPI
 import com.example.thrivematch.data.repository.HomeRepository
+import com.example.thrivematch.data.roomdb.database.AppDatabase
 import com.example.thrivematch.databinding.FragmentHomeBinding
 import com.example.thrivematch.ui.account_setup.SharedAccountSetupViewModel
 import com.example.thrivematch.ui.adapters.CardSwipeAdapter
@@ -151,5 +152,5 @@ class HomeFragment:BaseFragment<HomeViewModel, FragmentHomeBinding,HomeRepositor
         container: ViewGroup?
     )=FragmentHomeBinding.inflate(inflater, container, false)
 
-    override fun getFragmentRepository()= HomeRepository(remoteDataSource.buildApi(HomeDataAPI::class.java))
+    override fun getFragmentRepository()= HomeRepository(remoteDataSource.buildApi(HomeDataAPI::class.java), AppDatabase.invoke(requireContext()))
 }

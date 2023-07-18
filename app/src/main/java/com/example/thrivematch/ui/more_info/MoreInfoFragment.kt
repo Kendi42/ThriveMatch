@@ -15,6 +15,7 @@ import com.example.thrivematch.R
 import com.example.thrivematch.data.models.PdfFileModel
 import com.example.thrivematch.data.network.HomeDataAPI
 import com.example.thrivematch.data.repository.HomeRepository
+import com.example.thrivematch.data.roomdb.database.AppDatabase
 import com.example.thrivematch.databinding.FragmentMoreInfoBinding
 import com.example.thrivematch.ui.adapters.PdfDownloadRecyclerViewAdapter
 import com.example.thrivematch.ui.adapters.PendingMatchRecyclerViewAdapter
@@ -68,6 +69,6 @@ class StartupDetailsFragment: BaseFragment<HomeViewModel, FragmentMoreInfoBindin
         container: ViewGroup?
     )=FragmentMoreInfoBinding.inflate(inflater, container, false)
 
-    override fun getFragmentRepository()=HomeRepository(remoteDataSource.buildApi(HomeDataAPI::class.java))
+    override fun getFragmentRepository()=HomeRepository(remoteDataSource.buildApi(HomeDataAPI::class.java), AppDatabase.invoke(requireContext()))
 
 }

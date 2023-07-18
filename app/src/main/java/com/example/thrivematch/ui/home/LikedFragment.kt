@@ -15,6 +15,7 @@ import com.example.thrivematch.R
 import com.example.thrivematch.data.models.PendingMatchModel
 import com.example.thrivematch.data.network.HomeDataAPI
 import com.example.thrivematch.data.repository.HomeRepository
+import com.example.thrivematch.data.roomdb.database.AppDatabase
 import com.example.thrivematch.databinding.FragmentLikedBinding
 import com.example.thrivematch.ui.base.BaseFragment
 
@@ -44,6 +45,6 @@ class LikedFragment : BaseFragment<HomeViewModel, FragmentLikedBinding, HomeRepo
         container: ViewGroup?
     )= FragmentLikedBinding.inflate(inflater, container, false)
 
-    override fun getFragmentRepository()= HomeRepository(remoteDataSource.buildApi(HomeDataAPI::class.java))
+    override fun getFragmentRepository()= HomeRepository(remoteDataSource.buildApi(HomeDataAPI::class.java), AppDatabase.invoke(requireContext()))
 
 }
