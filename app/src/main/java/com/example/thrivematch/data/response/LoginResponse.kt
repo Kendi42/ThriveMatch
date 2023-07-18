@@ -28,7 +28,7 @@ data class User(
         val username: String,// user10
         @SerializedName("setup")
         @Embedded(prefix = "setupdata_")
-        val setupData: AccountSetupResponse?
+        var setupData: AccountSetupResponse?
     ){
     @PrimaryKey(autoGenerate = false)
     var uid = ROOM_DB_CURRENT_USER_ID

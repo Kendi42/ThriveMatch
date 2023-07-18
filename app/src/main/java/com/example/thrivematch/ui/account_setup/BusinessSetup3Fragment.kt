@@ -32,6 +32,7 @@ import com.example.thrivematch.data.models.InvestorModel
 import com.example.thrivematch.data.network.AccountSetupAPI
 import com.example.thrivematch.data.network.Resource
 import com.example.thrivematch.data.repository.AccountSetupRepository
+import com.example.thrivematch.data.roomdb.database.AppDatabase
 import com.example.thrivematch.databinding.FragmentBusinessSetup3Binding
 import com.example.thrivematch.ui.HomeActivity
 import com.example.thrivematch.ui.base.BaseFragment
@@ -307,5 +308,5 @@ class BusinessSetup3Fragment : BaseFragment<SharedAccountSetupViewModel, Fragmen
         container: ViewGroup?
     )= FragmentBusinessSetup3Binding.inflate(inflater, container, false)
 
-    override fun getFragmentRepository() =AccountSetupRepository(remoteDataSource.buildApi(AccountSetupAPI::class.java))
+    override fun getFragmentRepository() =AccountSetupRepository(remoteDataSource.buildApi(AccountSetupAPI::class.java), AppDatabase.invoke(requireActivity()))
 }

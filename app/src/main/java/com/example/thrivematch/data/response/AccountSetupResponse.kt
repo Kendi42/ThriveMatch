@@ -6,9 +6,9 @@ import com.google.gson.annotations.SerializedName
 
 data class AccountSetupResponse(
 @SerializedName("message")
-val message: String, // Account Created Successfully !!
+var message: String, // Account Created Successfully !!
 @SerializedName("success")
-val success: Boolean, // true
+var success: Boolean, // true
 )
 
 

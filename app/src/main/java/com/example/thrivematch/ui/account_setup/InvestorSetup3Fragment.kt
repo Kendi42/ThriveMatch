@@ -31,6 +31,7 @@ import com.example.thrivematch.data.network.AccountSetupAPI
 import com.example.thrivematch.data.network.Resource
 import com.example.thrivematch.data.repository.AccountSetupRepository
 import com.example.thrivematch.data.repository.AuthRepository
+import com.example.thrivematch.data.roomdb.database.AppDatabase
 import com.example.thrivematch.databinding.FragmentInvestorSetup3Binding
 import com.example.thrivematch.databinding.FragmentLoginBinding
 import com.example.thrivematch.ui.HomeActivity
@@ -305,5 +306,5 @@ class InvestorSetup3Fragment :
     )= FragmentInvestorSetup3Binding.inflate(inflater, container, false)
 
 
-    override fun getFragmentRepository() = AccountSetupRepository(remoteDataSource.buildApi(AccountSetupAPI::class.java))
+    override fun getFragmentRepository() = AccountSetupRepository(remoteDataSource.buildApi(AccountSetupAPI::class.java), AppDatabase.invoke(requireActivity()))
 }
