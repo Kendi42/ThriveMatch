@@ -12,7 +12,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 class RemoteDataSource {
 
     companion object{
-        private const val BASE_URL= "https://thrivematch.onrender.com/api/"
+        private const val BASE_URL= "https://spring-thrivematch.calmwater-2978c172.eastus.azurecontainerapps.io/api/"
     }
 
     fun <Api> buildApi(
