@@ -18,7 +18,7 @@ class AuthRepository(
     private val appDatabase: AppDatabase
     ) : BaseRepository() {
     suspend fun login(email: String, password: String): Resource<LoginResponse> = safeApiCall{
-        val apiResponse= api.login(LoginRequest(email = email, password = password))
+        var apiResponse= api.login(LoginRequest(email = email, password = password))
         if(apiResponse.success){
             Log.i("Success true", apiResponse.success.toString())
             var currentUser = appDatabase.userDao().getCurrentUser()
@@ -27,9 +27,12 @@ class AuthRepository(
                 Log.i("creating new user", "Creating new user")
                 appDatabase.userDao().createNewUser(apiResponse.user)
             }
-            else if(currentUser.id == null){
-                currentUser.id = apiResponse.user.id
-                appDatabase.userDao().updateUser(currentUser)
+            else{
+                apiResponse.user.setupData= currentUser.setupData
+                if(currentUser.id == null){
+                    currentUser.id = apiResponse.user.id
+                    appDatabase.userDao().updateUser(currentUser)
+            }
             }
         }
         apiResponse

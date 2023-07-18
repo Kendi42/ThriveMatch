@@ -48,8 +48,16 @@ class LoginFragment : BaseFragment<AuthenticationViewModel,FragmentLoginBinding,
                     Toast.makeText(requireContext(),"Login Success", Toast.LENGTH_SHORT).show()
                     commonSharedPreferences.saveStringData(Constants.AUTHTOKEN, it.value.token)
                     Log.i("Login Success", it.toString())
-                    val intent = Intent(requireActivity(), HomeActivity::class.java)
-                    startActivity(intent)
+                    if(it.value.user.setupData?.success != true){
+                        Log.i("SetupData Status, if", it.value.user.setupData?.success.toString())
+                        Toast.makeText(requireContext(),"Complete Account Setup", Toast.LENGTH_SHORT).show()
+                        findNavController().navigate(R.id.action_loginFragment_to_accountTypeFragment)
+                    }
+                    else{
+                        Log.i("SetupData Status, else", it.value.user.setupData?.success.toString())
+                        val intent = Intent(requireActivity(), HomeActivity::class.java)
+                        startActivity(intent)
+                    }
                 }
                 is Resource.Failure -> handleApiError(it){ login() }
 
