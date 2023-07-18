@@ -12,11 +12,16 @@ interface UserDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun createNewUser(user: User)
 
+
+
     @Query("SELECT * FROM UserData WHERE uid=$ROOM_DB_CURRENT_USER_ID")
     fun getCurrentUser(): User?
 
     @Query("SELECT * FROM UserData WHERE email = :email")
     suspend fun getUserByEmail(email: String): User
+
+    @Update
+    suspend fun updateUser(user: User)
 
     @Delete
     fun deleteCurrentUser(user: User) // Todo: Shouldn't this delete the whole db

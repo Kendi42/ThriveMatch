@@ -27,47 +27,36 @@ class HomeViewModel(private val repository: HomeRepository,
     init {
         viewModelScope.launch {
             likedCardsList.value = getLikedCards()
-
-            repository.getBusinessCardData().collect{resource ->
-                when(resource){
-                    is Resource.Loading->{
-                        Log.i("Handle Loading,", "Handle")
-                    }
-                    is Resource.Success ->{
-                        _cardItems.value= resource.value!!
-                    }
-                    is Resource.Failure->{
-                    }
-                }
-            }
-        }
-    }
-    private val gson = Gson()
-    private val _cardItems: MutableLiveData<MutableList<CardSwipeItemModel>> = MutableLiveData()
-    val unseenCardItems: LiveData<MutableList<CardSwipeItemModel>> = _cardItems
-    val cardItems: LiveData<MutableList<CardSwipeItemModel>>
-        get()= _cardItems
-    private var selectedCard: CardSwipeItemModel? = null
-
-//    private fun getAllCards(): LiveData<MutableList<CardSwipeItemModel>>{
-//        viewModelScope.launch {
+//
 //            repository.getBusinessCardData().collect{resource ->
 //                when(resource){
 //                    is Resource.Loading->{
 //                        Log.i("Handle Loading,", "Handle")
 //                    }
 //                    is Resource.Success ->{
-//                            _cardItems.value= resource.value!!
+//                        _cardItems.value= resource.value!!
 //                    }
 //                    is Resource.Failure->{
-//                        Log.i("Handle Loading,", "Handle")
 //                    }
 //                }
 //            }
-//        }
-//        return _cardItems
-//    }
+        }
+    }
+    private val gson = Gson()
+    private val _cardItems: MutableLiveData<MutableList<CardSwipeItemModel>> = MutableLiveData()
+//    val unseenCardItems: LiveData<MutableList<CardSwipeItemModel>> = _cardItems
+        val unseenCardItems: LiveData<MutableList<CardSwipeItemModel>> = getAllCards()
 
+    val cardItems: LiveData<MutableList<CardSwipeItemModel>>
+        get()= _cardItems
+    private var selectedCard: CardSwipeItemModel? = null
+
+    private fun getAllCards(): LiveData<MutableList<CardSwipeItemModel>>{
+        viewModelScope.launch {
+            _cardItems.value = repository.getBusinessCardData()
+        }
+        return _cardItems
+    }
     fun saveLikedCard(savedCard: CardSwipeItemModel) = viewModelScope.launch{
         repository.saveLikedCard(savedCard)
     }

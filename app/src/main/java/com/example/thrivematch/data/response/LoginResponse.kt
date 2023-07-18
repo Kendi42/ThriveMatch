@@ -23,7 +23,7 @@ data class User(
         @SerializedName("email")
         val email: String, // user10@gmail.com
         @SerializedName("id")
-        val id: Int, // 8
+        var id: Int?, // 8
         @SerializedName("username")
         val username: String,// user10
         @SerializedName("setup")

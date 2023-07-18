@@ -9,21 +9,21 @@ import com.example.thrivematch.data.models.CardSwipeItemModel
 import com.example.thrivematch.data.response.AccountSetupResponse
 import com.example.thrivematch.data.response.SignupResponse
 import com.example.thrivematch.data.response.User
-import com.example.thrivematch.data.roomdb.dao.SwipeCardDao
+//import com.example.thrivematch.data.roomdb.dao.SwipeCardDao
 import com.example.thrivematch.data.roomdb.dao.UserDao
 
 
 @Database(
     entities = [
-        User::class,
-        CardSwipeItemModel::class
+        User::class
+//        CardSwipeItemModel::class
     ],
-    version = 3,
+    version = 5,
     exportSchema = false
 )
 abstract class AppDatabase: RoomDatabase() {
     abstract fun userDao(): UserDao
-    abstract fun swipeCardDao(): SwipeCardDao
+//    abstract fun swipeCardDao(): SwipeCardDao
 
     companion object {
         @Volatile
