@@ -25,6 +25,7 @@ class AccountSetupRepository(
                 Log.i("Current User Updated", currentUser.toString())
                 appDatabase.userDao().updateUser(currentUser)
                 Log.i("After DB update", "After DB update")
+                appDatabase.accountSetupDao().insertInvestorAccountData(investorData)
             }
 
         }
@@ -42,7 +43,7 @@ class AccountSetupRepository(
                 Log.i("Current User Updated", currentUser.toString())
                 appDatabase.userDao().updateUser(currentUser)
                 Log.i("After DB update", "After DB update")
-
+                appDatabase.accountSetupDao().insertBusinessAccountData(businessData)
             }
         }
         apiResponse

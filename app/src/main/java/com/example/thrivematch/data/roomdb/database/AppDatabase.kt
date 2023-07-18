@@ -5,25 +5,34 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import androidx.room.TypeConverters
+import com.example.thrivematch.data.models.BusinessModel
 import com.example.thrivematch.data.models.CardSwipeItemModel
+import com.example.thrivematch.data.models.InvestorModel
 import com.example.thrivematch.data.response.AccountSetupResponse
 import com.example.thrivematch.data.response.SignupResponse
 import com.example.thrivematch.data.response.User
+import com.example.thrivematch.data.roomdb.Converts
+import com.example.thrivematch.data.roomdb.dao.AccountSetupDao
 //import com.example.thrivematch.data.roomdb.dao.SwipeCardDao
 import com.example.thrivematch.data.roomdb.dao.UserDao
 
 
 @Database(
     entities = [
-        User::class
+        User::class,
+        InvestorModel:: class,
+        BusinessModel::class
 //        CardSwipeItemModel::class
     ],
-    version = 5,
+    version = 6,
     exportSchema = false
 )
+@TypeConverters(Converts::class)
 abstract class AppDatabase: RoomDatabase() {
     abstract fun userDao(): UserDao
 //    abstract fun swipeCardDao(): SwipeCardDao
+    abstract fun accountSetupDao(): AccountSetupDao
 
     companion object {
         @Volatile
