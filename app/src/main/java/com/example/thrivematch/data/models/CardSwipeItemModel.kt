@@ -6,8 +6,8 @@ import com.google.gson.annotations.SerializedName
 //
 @Entity(tableName = "CardData")
 data class CardSwipeItemModel(
-    @PrimaryKey(autoGenerate = true)
-    val cardID: Int = 0,
+    @PrimaryKey(autoGenerate = false)
+    val cardID: Int,
     @SerializedName("name")
     val name: String,
     @SerializedName("industry")

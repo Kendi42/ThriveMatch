@@ -26,7 +26,7 @@ import com.example.thrivematch.data.roomdb.dao.UserDao
         BusinessModel::class,
         CardSwipeItemModel::class
     ],
-    version = 8,
+    version = 9,
     exportSchema = false
 )
 @TypeConverters(Converts::class)

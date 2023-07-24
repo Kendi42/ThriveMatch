@@ -9,10 +9,7 @@ import com.example.thrivematch.data.models.InvestorModel
 import com.example.thrivematch.data.models.PendingMatchModel
 import com.example.thrivematch.data.request.LoginRequest
 import com.example.thrivematch.data.request.SignupRequest
-import com.example.thrivematch.data.response.AccountSetupResponse
-import com.example.thrivematch.data.response.LoginResponse
-import com.example.thrivematch.data.response.SignupResponse
-import com.example.thrivematch.data.response.StartupDataResponse
+import com.example.thrivematch.data.response.*
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.Header
@@ -25,6 +22,11 @@ interface HomeDataAPI {
     @GET("v1/all_startups")
     suspend fun getStartupCardData(
     ): StartupDataResponse
+
+
+    @GET("v1/all_investors")
+    suspend fun getInvestorCardData(
+    ): InvestorResponseData
 
 //
 //    @POST("v1/userRegister")

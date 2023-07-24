@@ -29,6 +29,7 @@ class HomeRepository(
             fetch = {
                     api.getStartupCardData().startups.map { startup ->
                         CardSwipeItemModel(
+                            cardID= startup.id,
                             name = startup.name,
                             industry = startup.industry,
                             description = startup.description,
