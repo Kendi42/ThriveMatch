@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.view.View
+import android.widget.Toast
 import androidx.core.view.GravityCompat
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
@@ -13,6 +14,7 @@ import androidx.navigation.ui.NavigationUI.setupWithNavController
 import androidx.navigation.ui.setupActionBarWithNavController
 import com.example.thrivematch.R
 import com.example.thrivematch.databinding.ActivityHomeBinding
+import com.example.thrivematch.util.Constants.AUTH_TOKEN
 
 class HomeActivity : AppCompatActivity() {
 

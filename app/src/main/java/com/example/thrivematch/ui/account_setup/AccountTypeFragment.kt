@@ -11,6 +11,7 @@ class AccountTypeFragment : Fragment(R.layout.fragment_account_type) {
     private lateinit var binding: FragmentAccountTypeBinding
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         binding=FragmentAccountTypeBinding.bind(view)
 
         //Progress Bar

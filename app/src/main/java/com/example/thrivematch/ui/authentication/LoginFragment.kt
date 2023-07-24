@@ -1,5 +1,6 @@
 package com.example.thrivematch.ui.authentication
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -26,6 +27,7 @@ import com.example.thrivematch.ui.account_setup.SharedAccountSetupViewModel
 import com.example.thrivematch.ui.base.BaseFragment
 import com.example.thrivematch.util.CommonSharedPreferences
 import com.example.thrivematch.util.Constants
+import com.example.thrivematch.util.Constants.AUTH_TOKEN
 import com.example.thrivematch.util.FormValidation
 import com.example.thrivematch.util.handleApiError
 import kotlinx.coroutines.launch
@@ -34,11 +36,15 @@ class LoginFragment : BaseFragment<AuthenticationViewModel,FragmentLoginBinding,
     private lateinit var formValidation:FormValidation
     private lateinit var commonSharedPreferences: CommonSharedPreferences
 
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        commonSharedPreferences= CommonSharedPreferences(requireContext())
+    }
+
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         formValidation= FormValidation()
-        commonSharedPreferences = CommonSharedPreferences(requireContext())
-
         binding.loginProgressBar.isVisible= false
 
         viewModel.loginResponse.observe(viewLifecycleOwner, Observer {
@@ -47,6 +53,8 @@ class LoginFragment : BaseFragment<AuthenticationViewModel,FragmentLoginBinding,
                 is Resource.Success ->{
                     Toast.makeText(requireContext(),"Login Success", Toast.LENGTH_SHORT).show()
                     commonSharedPreferences.saveStringData(Constants.AUTHTOKEN, it.value.token)
+                    AUTH_TOKEN = it.value.token
+                    Log.i("Token saved is", it.value.token)
                     Log.i("Login Success", it.toString())
                     if(it.value.user.setupData?.success != true){
                         Log.i("SetupData Status, if", it.value.user.setupData?.success.toString())

@@ -18,6 +18,7 @@ import com.example.thrivematch.data.repository.HomeRepository
 import com.example.thrivematch.data.roomdb.database.AppDatabase
 import com.example.thrivematch.databinding.FragmentLikedBinding
 import com.example.thrivematch.ui.base.BaseFragment
+import com.example.thrivematch.util.CommonSharedPreferences
 
 class LikedFragment : BaseFragment<HomeViewModel, FragmentLikedBinding, HomeRepository>() {
     private lateinit var recyclerView: RecyclerView
@@ -45,6 +46,6 @@ class LikedFragment : BaseFragment<HomeViewModel, FragmentLikedBinding, HomeRepo
         container: ViewGroup?
     )= FragmentLikedBinding.inflate(inflater, container, false)
 
-    override fun getFragmentRepository()= HomeRepository(remoteDataSource.buildApi(HomeDataAPI::class.java), AppDatabase.invoke(requireContext()))
+    override fun getFragmentRepository()= HomeRepository(remoteDataSource.buildApi(HomeDataAPI::class.java), AppDatabase.invoke(requireContext()), CommonSharedPreferences(requireActivity()))
 
 }

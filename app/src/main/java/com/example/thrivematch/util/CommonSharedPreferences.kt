@@ -59,4 +59,24 @@ class CommonSharedPreferences(context: Context) {
         Log.i("CommonSharedPreferences", sharedPreferences.toString())
 
     }
+
+    fun saveLongData(key: String, value: Long) {
+        val editor = sharedPreferences.edit()
+        editor.putLong(key, value)
+        editor.apply()
+    }
+
+    fun getLongData(key: String): Long {
+        Log.e(
+            "",
+            "GET_LONG_DATA${
+                sharedPreferences.getLong(
+                    key,
+                    0L
+                )
+            }"
+        )
+        return sharedPreferences.getLong(key, 0L)
+    }
+
 }

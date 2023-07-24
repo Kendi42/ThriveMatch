@@ -1,6 +1,7 @@
 package com.example.thrivematch.util
 
 object Constants {
+    val LAST_UPDATED_TIME: String = "last_updated_time"
     const val INVESTORTYPE= "investor_type"
     const val INVESTORNAME= "investor_name"
     const val INVESTORDESCRIPTION= "investor_description"
@@ -19,6 +20,7 @@ object Constants {
 
 
     const val AUTHTOKEN= "auth_token"
+     var AUTH_TOKEN= ""
 
 
 

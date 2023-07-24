@@ -21,6 +21,7 @@ import com.example.thrivematch.ui.adapters.PdfDownloadRecyclerViewAdapter
 import com.example.thrivematch.ui.adapters.PendingMatchRecyclerViewAdapter
 import com.example.thrivematch.ui.base.BaseFragment
 import com.example.thrivematch.ui.home.HomeViewModel
+import com.example.thrivematch.util.CommonSharedPreferences
 import java.util.*
 
 class StartupDetailsFragment: BaseFragment<HomeViewModel, FragmentMoreInfoBinding, HomeRepository>() {
@@ -28,6 +29,7 @@ class StartupDetailsFragment: BaseFragment<HomeViewModel, FragmentMoreInfoBindin
     private lateinit var adapter: PdfDownloadRecyclerViewAdapter
     private var fileDetails: LinkedList<PdfFileModel> = LinkedList()
     private val sharedViewModel: DocumentSharingSharedViewModel by activityViewModels()
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -69,6 +71,6 @@ class StartupDetailsFragment: BaseFragment<HomeViewModel, FragmentMoreInfoBindin
         container: ViewGroup?
     )=FragmentMoreInfoBinding.inflate(inflater, container, false)
 
-    override fun getFragmentRepository()=HomeRepository(remoteDataSource.buildApi(HomeDataAPI::class.java), AppDatabase.invoke(requireContext()))
+    override fun getFragmentRepository()=HomeRepository(remoteDataSource.buildApi(HomeDataAPI::class.java), AppDatabase.invoke(requireContext()), CommonSharedPreferences(requireActivity()))
 
 }

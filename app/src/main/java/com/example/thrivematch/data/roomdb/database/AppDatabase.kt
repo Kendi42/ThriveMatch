@@ -14,6 +14,7 @@ import com.example.thrivematch.data.response.SignupResponse
 import com.example.thrivematch.data.response.User
 import com.example.thrivematch.data.roomdb.Converts
 import com.example.thrivematch.data.roomdb.dao.AccountSetupDao
+import com.example.thrivematch.data.roomdb.dao.SwipeCardDao
 //import com.example.thrivematch.data.roomdb.dao.SwipeCardDao
 import com.example.thrivematch.data.roomdb.dao.UserDao
 
@@ -22,16 +23,16 @@ import com.example.thrivematch.data.roomdb.dao.UserDao
     entities = [
         User::class,
         InvestorModel:: class,
-        BusinessModel::class
-//        CardSwipeItemModel::class
+        BusinessModel::class,
+        CardSwipeItemModel::class
     ],
-    version = 6,
+    version = 8,
     exportSchema = false
 )
 @TypeConverters(Converts::class)
 abstract class AppDatabase: RoomDatabase() {
     abstract fun userDao(): UserDao
-//    abstract fun swipeCardDao(): SwipeCardDao
+    abstract fun swipeCardDao(): SwipeCardDao
     abstract fun accountSetupDao(): AccountSetupDao
 
     companion object {
@@ -48,6 +49,7 @@ abstract class AppDatabase: RoomDatabase() {
             AppDatabase::class.java,
             "thrivematch-database.db"
         )
+            .fallbackToDestructiveMigration()
             .build()
     }
 

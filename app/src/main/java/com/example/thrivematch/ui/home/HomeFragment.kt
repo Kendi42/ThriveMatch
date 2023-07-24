@@ -1,5 +1,6 @@
 package com.example.thrivematch.ui.home
 
+import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -10,6 +11,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AccelerateInterpolator
 import android.widget.Toast
+import androidx.core.view.isVisible
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
@@ -18,12 +20,17 @@ import androidx.recyclerview.widget.DefaultItemAnimator
 import com.example.thrivematch.R
 import com.example.thrivematch.data.models.CardSwipeItemModel
 import com.example.thrivematch.data.network.HomeDataAPI
+import com.example.thrivematch.data.network.Resource
 import com.example.thrivematch.data.repository.HomeRepository
 import com.example.thrivematch.data.roomdb.database.AppDatabase
 import com.example.thrivematch.databinding.FragmentHomeBinding
+import com.example.thrivematch.ui.HomeActivity
 import com.example.thrivematch.ui.account_setup.SharedAccountSetupViewModel
 import com.example.thrivematch.ui.adapters.CardSwipeAdapter
 import com.example.thrivematch.ui.base.BaseFragment
+import com.example.thrivematch.util.CommonSharedPreferences
+import com.example.thrivematch.util.Constants
+import com.example.thrivematch.util.handleApiError
 import com.yuyakaido.android.cardstackview.CardStackLayoutManager
 import com.yuyakaido.android.cardstackview.CardStackListener
 import com.yuyakaido.android.cardstackview.Direction
@@ -35,9 +42,31 @@ class HomeFragment:BaseFragment<HomeViewModel, FragmentHomeBinding,HomeRepositor
     private lateinit var adapter: CardSwipeAdapter
     private var cardItems: List<CardSwipeItemModel> = emptyList()
 
+
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding=FragmentHomeBinding.bind(view)
+        binding.homeProgressBar.isVisible= false
+        //Todo: Finish
+        viewModel.cardLoadingResponse.observe(viewLifecycleOwner, Observer {
+            binding.homeProgressBar.isVisible= false
+            when(it){
+                is Resource.Success ->{
+                    binding.homeProgressBar.isVisible= false
+                }
+                is Resource.Failure -> handleApiError(it){
+                    Toast.makeText(requireContext(), "Something Went Wrong", Toast.LENGTH_SHORT).show()
+                    binding.homeProgressBar.isVisible= false
+                }
+
+                is Resource.Loading->{
+                    binding.homeProgressBar.isVisible= true
+
+                }
+            }
+        })
+
         initCardStackLayoutManager()
         binding.cardStackView.layoutManager= cardStackLayoutManager
         val cardStackView = binding.cardStackView
@@ -152,5 +181,5 @@ class HomeFragment:BaseFragment<HomeViewModel, FragmentHomeBinding,HomeRepositor
         container: ViewGroup?
     )=FragmentHomeBinding.inflate(inflater, container, false)
 
-    override fun getFragmentRepository()= HomeRepository(remoteDataSource.buildApi(HomeDataAPI::class.java), AppDatabase.invoke(requireContext()))
+    override fun getFragmentRepository()= HomeRepository(remoteDataSource.buildApi(HomeDataAPI::class.java), AppDatabase.invoke(requireContext()),CommonSharedPreferences(requireActivity()))
 }
