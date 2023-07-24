@@ -4,11 +4,12 @@ import android.util.Log
 import com.example.thrivematch.data.models.BusinessModel
 import com.example.thrivematch.data.models.InvestorModel
 import com.example.thrivematch.data.network.AccountSetupAPI
-import com.example.thrivematch.data.network.AuthAPI
-import com.example.thrivematch.data.request.LoginRequest
-import com.example.thrivematch.data.request.SignupRequest
-import com.example.thrivematch.data.response.User
 import com.example.thrivematch.data.roomdb.database.AppDatabase
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.MultipartBody
+import okhttp3.RequestBody.Companion.asRequestBody
+import okhttp3.RequestBody.Companion.toRequestBody
+import java.io.File
 
 class AccountSetupRepository(
     private val api: AccountSetupAPI,
@@ -33,8 +34,22 @@ class AccountSetupRepository(
     }
 
     suspend fun businessSetup (businessData: BusinessModel) = safeApiCall{
-        val apiResponse= api.businessAccountSetup(BusinessModel(businessName = businessData.businessName, industry = businessData.industry, dateFounded = businessData.dateFounded, companyDescription = businessData.companyDescription, phoneNumber = businessData.phoneNumber,
-                                                email = businessData.email, address=businessData.address, poBox = businessData.poBox, photo = businessData.photo))
+        var imagePart: MultipartBody.Part? = null
+        val imageFile = File(businessData.photo)
+        if (imageFile.exists()) {
+            val reqFile = imageFile.asRequestBody("image/*".toMediaTypeOrNull())
+             imagePart = MultipartBody.Part.createFormData("image", imageFile.name, reqFile)
+        }
+        val apiResponse = api.businessAccountSetup(
+            image = imagePart,
+            businessName = businessData.businessName.toRequestBody("multipart/form-data".toMediaTypeOrNull()),
+            industry = businessData.industry.toRequestBody("multipart/form-data".toMediaTypeOrNull()),
+            dateFounded = businessData.dateFounded.toRequestBody("multipart/form-data".toMediaTypeOrNull()),
+            companyDescription = businessData.companyDescription.toRequestBody("multipart/form-data".toMediaTypeOrNull()),
+//            phoneNumber = businessData.phoneNumber.toRequestBody("multipart/form-data".toMediaTypeOrNull()),
+            email = businessData.email.toRequestBody("multipart/form-data".toMediaTypeOrNull()),
+            address=businessData.address.toRequestBody("multipart/form-data".toMediaTypeOrNull()),
+            poBox = businessData.poBox.toRequestBody("multipart/form-data".toMediaTypeOrNull()))
         if(apiResponse.success){
             var currentUser = appDatabase.userDao().getCurrentUser()
             if (currentUser != null && currentUser.setupData?.success != true) {
@@ -46,7 +61,9 @@ class AccountSetupRepository(
                 appDatabase.accountSetupDao().insertBusinessAccountData(businessData)
             }
         }
+        else{
+            Log.e("Failed Upload", apiResponse.toString())
+        }
         apiResponse
-
     }
 }

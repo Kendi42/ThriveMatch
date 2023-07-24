@@ -45,11 +45,8 @@ fun View.snackbar(message: String, action: (() -> Unit)? = null) {
             failure.errorCode == 401 -> {
                 if (this is LoginFragment) {
                     requireView().snackbar("You've entered incorrect email or password")
-                } else if(this is SignupFragment) {
+                } else {
                     requireView().snackbar("Something went wrong. Try again")
-                }
-                else{
-                    (this as BaseFragment<*, *, *>).logout()
                 }
             }
             else -> {

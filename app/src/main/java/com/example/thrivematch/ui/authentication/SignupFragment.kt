@@ -32,7 +32,7 @@ class SignupFragment : BaseFragment<AuthenticationViewModel, FragmentSignupBindi
             when(it){
                 is Resource.Success ->{
                     Toast.makeText(requireContext(),"Signup Success", Toast.LENGTH_SHORT).show()
-                    findNavController().navigate(R.id.action_signupFragment_to_accountTypeFragment)
+                    findNavController().navigate(R.id.action_signupFragment_to_loginFragment)
                 }
                 is Resource.Failure ->handleApiError(it){ signup() }
                 is Resource.Loading->{

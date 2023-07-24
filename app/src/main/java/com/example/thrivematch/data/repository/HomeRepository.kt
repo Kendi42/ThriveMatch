@@ -24,6 +24,7 @@ class HomeRepository(
         return networkBoundResource(
             query = {
                     appDatabase.swipeCardDao().getAllCards()
+
             },
             fetch = {
                     api.getStartupCardData().startups.map { startup ->
@@ -56,24 +57,29 @@ class HomeRepository(
     private fun updateLastUpdateTime() {
         val currentTime = System.currentTimeMillis()
         commonSharedPreferences.saveLongData(Constants.LAST_UPDATED_TIME, currentTime)
-
     }
+
 
     private fun getLastUpdateTime(): Long {
         return commonSharedPreferences.getLongData(Constants.LAST_UPDATED_TIME)
     }
+
 
     suspend fun saveLikedCard(savedCard: CardSwipeItemModel){
         val response= api.saveLikedCard(savedCard)
         Log.i("Save Response", response.toString())
     }
 
+
     suspend fun getLikedCards(): MutableList<PendingMatchModel>{
         Log.i("LikedCardsRepo", api.getLikedCards().toString())
        return api.getLikedCards()
     }
 
+
     companion object {
         const val UPDATE_INTERVAL_MINUTES= 1
     }
+
+
 }
