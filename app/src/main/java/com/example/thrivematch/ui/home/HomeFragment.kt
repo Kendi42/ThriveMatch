@@ -161,18 +161,8 @@ class HomeFragment:BaseFragment<HomeViewModel, FragmentHomeBinding,HomeRepositor
             cardItems = newCardItems
             Log.i("Card Items (HF)", cardItems.toString())
             Log.i("newCard Items (HF)", newCardItems.toString())
-
             adapter.setCardSwipeItems(newCardItems)
         })
-
-        // Investor Cards
-//        viewModel.unseenInvestorCardItems.observe(viewLifecycleOwner, Observer{ newCardItems ->
-//            cardItems = newCardItems
-//            Log.i("Card Items (HF)", cardItems.toString())
-//            Log.i("newCard Items (HF)", newCardItems.toString())
-//
-//            adapter.setCardSwipeItems(newCardItems)
-//        })
     }
 
     private fun setOnCardItemClicked(it: CardSwipeItemModel) {

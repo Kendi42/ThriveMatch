@@ -38,7 +38,6 @@ class HomeViewModel(private val repository: HomeRepository,
     private val gson = Gson()
     private val _cardItems: MutableLiveData<MutableList<CardSwipeItemModel>> = MutableLiveData()
     val unseenCardItems: LiveData<MutableList<CardSwipeItemModel>> = getAllCards()
-//    val unseenInvestorCardItems: LiveData<MutableList<CardSwipeItemModel>> = getAllInvestorCards()
 
     val cardItems: LiveData<MutableList<CardSwipeItemModel>>
         get()= _cardItems
@@ -50,7 +49,7 @@ class HomeViewModel(private val repository: HomeRepository,
 
     private fun getAllCards(): LiveData<MutableList<CardSwipeItemModel>>{
         viewModelScope.launch {
-            repository.getBusinessCardData().collect{resource->
+            repository.getCardData().collect{resource->
                 _cardLoadingResponse.value = resource
                 Log.i("Whats in resource", resource.toString())
                 when (resource) {
@@ -67,40 +66,6 @@ class HomeViewModel(private val repository: HomeRepository,
         }
         return _cardItems
     }
-
-//    private fun getAllInvestorCards(): LiveData<MutableList<CardSwipeItemModel>>{
-//        viewModelScope.launch {
-//            repository.getInvestorCardData().collect{resource->
-//                _cardLoadingResponse.value = resource
-//                Log.i("Whats in resource", resource.toString())
-//                when (resource) {
-//                    is Resource.Success->{
-//                        _cardItems.value = resource.value.toMutableList()
-//                        Log.i("Whats in _cardItems", _cardItems.value.toString())
-//                    }
-//                    is Resource.Loading ->{
-//                    }
-//                    is Resource.Failure->{
-//                    }
-//                }
-//            }
-//        }
-//        return _cardItems
-//    }
-
-    //    fun alterUnseenCards(){
-//        Log.i("Unseen Cards Altered", "Position to be removed: 0")
-//        // Todo: Instead of just removing the card from here, we need to make a call to the backend
-//        unseenCardItems.value?.removeAt(0)
-//        Log.i("Unseen Cards Altered", "New unseen Cards ${unseenCardItems.value}")
-//    }
-
-//    fun alterUnseenCards(){
-//        Log.i("Unseen Cards Altered", "Position to be removed: 0")
-//        // Todo: Instead of just removing the card from here, we need to make a call to the backend
-//        unseenInvestorCardItems.value?.removeAt(0)
-//        Log.i("Unseen Cards Altered", "New unseen Cards ${unseenInvestorCardItems.value}")
-//    }
 
     fun alterUnseenCards(){
         Log.i("Unseen Cards Altered", "Position to be removed: 0")
