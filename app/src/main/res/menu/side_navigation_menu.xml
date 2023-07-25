@@ -9,21 +9,21 @@
             android:enabled="true"
             android:icon="@drawable/home_icon"
             android:title="@string/home"/>
-        <item
-            android:id="@+id/myAccountFragment"
-            android:enabled="true"
-            android:icon="@drawable/person_icon"
-            android:title="@string/myAccount"/>
+<!--        <item-->
+<!--            android:id="@+id/myAccountFragment"-->
+<!--            android:enabled="true"-->
+<!--            android:icon="@drawable/person_icon"-->
+<!--            android:title="@string/myAccount"/>-->
         <item
             android:id="@+id/documentUploadFragment"
             android:enabled="true"
             android:icon="@drawable/upload_icon"
             android:title="@string/docUpload"/>
-        <item
-            android:id="@+id/subscriptionFragment"
-            android:enabled="true"
-            android:icon="@drawable/monetization_icon"
-            android:title="@string/subscription"/>
+<!--        <item-->
+<!--            android:id="@+id/subscriptionFragment"-->
+<!--            android:enabled="true"-->
+<!--            android:icon="@drawable/monetization_icon"-->
+<!--            android:title="@string/subscription"/>-->
 
         <item
             android:id="@+id/logout_sidenav"

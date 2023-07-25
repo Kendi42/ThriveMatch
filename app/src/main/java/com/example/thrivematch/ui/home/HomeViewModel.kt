@@ -25,14 +25,16 @@ class HomeViewModel(private val repository: HomeRepository,
                     private val sharedPreferences: CommonSharedPreferences
                     ): BaseViewModel(repository) {
     var likedCardsList: MutableLiveData<MutableList<PendingMatchModel>?> = MutableLiveData()
+    var matchedCardsList: MutableLiveData<MutableList<PendingMatchModel>?> = MutableLiveData()
+
 
     init {
         viewModelScope.launch {
             likedCardsList.value = getLikedCards()
+            matchedCardsList.value = getMatchedCards()
+
         }
     }
-    private val _searchQuery: MutableLiveData<String> = MutableLiveData()
-    val searchQuery: LiveData<String> = _searchQuery
     private val gson = Gson()
     private val _cardItems: MutableLiveData<MutableList<CardSwipeItemModel>> = MutableLiveData()
 //    val unseenCardItems: LiveData<MutableList<CardSwipeItemModel>> = getAllCards()
@@ -86,15 +88,7 @@ class HomeViewModel(private val repository: HomeRepository,
         return _cardItems
     }
 
-    fun saveLikedCard(savedCard: CardSwipeItemModel) = viewModelScope.launch{
-        repository.saveLikedCard(savedCard)
-    }
-    suspend fun getLikedCards(): MutableList<PendingMatchModel>{
-        Log.i("Inside getlikedvm", "Inside get liked cards vm")
-        return repository.getLikedCards()
-    }
-
-//    fun alterUnseenCards(){
+    //    fun alterUnseenCards(){
 //        Log.i("Unseen Cards Altered", "Position to be removed: 0")
 //        // Todo: Instead of just removing the card from here, we need to make a call to the backend
 //        unseenCardItems.value?.removeAt(0)
@@ -108,6 +102,22 @@ class HomeViewModel(private val repository: HomeRepository,
         Log.i("Unseen Cards Altered", "New unseen Cards ${unseenInvestorCardItems.value}")
     }
 
+    // Liked Fragment Functions
+    fun saveLikedCard(savedCard: CardSwipeItemModel) = viewModelScope.launch{
+        repository.saveLikedCard(savedCard)
+    }
+    suspend fun getLikedCards(): MutableList<PendingMatchModel>{
+        Log.i("Inside getlikedvm", "Inside get liked cards vm")
+        return repository.getLikedCards()
+    }
+
+
+    // Matched Fragment Functions
+    suspend fun getMatchedCards(): MutableList<PendingMatchModel> {
+        return repository.getMatchedCards()
+    }
+
+    // Selected Cards From Home Fragment and Liked Fragment
     fun setSelectedCard(it: CardSwipeItemModel) {
         selectedCard = it
         sharedPreferences.saveStringData(Constants.SELECTEDCARD, gson.toJson(selectedCard))
@@ -117,10 +127,6 @@ class HomeViewModel(private val repository: HomeRepository,
         val stringData= sharedPreferences.getStringData(Constants.SELECTEDCARD)
         selectedCard=convertStringToCardSwipeItemModel(stringData)
         return selectedCard
-    }
-
-    fun setSearchQuery(query: String) {
-        _searchQuery.value = query
     }
 
     private fun convertStringToCardSwipeItemModel(stringData: String): CardSwipeItemModel? {

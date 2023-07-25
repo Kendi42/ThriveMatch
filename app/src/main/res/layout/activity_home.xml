@@ -22,13 +22,13 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" >
 
-            <ImageView
-                android:id="@+id/notification_icon"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/notification_none_icon"
-                android:layout_gravity="end"
-                android:padding="8dp" />
+<!--            <ImageView-->
+<!--                android:id="@+id/notification_icon"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:src="@drawable/notification_none_icon"-->
+<!--                android:layout_gravity="end"-->
+<!--                android:padding="8dp" />-->
 
             <ImageView
                 android:id="@+id/side_drawer_icon"

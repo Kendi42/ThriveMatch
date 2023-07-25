@@ -106,6 +106,7 @@
     <string name="document_name">Document Name</string>
     <string name="download">Download</string>
     <string name="delete">Delete</string>
+    <string name="contacts">Contacts</string>
 
 
 </resources>

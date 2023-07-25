@@ -115,6 +115,11 @@ class HomeRepository(
        return api.getLikedCards()
     }
 
+    suspend fun getMatchedCards(): MutableList<PendingMatchModel> {
+        return api.getMatchedCards()
+
+    }
+
 
     companion object {
         const val UPDATE_INTERVAL_MINUTES= 1
