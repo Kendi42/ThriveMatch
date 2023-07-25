@@ -56,14 +56,18 @@ class LoginFragment : BaseFragment<AuthenticationViewModel,FragmentLoginBinding,
                     AUTH_TOKEN = it.value.token
                     Log.i("Token saved is", it.value.token)
                     Log.i("Login Success", it.toString())
-                    // Todo: Check if the user has finished account set up
                     // Todo: Check if the user is an Investor or Startup
-//                    if(){
-//                    }
-//                    else{
+                    val startupAccount = it.value.user.hasCreatedStartUp
+                    val investorAccount = it.value.user.hasCreatedInvestor
+                    val individualInvestorAccount = it.value.user.hasCreatedIndividualInvestor
+                    if(!startupAccount && !investorAccount && !individualInvestorAccount){
+                        Toast.makeText(requireContext(),"Complete Account Setup", Toast.LENGTH_SHORT).show()
+                        findNavController().navigate(R.id.action_loginFragment_to_accountTypeFragment)
+                    }
+                    else{
                         val intent = Intent(requireActivity(), HomeActivity::class.java)
                         startActivity(intent)
-//                    }
+                    }
                 }
                 is Resource.Failure -> handleApiError(it){ login() }
 

@@ -72,7 +72,7 @@ class AccountSetupRepository(
 //                Log.i("Current User Updated", currentUser.toString())
 //                appDatabase.userDao().updateUser(currentUser)
 //                Log.i("After DB update", "After DB update")
-                appDatabase.accountSetupDao().insertBusinessAccountData(businessData)
+            appDatabase.accountSetupDao().insertBusinessAccountData(businessData)
 //            }
         }
         else{
