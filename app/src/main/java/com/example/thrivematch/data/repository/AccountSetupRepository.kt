@@ -30,6 +30,7 @@ class AccountSetupRepository(
             investorName = investorData.name.toRequestBody("multipart/form-data".toMediaTypeOrNull()),
             industry = investorData.selectedInterests.toString().toRequestBody("multipart/form-data".toMediaTypeOrNull()),
             description = investorData.description.toRequestBody("multipart/form-data".toMediaTypeOrNull()),
+            address= "Nairobi".toRequestBody("multipart/form-data".toMediaTypeOrNull()),
             email = userEmail?.toRequestBody("multipart/form-data".toMediaTypeOrNull())!!
         )
 

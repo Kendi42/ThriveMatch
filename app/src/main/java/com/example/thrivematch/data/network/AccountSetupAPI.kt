@@ -21,6 +21,7 @@ interface AccountSetupAPI {
         @Part("name") investorName: RequestBody,
         @Part("industry") industry: RequestBody,
         @Part("desc") description: RequestBody,
+        @Part("address") address: RequestBody,
         @Part("email") email: RequestBody,
     ): AccountSetupResponse
 
