@@ -56,16 +56,16 @@ class LoginFragment : BaseFragment<AuthenticationViewModel,FragmentLoginBinding,
                     AUTH_TOKEN = it.value.token
                     Log.i("Token saved is", it.value.token)
                     Log.i("Login Success", it.toString())
-//                    if(it.value.user.setupData?.success != true){
-//                        Log.i("SetupData Status, if", it.value.user.setupData?.success.toString())
-//                        Toast.makeText(requireContext(),"Complete Account Setup", Toast.LENGTH_SHORT).show()
-//                        findNavController().navigate(R.id.action_loginFragment_to_accountTypeFragment)
-//                    }
-//                    else{
+                    if(it.value.user.setupData?.success != true){
+                        Log.i("SetupData Status, if", it.value.user.setupData?.success.toString())
+                        Toast.makeText(requireContext(),"Complete Account Setup", Toast.LENGTH_SHORT).show()
+                        findNavController().navigate(R.id.action_loginFragment_to_accountTypeFragment)
+                    }
+                    else{
                         Log.i("SetupData Status, else", it.value.user.setupData?.success.toString())
                         val intent = Intent(requireActivity(), HomeActivity::class.java)
                         startActivity(intent)
-//                    }
+                    }
                 }
                 is Resource.Failure -> handleApiError(it){ login() }
 

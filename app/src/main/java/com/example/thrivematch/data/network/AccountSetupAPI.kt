@@ -13,13 +13,16 @@ import retrofit2.http.Part
 
 interface AccountSetupAPI {
 
-    @Mock
-    @MockResponse(body ="{\"message\":\"Account Setup Successfully !!\",\"success\":true}" )
-    @POST("v1/investorAccountSetup")
-    suspend fun investorAccountSetup(
-        @Body accountSetupRequest: InvestorModel
-    ): AccountSetupResponse
 
+    @Multipart
+    @POST("v1/individual_investor")
+    suspend fun investorAccountSetup(
+        @Part image: MultipartBody.Part?,
+        @Part("name") investorName: RequestBody,
+        @Part("industry") industry: RequestBody,
+        @Part("desc") description: RequestBody,
+        @Part("email") email: RequestBody,
+    ): AccountSetupResponse
 
     @Multipart
     @POST("v1/add_startup")
@@ -33,6 +36,15 @@ interface AccountSetupAPI {
         @Part("address") address: RequestBody,
         @Part("poBox") poBox: RequestBody
     ): AccountSetupResponse
+
+
+    //
+//    @Mock
+//    @MockResponse(body ="{\"message\":\"Account Setup Successfully !!\",\"success\":true}" )
+//    @POST("v1/investorAccountSetup")
+//    suspend fun investorAccountSetup(
+//        @Body accountSetupRequest: InvestorModel
+//    ): AccountSetupResponse
 
 
 //    @Mock

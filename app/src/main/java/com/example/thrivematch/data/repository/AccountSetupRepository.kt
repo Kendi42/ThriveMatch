@@ -17,9 +17,24 @@ class AccountSetupRepository(
 ): BaseRepository() {
 
     suspend fun investorSetup(investorData: InvestorModel ) = safeApiCall{
-        val apiResponse = api.investorAccountSetup(InvestorModel(investorType = investorData.investorType, name=investorData.name, description = investorData.description, selectedInterests = investorData.selectedInterests, photo = investorData.photo))
+        var currentUser = appDatabase.userDao().getCurrentUser()
+        var imagePart: MultipartBody.Part? = null
+        val imageFile = File(investorData.photo)
+        if (imageFile.exists()) {
+            val reqFile = imageFile.asRequestBody("image/*".toMediaTypeOrNull())
+            imagePart = MultipartBody.Part.createFormData("image", imageFile.name, reqFile)
+        }
+        val userEmail= currentUser?.email
+        val apiResponse = api.investorAccountSetup(
+            image = imagePart,
+            investorName = investorData.name.toRequestBody("multipart/form-data".toMediaTypeOrNull()),
+            industry = investorData.selectedInterests.toString().toRequestBody("multipart/form-data".toMediaTypeOrNull()),
+            description = investorData.description.toRequestBody("multipart/form-data".toMediaTypeOrNull()),
+            email = userEmail?.toRequestBody("multipart/form-data".toMediaTypeOrNull())!!
+        )
+
+//        val apiResponse = api.investorAccountSetup(InvestorModel(investorType = investorData.investorType, name=investorData.name, description = investorData.description, selectedInterests = investorData.selectedInterests, photo = investorData.photo))
         if(apiResponse.success){
-            var currentUser = appDatabase.userDao().getCurrentUser()
             if (currentUser != null && currentUser.setupData?.success != true) {
                 Log.i("Conditions Met", "If Conditions met")
                 currentUser.setupData = apiResponse
