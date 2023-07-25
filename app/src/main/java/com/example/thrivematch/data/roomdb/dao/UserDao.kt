@@ -26,7 +26,6 @@ interface UserDao {
     @Delete
     fun deleteCurrentUser(user: User) // Todo: Shouldn't this delete the whole db
 
-    // Todo: Check if the user set up their account succesfully
 
 
 

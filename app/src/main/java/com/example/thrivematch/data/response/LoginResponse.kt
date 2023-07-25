@@ -23,11 +23,11 @@ data class User(
         @SerializedName("email")
         val email: String, // kendi.anyika@gmail.com
         @SerializedName("hasCreatedIndividualInvestor")
-        val hasCreatedIndividualInvestor: Boolean, // false
+        var hasCreatedIndividualInvestor: Boolean, // false
         @SerializedName("hasCreatedInvestor")
-        val hasCreatedInvestor: Boolean, // false
+        var hasCreatedInvestor: Boolean, // false
         @SerializedName("hasCreatedStartUp")
-        val hasCreatedStartUp: Boolean, // false
+        var hasCreatedStartUp: Boolean, // false
         @SerializedName("id")
         var id: Int?, // 26
         @SerializedName("username")

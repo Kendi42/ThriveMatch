@@ -33,6 +33,10 @@ class AuthRepository(
                     currentUser.id = apiResponse.user.id
                     appDatabase.userDao().updateUser(currentUser)
             }
+                currentUser.hasCreatedInvestor = apiResponse.user.hasCreatedInvestor
+                currentUser.hasCreatedIndividualInvestor = apiResponse.user.hasCreatedIndividualInvestor
+                currentUser.hasCreatedStartUp = apiResponse.user.hasCreatedStartUp
+                appDatabase.userDao().updateUser(currentUser)
             }
         }
         apiResponse
@@ -46,6 +50,7 @@ class AuthRepository(
             Log.i("Checking current user", currentUser.toString())
             if(currentUser==null || currentUser.email != email){
                 Log.i("creating new user", "Creating new user")
+                appDatabase.clearAllTables()
                 appDatabase.userDao().createNewUser(User(email=email, username = name, id = null, hasCreatedIndividualInvestor = false, hasCreatedInvestor = false, hasCreatedStartUp = false))
             }
         }
