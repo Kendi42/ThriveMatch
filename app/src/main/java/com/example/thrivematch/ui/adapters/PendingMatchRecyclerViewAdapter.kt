@@ -10,7 +10,7 @@ import com.bumptech.glide.Glide
 import com.example.thrivematch.R
 import com.example.thrivematch.data.models.PendingMatchModel
 
-class PendingMatchRecyclerViewAdapter(private val itemList: List<PendingMatchModel>) :
+class PendingMatchRecyclerViewAdapter(private var itemList: ArrayList<PendingMatchModel>) :
     RecyclerView.Adapter<PendingMatchRecyclerViewAdapter.ViewHolder>() {
 
     // Create the ViewHolder
@@ -37,5 +37,11 @@ class PendingMatchRecyclerViewAdapter(private val itemList: List<PendingMatchMod
     // Return the number of items in the list
     override fun getItemCount(): Int {
         return itemList.size
+    }
+
+    fun setFilteredList(filteredList: ArrayList<PendingMatchModel>) {
+        this.itemList = filteredList
+        notifyDataSetChanged()
+
     }
 }

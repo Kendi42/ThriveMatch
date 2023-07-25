@@ -84,16 +84,18 @@ class LoginFragment : BaseFragment<AuthenticationViewModel,FragmentLoginBinding,
     }
 
     private fun login() {
-        val email= binding.etLoginEmail.text.toString().trim()
-        val password= binding.etLoginPassword.text.toString().trim()
-
-        if(formValidation.checkIfEmailIsValid(email)==null){
-            binding.loginProgressBar.isVisible= true
-            viewModel.login(email, password)
-        }
-        else{
-            binding.etLoginEmail.error= formValidation.checkIfEmailIsValid(email)
-        }
+        val intent = Intent(requireActivity(), HomeActivity::class.java)
+        startActivity(intent)
+//        val email= binding.etLoginEmail.text.toString().trim()
+//        val password= binding.etLoginPassword.text.toString().trim()
+//
+//        if(formValidation.checkIfEmailIsValid(email)==null){
+//            binding.loginProgressBar.isVisible= true
+//            viewModel.login(email, password)
+//        }
+//        else{
+//            binding.etLoginEmail.error= formValidation.checkIfEmailIsValid(email)
+//        }
     }
 
     override fun getViewModel() = AuthenticationViewModel::class.java

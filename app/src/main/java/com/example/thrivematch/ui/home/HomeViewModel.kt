@@ -31,6 +31,8 @@ class HomeViewModel(private val repository: HomeRepository,
             likedCardsList.value = getLikedCards()
         }
     }
+    private val _searchQuery: MutableLiveData<String> = MutableLiveData()
+    val searchQuery: LiveData<String> = _searchQuery
     private val gson = Gson()
     private val _cardItems: MutableLiveData<MutableList<CardSwipeItemModel>> = MutableLiveData()
 //    val unseenCardItems: LiveData<MutableList<CardSwipeItemModel>> = getAllCards()
@@ -115,6 +117,10 @@ class HomeViewModel(private val repository: HomeRepository,
         val stringData= sharedPreferences.getStringData(Constants.SELECTEDCARD)
         selectedCard=convertStringToCardSwipeItemModel(stringData)
         return selectedCard
+    }
+
+    fun setSearchQuery(query: String) {
+        _searchQuery.value = query
     }
 
     private fun convertStringToCardSwipeItemModel(stringData: String): CardSwipeItemModel? {
