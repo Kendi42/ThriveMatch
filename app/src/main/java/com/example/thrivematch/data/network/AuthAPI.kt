@@ -6,6 +6,7 @@ import com.example.thrivematch.data.request.LoginRequest
 import com.example.thrivematch.data.request.SignupRequest
 import com.example.thrivematch.data.response.LoginResponse
 import com.example.thrivematch.data.response.SignupResponse
+import okhttp3.ResponseBody
 import retrofit2.http.Body
 import retrofit2.http.POST
 
@@ -34,5 +35,8 @@ interface AuthAPI {
     suspend fun signup(
         @Body signupRequest: SignupRequest
     ): SignupResponse
+    
+    @POST("v1/logout")
+    suspend fun logout(): ResponseBody
 
 }

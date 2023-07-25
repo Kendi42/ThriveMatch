@@ -56,13 +56,11 @@ class LoginFragment : BaseFragment<AuthenticationViewModel,FragmentLoginBinding,
                     AUTH_TOKEN = it.value.token
                     Log.i("Token saved is", it.value.token)
                     Log.i("Login Success", it.toString())
-//                    if(it.value.user.setupData?.success != true){
-//                        Log.i("SetupData Status, if", it.value.user.setupData?.success.toString())
-//                        Toast.makeText(requireContext(),"Complete Account Setup", Toast.LENGTH_SHORT).show()
-//                        findNavController().navigate(R.id.action_loginFragment_to_accountTypeFragment)
+                    // Todo: Check if the user has finished account set up
+                    // Todo: Check if the user is an Investor or Startup
+//                    if(){
 //                    }
 //                    else{
-                        Log.i("SetupData Status, else", it.value.user.setupData?.success.toString())
                         val intent = Intent(requireActivity(), HomeActivity::class.java)
                         startActivity(intent)
 //                    }
@@ -84,18 +82,16 @@ class LoginFragment : BaseFragment<AuthenticationViewModel,FragmentLoginBinding,
     }
 
     private fun login() {
-        val intent = Intent(requireActivity(), HomeActivity::class.java)
-        startActivity(intent)
-//        val email= binding.etLoginEmail.text.toString().trim()
-//        val password= binding.etLoginPassword.text.toString().trim()
-//
-//        if(formValidation.checkIfEmailIsValid(email)==null){
-//            binding.loginProgressBar.isVisible= true
-//            viewModel.login(email, password)
-//        }
-//        else{
-//            binding.etLoginEmail.error= formValidation.checkIfEmailIsValid(email)
-//        }
+        val email= binding.etLoginEmail.text.toString().trim()
+        val password= binding.etLoginPassword.text.toString().trim()
+
+        if(formValidation.checkIfEmailIsValid(email)==null){
+            binding.loginProgressBar.isVisible= true
+            viewModel.login(email, password)
+        }
+        else{
+            binding.etLoginEmail.error= formValidation.checkIfEmailIsValid(email)
+        }
     }
 
     override fun getViewModel() = AuthenticationViewModel::class.java

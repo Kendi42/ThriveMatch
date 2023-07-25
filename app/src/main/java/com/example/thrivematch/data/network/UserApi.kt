@@ -6,9 +6,8 @@ import retrofit2.http.GET
 import retrofit2.http.POST
 
 interface UserApi {
-    @GET("user")
-    suspend fun getUserData(): LoginResponse
+//    @GET("user")
+//    suspend fun getUserData(): LoginResponse
 
-    @POST("logout")
-    suspend fun logout():ResponseBody
+
 }

@@ -40,4 +40,8 @@ class AuthenticationViewModel(private val repository: AuthRepository): BaseViewM
         Log.i("Signup Data", "$name, $email, $password")
     }
 
+    suspend fun logout(){
+        repository.logout()
+    }
+
 }

@@ -38,9 +38,7 @@ abstract class BaseFragment<VM: BaseViewModel, B: ViewBinding, R: BaseRepository
     }
 
     fun logout()= lifecycleScope.launch {
-        val authToken = commonSharedPreferences.getStringData(Constants.AUTHTOKEN)
         val api = remoteDataSource.buildApi(UserApi::class.java)
-        viewModel.logout(api)
         commonSharedPreferences.clearSharedPreferences()
         //Todo: Navigate to login page
         Toast.makeText(requireActivity(), "Logout", Toast.LENGTH_SHORT).show()

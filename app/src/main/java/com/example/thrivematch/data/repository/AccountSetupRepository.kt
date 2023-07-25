@@ -33,16 +33,15 @@ class AccountSetupRepository(
             email = userEmail?.toRequestBody("multipart/form-data".toMediaTypeOrNull())!!
         )
 
-//        val apiResponse = api.investorAccountSetup(InvestorModel(investorType = investorData.investorType, name=investorData.name, description = investorData.description, selectedInterests = investorData.selectedInterests, photo = investorData.photo))
         if(apiResponse.success){
-            if (currentUser != null && currentUser.setupData?.success != true) {
-                Log.i("Conditions Met", "If Conditions met")
-                currentUser.setupData = apiResponse
-                Log.i("Current User Updated", currentUser.toString())
-                appDatabase.userDao().updateUser(currentUser)
-                Log.i("After DB update", "After DB update")
+//            if (currentUser != null && currentUser.setupData?.success != true) {
+//                Log.i("Conditions Met", "If Conditions met")
+//                currentUser.setupData = apiResponse
+//                Log.i("Current User Updated", currentUser.toString())
+//                appDatabase.userDao().updateUser(currentUser)
+//                Log.i("After DB update", "After DB update")
                 appDatabase.accountSetupDao().insertInvestorAccountData(investorData)
-            }
+//            }
 
         }
         apiResponse
@@ -67,14 +66,14 @@ class AccountSetupRepository(
             poBox = businessData.poBox.toRequestBody("multipart/form-data".toMediaTypeOrNull()))
         if(apiResponse.success){
             var currentUser = appDatabase.userDao().getCurrentUser()
-            if (currentUser != null && currentUser.setupData?.success != true) {
-                Log.i("Conditions Met", "If Conditions met")
-                currentUser.setupData = apiResponse
-                Log.i("Current User Updated", currentUser.toString())
-                appDatabase.userDao().updateUser(currentUser)
-                Log.i("After DB update", "After DB update")
+//            if (currentUser != null && currentUser.setupData?.success != true) {
+//                Log.i("Conditions Met", "If Conditions met")
+//                currentUser.setupData = apiResponse
+//                Log.i("Current User Updated", currentUser.toString())
+//                appDatabase.userDao().updateUser(currentUser)
+//                Log.i("After DB update", "After DB update")
                 appDatabase.accountSetupDao().insertBusinessAccountData(businessData)
-            }
+//            }
         }
         else{
             Log.e("Failed Upload", apiResponse.toString())
