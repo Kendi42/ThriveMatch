@@ -157,26 +157,25 @@ class HomeFragment:BaseFragment<HomeViewModel, FragmentHomeBinding,HomeRepositor
 
     private fun updateCardView() {
         // Business Cards
-//        viewModel.unseenCardItems.observe(viewLifecycleOwner, Observer{ newCardItems ->
-//            cardItems = newCardItems
-//            Log.i("Card Items (HF)", cardItems.toString())
-//            Log.i("newCard Items (HF)", newCardItems.toString())
-//
-//            adapter.setCardSwipeItems(newCardItems)
-//        })
-
-        // Investor Cards
-        viewModel.unseenInvestorCardItems.observe(viewLifecycleOwner, Observer{ newCardItems ->
+        viewModel.unseenCardItems.observe(viewLifecycleOwner, Observer{ newCardItems ->
             cardItems = newCardItems
             Log.i("Card Items (HF)", cardItems.toString())
             Log.i("newCard Items (HF)", newCardItems.toString())
 
             adapter.setCardSwipeItems(newCardItems)
         })
+
+        // Investor Cards
+//        viewModel.unseenInvestorCardItems.observe(viewLifecycleOwner, Observer{ newCardItems ->
+//            cardItems = newCardItems
+//            Log.i("Card Items (HF)", cardItems.toString())
+//            Log.i("newCard Items (HF)", newCardItems.toString())
+//
+//            adapter.setCardSwipeItems(newCardItems)
+//        })
     }
 
     private fun setOnCardItemClicked(it: CardSwipeItemModel) {
-//        Toast.makeText(requireActivity(), it.name, Toast.LENGTH_SHORT).show()
         viewModel.setSelectedCard(it)
         Handler(Looper.getMainLooper()).postDelayed({
             findNavController().navigate(R.id.action_homeFragment_to_moreInfoFragment)

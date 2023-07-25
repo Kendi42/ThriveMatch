@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.thrivematch.ui.adapters.PendingMatchRecyclerViewAdapter
 import com.example.thrivematch.R
+import com.example.thrivematch.data.models.CardSwipeItemModel
 import com.example.thrivematch.data.models.PendingMatchModel
 import com.example.thrivematch.data.network.HomeDataAPI
 import com.example.thrivematch.data.repository.HomeRepository
@@ -26,10 +27,18 @@ import java.util.Locale.ROOT
 import java.util.Locale.filter
 import kotlin.collections.ArrayList
 
-class LikedFragment : BaseFragment<HomeViewModel, FragmentLikedBinding, HomeRepository>() {
+class LikedFragment : BaseFragment<HomeViewModel, FragmentLikedBinding, HomeRepository>(),
+
+    PendingMatchRecyclerViewAdapter.OnItemClickListener{
+    override fun onItemClick(item: PendingMatchModel) {
+//        viewModel.setSelectedCard(CardSwipeItemModel(item.name))
+
+    }
+
     private lateinit var recyclerView: RecyclerView
     private lateinit var adapter: PendingMatchRecyclerViewAdapter
     private var likedList = ArrayList<PendingMatchModel>()
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -39,7 +48,7 @@ class LikedFragment : BaseFragment<HomeViewModel, FragmentLikedBinding, HomeRepo
             likedCards?.let {
                 Log.i("LikedCardsFragm", likedCards.toString())
                 likedList= likedCards as ArrayList<PendingMatchModel>
-                adapter = PendingMatchRecyclerViewAdapter(likedList)
+                adapter = PendingMatchRecyclerViewAdapter(likedList, this)
                 adapter.notifyDataSetChanged()
                 recyclerView.adapter = adapter
                 recyclerView.layoutManager = LinearLayoutManager(requireContext())
@@ -69,7 +78,7 @@ class LikedFragment : BaseFragment<HomeViewModel, FragmentLikedBinding, HomeRepo
         if( newText!=null){
             val filteredList = ArrayList<PendingMatchModel>()
             for(i in likedList ){
-                if(i.name.toLowerCase(Locale.ROOT).contains(newText.toLowerCase())){
+                if(i.name.lowercase(Locale.ROOT).contains(newText.lowercase(Locale.ROOT))){
                     filteredList.add(i)
                 }
             }

@@ -23,7 +23,14 @@ import java.util.*
 import kotlin.collections.ArrayList
 
 
-class MatchedFragment : BaseFragment<HomeViewModel, FragmentMatchedBinding, HomeRepository>() {
+class MatchedFragment : BaseFragment<HomeViewModel, FragmentMatchedBinding, HomeRepository>(),
+    PendingMatchRecyclerViewAdapter.OnItemClickListener{
+        override fun onItemClick(item: PendingMatchModel) {
+//        viewModel.setSelectedCard(CardSwipeItemModel(item.name))
+
+        }
+
+
     private lateinit var recyclerView: RecyclerView
     private lateinit var adapter: PendingMatchRecyclerViewAdapter
     private var matchedList = ArrayList<PendingMatchModel>()
@@ -38,7 +45,7 @@ class MatchedFragment : BaseFragment<HomeViewModel, FragmentMatchedBinding, Home
         viewModel.matchedCardsList.observe(viewLifecycleOwner, Observer { matchedCards ->
             matchedCards?.let {
                 matchedList = matchedCards as ArrayList<PendingMatchModel>
-                adapter = PendingMatchRecyclerViewAdapter(matchedList)
+                adapter = PendingMatchRecyclerViewAdapter(matchedList, this)
                 adapter.notifyDataSetChanged()
                 recyclerView.adapter = adapter
                 recyclerView.layoutManager = LinearLayoutManager(requireContext())
