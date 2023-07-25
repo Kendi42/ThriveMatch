@@ -25,6 +25,7 @@ class AuthRepository(
             Log.i("Checking current user", currentUser.toString())
             if(currentUser==null || currentUser.email != apiResponse.user.email){
                 Log.i("creating new user", "Creating new user")
+                appDatabase.clearAllTables()
                 appDatabase.userDao().createNewUser(apiResponse.user)
             }
             else{

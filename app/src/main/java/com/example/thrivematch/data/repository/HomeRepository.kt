@@ -20,22 +20,59 @@ class HomeRepository(
 ) : BaseRepository(){
     private var likedCardsList: MutableList<CardSwipeItemModel> = mutableListOf()
 
-    suspend fun getBusinessCardData(): Flow<Resource<List<CardSwipeItemModel>>> {
+//    suspend fun getBusinessCardData(): Flow<Resource<List<CardSwipeItemModel>>> {
+//        return networkBoundResource(
+//            query = {
+//                    appDatabase.swipeCardDao().getAllCards()
+//
+//            },
+//            fetch = {
+//                    api.getStartupCardData().startups.map { startup ->
+//                        CardSwipeItemModel(
+//                            cardID= startup.id,
+//                            name = startup.name,
+//                            industry = startup.industry,
+//                            description = startup.description,
+//                            imageURL = startup.picturePath
+//                        )
+//                    }
+//            },
+//            saveFetchResult = {cardSwipeItems->
+//                appDatabase.swipeCardDao().insertCards(cardSwipeItems)
+//                updateLastUpdateTime()
+//            },
+//            shouldFetch = {cachedCards->
+//                val currentTime = System.currentTimeMillis()
+//                Log.i("Current Time", currentTime.toString())
+//                val lastUpdateTime = getLastUpdateTime() // Implement this function to get the last update time from SharedPreferences
+//                Log.i("Last Updated Time", lastUpdateTime.toString())
+//                val elapsedTimeMinutes = TimeUnit.MILLISECONDS.toMinutes(currentTime - lastUpdateTime)
+//                Log.i("Elapsed Time", elapsedTimeMinutes.toString())
+//                val isStale = elapsedTimeMinutes >= Companion.UPDATE_INTERVAL_MINUTES
+//                Log.i("isStale", isStale.toString())
+//                isStale
+//            }
+//        )
+//    }
+
+
+    suspend fun getInvestorCardData(): Flow<Resource<List<CardSwipeItemModel>>> {
         return networkBoundResource(
             query = {
-                    appDatabase.swipeCardDao().getAllCards()
+                appDatabase.swipeCardDao().getAllCards()
 
             },
             fetch = {
-                    api.getStartupCardData().startups.map { startup ->
-                        CardSwipeItemModel(
-                            cardID= startup.id,
-                            name = startup.name,
-                            industry = startup.industry,
-                            description = startup.description,
-                            imageURL = startup.picturePath
-                        )
-                    }
+                api.getInvestorCardData().investors.map { investor ->
+                    CardSwipeItemModel(
+                        cardID=investor.id,
+                        name = investor.name,
+                        industry = investor.industry,
+                        description = investor.description,
+                        imageURL = investor.picturePath
+                    )
+
+                }
             },
             saveFetchResult = {cardSwipeItems->
                 appDatabase.swipeCardDao().insertCards(cardSwipeItems)
@@ -65,6 +102,7 @@ class HomeRepository(
         return commonSharedPreferences.getLongData(Constants.LAST_UPDATED_TIME)
     }
 
+    // Liking
 
     suspend fun saveLikedCard(savedCard: CardSwipeItemModel){
         val response= api.saveLikedCard(savedCard)
