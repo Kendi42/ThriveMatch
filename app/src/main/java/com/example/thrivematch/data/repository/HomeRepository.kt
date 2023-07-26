@@ -27,11 +27,19 @@ class HomeRepository(
     private var likedCardsList: MutableList<CardSwipeItemModel> = mutableListOf()
 
 
+    private var individualInvestor: Boolean = false
+    private var investor: Boolean = false
+    private var startup: Boolean = false
+
+
+
+
+
     suspend fun getCardData(): Flow<Resource<List<CardSwipeItemModel>>> {
         return withContext(Dispatchers.IO){
-            val individualInvestor= appDatabase.userDao().getCurrentUser()!!.hasCreatedIndividualInvestor
-            val investor= appDatabase.userDao().getCurrentUser()!!.hasCreatedInvestor
-            val startup= appDatabase.userDao().getCurrentUser()!!.hasCreatedStartUp
+            individualInvestor= appDatabase.userDao().getCurrentUser()!!.hasCreatedIndividualInvestor
+            investor= appDatabase.userDao().getCurrentUser()!!.hasCreatedInvestor
+            startup= appDatabase.userDao().getCurrentUser()!!.hasCreatedStartUp
         networkBoundResource(
             query = {
                     appDatabase.swipeCardDao().getAllCards()
@@ -104,13 +112,42 @@ class HomeRepository(
 
 
      suspend fun getLikedCards(): MutableList<PendingMatchModel>{
-        Log.i("LikedCardsRepo", api.getLikedCards().toString())
-       return api.getLikedCards()
+         var returnValue = mutableListOf<PendingMatchModel>()
+         withContext(Dispatchers.IO){
+             individualInvestor= appDatabase.userDao().getCurrentUser()!!.hasCreatedIndividualInvestor
+             investor= appDatabase.userDao().getCurrentUser()!!.hasCreatedInvestor
+             startup= appDatabase.userDao().getCurrentUser()!!.hasCreatedStartUp
+
+             returnValue = if (individualInvestor || investor) {
+                 api.getLikedCards()
+
+             } else if (startup) {
+                 api.getLikedInvestorCards()
+             } else{
+                 returnValue
+             }
+         }
+         return returnValue
+
     }
 
     suspend fun getMatchedCards(): MutableList<MatchedModel> {
-        return api.getMatchedCards()
+        var returnValue = mutableListOf<MatchedModel>()
+        withContext(Dispatchers.IO){
+            individualInvestor= appDatabase.userDao().getCurrentUser()!!.hasCreatedIndividualInvestor
+            investor= appDatabase.userDao().getCurrentUser()!!.hasCreatedInvestor
+            startup= appDatabase.userDao().getCurrentUser()!!.hasCreatedStartUp
 
+            returnValue = if (individualInvestor || investor) {
+                api.getMatchedCards()
+
+            } else if (startup) {
+                api.getMatchedInvestorCards()
+            } else{
+                returnValue
+            }
+        }
+        return returnValue
     }
 
     companion object {

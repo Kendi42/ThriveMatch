@@ -45,6 +45,13 @@ interface HomeDataAPI {
     @MockBehavior(durationMillis = 0, durationDeviation = 0)
     suspend fun getLikedCards(): MutableList<PendingMatchModel>
 
+    @Mock
+    @POST("v1/getLikedCards")
+    @MockResponse(body = "[{\"imageURL\":\"https://images.pexels.com/photos/3769021/pexels-photo-3769021.jpeg?auto=compress&cs=tinysrgb&w=600\",\"name\":\"Madeline Mugo\"}," +
+            "{\"imageURL\":\"https://images.pexels.com/photos/4173168/pexels-photo-4173168.jpeg?auto=compress&cs=tinysrgb&w=600\",\"name\":\"Amani Onyango\"}]")
+    @MockBehavior(durationMillis = 0, durationDeviation = 0)
+    suspend fun getLikedInvestorCards(): MutableList<PendingMatchModel>
+
 
     @Mock
     @POST("v1/getLikedCards")
@@ -52,5 +59,13 @@ interface HomeDataAPI {
             "{\"imageURL\":\"https://cdn.dribbble.com/userupload/8098458/file/original-a2252dbb9fbd1b6fc989cea4156f9519.jpg?compress=1&resize=1338x1003&vertical=center\",\"name\":\"Drivable\",\"phoneNumber\":\"254111690030\"}]")
     @MockBehavior(durationMillis = 0, durationDeviation = 0)
     suspend fun getMatchedCards(): MutableList<MatchedModel>
+
+
+    @Mock
+    @POST("v1/getLikedCards")
+    @MockResponse(body = "[{\"imageURL\":\"https://images.pexels.com/photos/3769021/pexels-photo-3769021.jpeg?auto=compress&cs=tinysrgb&w=600\",\"name\":\"Madeline Mugo\",\"phoneNumber\":\"254702766735\"}," +
+            "{\"imageURL\":\"https://images.pexels.com/photos/4173168/pexels-photo-4173168.jpeg?auto=compress&cs=tinysrgb&w=600\",\"name\":\"Amani Onyango\",\"phoneNumber\":\"254111690030\"}]")
+    @MockBehavior(durationMillis = 0, durationDeviation = 0)
+    suspend fun getMatchedInvestorCards(): MutableList<MatchedModel>
 
 }
