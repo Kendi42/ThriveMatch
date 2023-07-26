@@ -6,6 +6,7 @@ import co.infinum.retromock.meta.MockBehavior
 import co.infinum.retromock.meta.MockResponse
 import com.example.thrivematch.data.models.CardSwipeItemModel
 import com.example.thrivematch.data.models.InvestorModel
+import com.example.thrivematch.data.models.MatchedModel
 import com.example.thrivematch.data.models.PendingMatchModel
 import com.example.thrivematch.data.request.LoginRequest
 import com.example.thrivematch.data.request.SignupRequest
@@ -47,9 +48,9 @@ interface HomeDataAPI {
 
     @Mock
     @POST("v1/getLikedCards")
-    @MockResponse(body = "[{\"imageURL\":\"https://cdn.dribbble.com/userupload/7889038/file/original-8a3114ac067714ed900bb8437175ec7c.jpg?compress=1&resize=1504x1128\",\"name\":\"ArrowHealth\"}," +
-            "{\"imageURL\":\"https://cdn.dribbble.com/userupload/7733577/file/original-a2f0a453abc9ef61612d721aeb8a39da.jpg?compress=1&resize=2048x1536\",\"name\":\"Drivable\"}]")
+    @MockResponse(body = "[{\"imageURL\":\"https://cdn.dribbble.com/userupload/7889038/file/original-8a3114ac067714ed900bb8437175ec7c.jpg?compress=1&resize=1504x1128\",\"name\":\"ArrowHealth\",\"phoneNumber\":\"254702766735\"}," +
+            "{\"imageURL\":\"https://cdn.dribbble.com/userupload/8098458/file/original-a2252dbb9fbd1b6fc989cea4156f9519.jpg?compress=1&resize=1338x1003&vertical=center\",\"name\":\"Drivable\",\"phoneNumber\":\"254111690030\"}]")
     @MockBehavior(durationMillis = 0, durationDeviation = 0)
-    suspend fun getMatchedCards(): MutableList<PendingMatchModel>
+    suspend fun getMatchedCards(): MutableList<MatchedModel>
 
 }

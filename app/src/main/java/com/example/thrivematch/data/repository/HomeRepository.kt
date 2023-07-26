@@ -2,6 +2,7 @@ package com.example.thrivematch.data.repository
 
 import android.util.Log
 import com.example.thrivematch.data.models.CardSwipeItemModel
+import com.example.thrivematch.data.models.MatchedModel
 import com.example.thrivematch.data.models.PendingMatchModel
 import com.example.thrivematch.data.network.HomeDataAPI
 import com.example.thrivematch.data.network.Resource
@@ -107,7 +108,7 @@ class HomeRepository(
        return api.getLikedCards()
     }
 
-    suspend fun getMatchedCards(): MutableList<PendingMatchModel> {
+    suspend fun getMatchedCards(): MutableList<MatchedModel> {
         return api.getMatchedCards()
 
     }

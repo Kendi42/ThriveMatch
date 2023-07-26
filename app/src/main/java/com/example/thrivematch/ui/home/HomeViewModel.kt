@@ -9,6 +9,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.bumptech.glide.util.pool.FactoryPools.Resetter
 import com.example.thrivematch.data.models.CardSwipeItemModel
+import com.example.thrivematch.data.models.MatchedModel
 import com.example.thrivematch.data.models.PendingMatchModel
 import com.example.thrivematch.data.network.Resource
 import com.example.thrivematch.data.repository.HomeRepository
@@ -25,7 +26,7 @@ class HomeViewModel(private val repository: HomeRepository,
                     private val sharedPreferences: CommonSharedPreferences
                     ): BaseViewModel(repository) {
     var likedCardsList: MutableLiveData<MutableList<PendingMatchModel>?> = MutableLiveData()
-    var matchedCardsList: MutableLiveData<MutableList<PendingMatchModel>?> = MutableLiveData()
+    var matchedCardsList: MutableLiveData<MutableList<MatchedModel>?> = MutableLiveData()
 
 
     init {
@@ -87,7 +88,7 @@ class HomeViewModel(private val repository: HomeRepository,
 
 
     // Matched Fragment Functions
-    suspend fun getMatchedCards(): MutableList<PendingMatchModel> {
+    suspend fun getMatchedCards(): MutableList<MatchedModel> {
         return repository.getMatchedCards()
     }
 

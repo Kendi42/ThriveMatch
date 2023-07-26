@@ -5,8 +5,6 @@ import retrofit2.http.GET
 import retrofit2.http.Path
 
 interface DocumentSharingAPI {
-
-
     // Todo: Add response
     @GET("v1/startup/(startupID)/uploadDoc")
     suspend fun saveUploadedDocument(@Path("startupID") startupID: Int)

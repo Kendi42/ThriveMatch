@@ -1,39 +1,37 @@
 package com.example.thrivematch.ui.home
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
-import androidx.fragment.app.Fragment
 import android.view.View
 import android.view.ViewGroup
 import android.widget.SearchView
+import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.thrivematch.R
-import com.example.thrivematch.data.models.PendingMatchModel
+import com.example.thrivematch.data.models.MatchedModel
 import com.example.thrivematch.data.network.HomeDataAPI
 import com.example.thrivematch.data.repository.HomeRepository
 import com.example.thrivematch.data.roomdb.database.AppDatabase
-import com.example.thrivematch.databinding.FragmentLikedBinding
 import com.example.thrivematch.databinding.FragmentMatchedBinding
-import com.example.thrivematch.ui.adapters.PendingMatchRecyclerViewAdapter
+import com.example.thrivematch.ui.adapters.MatchedRecyclerViewAdapter
 import com.example.thrivematch.ui.base.BaseFragment
 import com.example.thrivematch.util.CommonSharedPreferences
 import java.util.*
-import kotlin.collections.ArrayList
 
 
 class MatchedFragment : BaseFragment<HomeViewModel, FragmentMatchedBinding, HomeRepository>(),
-    PendingMatchRecyclerViewAdapter.OnItemClickListener{
-        override fun onItemClick(item: PendingMatchModel) {
+    MatchedRecyclerViewAdapter.OnItemClickListener{
+        override fun onItemClick(item: MatchedModel) {
 //        viewModel.setSelectedCard(CardSwipeItemModel(item.name))
-
         }
 
 
     private lateinit var recyclerView: RecyclerView
-    private lateinit var adapter: PendingMatchRecyclerViewAdapter
-    private var matchedList = ArrayList<PendingMatchModel>()
+    private lateinit var adapter: MatchedRecyclerViewAdapter
+    private var matchedList = ArrayList<MatchedModel>()
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -44,8 +42,8 @@ class MatchedFragment : BaseFragment<HomeViewModel, FragmentMatchedBinding, Home
 
         viewModel.matchedCardsList.observe(viewLifecycleOwner, Observer { matchedCards ->
             matchedCards?.let {
-                matchedList = matchedCards as ArrayList<PendingMatchModel>
-                adapter = PendingMatchRecyclerViewAdapter(matchedList, this)
+                matchedList = matchedCards as ArrayList<MatchedModel>
+                adapter = MatchedRecyclerViewAdapter(matchedList, requireActivity(),this)
                 adapter.notifyDataSetChanged()
                 recyclerView.adapter = adapter
                 recyclerView.layoutManager = LinearLayoutManager(requireContext())
@@ -74,10 +72,9 @@ class MatchedFragment : BaseFragment<HomeViewModel, FragmentMatchedBinding, Home
 
 
     }
-
     private fun filterList(newText: String?) {
         if( newText!=null){
-            val filteredList = ArrayList<PendingMatchModel>()
+            val filteredList = ArrayList<MatchedModel>()
             for(i in matchedList ){
                 if(i.name.toLowerCase(Locale.ROOT).contains(newText.toLowerCase())){
                     filteredList.add(i)
