@@ -70,7 +70,7 @@
     <!--    // Match Strings-->
     <string name="match">Match</string>
     <string name="matched">Matched</string>
-    <string name="pending">Pending Matches</string>
+    <string name="pending">Pending</string>
     <string name="cong">Congratulations</string>
     <string name="match_made">Match Made!</string>
 

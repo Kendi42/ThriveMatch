@@ -51,6 +51,11 @@ class StartupDetailsFragment: BaseFragment<HomeViewModel, FragmentMoreInfoBindin
             Toast.makeText(requireActivity(), "Selected Card is Empty", Toast.LENGTH_SHORT).show()
         }
 
+        binding.btnMoreInfoMatch.setOnClickListener {
+            viewModel.saveLikedCard(selectedCardData!!)
+            binding.btnMoreInfoMatch.setText(R.string.pending)
+        }
+
         fileDetails= sharedViewModel.getDocumentList()
 
         recyclerView = binding.rvPdfs
@@ -58,9 +63,6 @@ class StartupDetailsFragment: BaseFragment<HomeViewModel, FragmentMoreInfoBindin
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
 
-        binding.btnMoreInfoMatch.setOnClickListener {
-
-        }
 
     }
 
