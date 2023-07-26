@@ -1,6 +1,7 @@
 package com.example.thrivematch.data.repository
 
 import android.util.Log
+import android.widget.Toast
 import com.example.thrivematch.data.models.CardSwipeItemModel
 import com.example.thrivematch.data.models.MatchedModel
 import com.example.thrivematch.data.models.PendingMatchModel
@@ -10,10 +11,12 @@ import com.example.thrivematch.data.network.networkBoundResource
 import com.example.thrivematch.data.roomdb.database.AppDatabase
 import com.example.thrivematch.util.CommonSharedPreferences
 import com.example.thrivematch.util.Constants
+import com.example.thrivematch.util.Constants.USER_ID
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import okhttp3.Dispatcher
 import java.util.concurrent.TimeUnit
@@ -25,7 +28,6 @@ class HomeRepository(
 
 ) : BaseRepository(){
     private var likedCardsList: MutableList<CardSwipeItemModel> = mutableListOf()
-
 
     private var individualInvestor: Boolean = false
     private var investor: Boolean = false
@@ -104,11 +106,53 @@ class HomeRepository(
 
     // Liking
 
-     suspend fun saveLikedCard(savedCard: CardSwipeItemModel){
+     suspend fun saveLikedCard(savedCard: CardSwipeItemModel) {
          Log.i("In liked repo", "In liked repo")
-         val response= api.saveLikedCard(savedCard)
-        Log.i("Save Response", response.toString())
-    }
+//         val response= api.saveLikedCard(savedCard)
+//        Log.i("Save Response", response.toString())
+         try{
+         withContext(Dispatchers.IO) {
+             individualInvestor = appDatabase.userDao().getCurrentUser()!!.hasCreatedIndividualInvestor
+             investor = appDatabase.userDao().getCurrentUser()!!.hasCreatedInvestor
+             startup = appDatabase.userDao().getCurrentUser()!!.hasCreatedStartUp
+             val investorData = api.getInvestorDetails()
+             val startupData = api.getStartupDetails()
+             if(individualInvestor || investor){
+                 val matchingInvestor = investorData.investorDetailsList.find { investor ->
+                     investor.userId == USER_ID
+                 }
+                 if(matchingInvestor != null){
+                     val investorID = matchingInvestor.id
+                     val startupID = savedCard.cardID
+
+                     launch(Dispatchers.IO) {
+                         api.investorLikeStartup(startupID = startupID, investorID = investorID)
+                     }                 }
+
+             }else if(startup){
+                 val matchingStartup = startupData.startUpDetailsList.find { startup ->
+                     startup.userId == USER_ID
+                 }
+                 if(matchingStartup != null){
+                     val startupID = matchingStartup.id
+                     val investorID = savedCard.cardID
+
+                     launch(Dispatchers.IO) {
+                         api.startupLikeInvestor(startupID = startupID, investorID = investorID)
+                     }                 }
+
+
+             }
+
+         }}
+         catch (e: Exception) {
+             // Handle any exceptions that may occur during the API calls
+             e.printStackTrace()
+             Log.i("Error", e.toString())
+         }
+         Log.i("End of liked repo", "End of liked repo")
+
+     }
 
 
      suspend fun getLikedCards(): MutableList<PendingMatchModel>{

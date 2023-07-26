@@ -11,32 +11,39 @@ import com.example.thrivematch.data.models.PendingMatchModel
 import com.example.thrivematch.data.request.LoginRequest
 import com.example.thrivematch.data.request.SignupRequest
 import com.example.thrivematch.data.response.*
-import retrofit2.http.Body
-import retrofit2.http.GET
-import retrofit2.http.Header
-import retrofit2.http.POST
+import retrofit2.http.*
 
 interface HomeDataAPI {
     // Real API responses
-
     @GET("v1/all_startups")
     suspend fun getStartupCardData(
     ): StartupDataResponse
 
-//
     @GET("v1/all_investors")
     suspend fun getInvestorCardData(
     ): InvestorResponseData
 
+    @GET("v1/all_investor_info")
+    suspend fun getInvestorDetails(
+    ): AllInvestorDetails
 
+    @GET("v1/all_startup_info")
+    suspend fun getStartupDetails(
+    ): AllStartupDetails
+
+    @POST("v1/startups/{startupID}/investors/{investorID}/like")
+    suspend fun startupLikeInvestor(@Path("startupID")startupID: Int, @Path("investorID") investorID: Int ): SignupResponse
+
+    @POST("v1/investors/{investorID}/startup/{startupID}/like")
+    suspend fun investorLikeStartup(@Path("startupID")startupID: Int, @Path("investorID") investorID: Int ): SignupResponse
 
     // Mock responses
-    @Mock
-    @MockResponse(body = "{\"message\":\"Successfully Saved !!\",\"success\":true}")
-    @POST("v1/saveLikedCard")
-    suspend fun saveLikedCard(
-        @Body savedCard: CardSwipeItemModel
-    ): SignupResponse
+//    @Mock
+//    @MockResponse(body = "{\"message\":\"Successfully Saved !!\",\"success\":true}")
+//    @POST("v1/saveLikedCard")
+//    suspend fun saveLikedCard(
+//        @Body savedCard: CardSwipeItemModel
+//    ): SignupResponse
 
     @Mock
     @POST("v1/getLikedCards")
@@ -52,7 +59,7 @@ interface HomeDataAPI {
     @MockBehavior(durationMillis = 0, durationDeviation = 0)
     suspend fun getLikedInvestorCards(): MutableList<PendingMatchModel>
 
-
+    // Mock responses
     @Mock
     @POST("v1/getLikedCards")
     @MockResponse(body = "[{\"imageURL\":\"https://cdn.dribbble.com/userupload/7889038/file/original-8a3114ac067714ed900bb8437175ec7c.jpg?compress=1&resize=1504x1128\",\"name\":\"ArrowHealth\",\"phoneNumber\":\"254702766735\"}," +

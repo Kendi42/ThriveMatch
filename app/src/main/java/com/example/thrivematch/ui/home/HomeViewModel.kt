@@ -78,7 +78,6 @@ class HomeViewModel(private val repository: HomeRepository,
     // Liked Fragment Functions
     fun saveLikedCard(savedCard: CardSwipeItemModel) = viewModelScope.launch{
         Log.i("In liked viewmodel", "In liked viewmodel")
-
         repository.saveLikedCard(savedCard)
     }
     suspend fun getLikedCards(): MutableList<PendingMatchModel>{

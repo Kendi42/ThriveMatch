@@ -28,6 +28,7 @@ import com.example.thrivematch.ui.base.BaseFragment
 import com.example.thrivematch.util.CommonSharedPreferences
 import com.example.thrivematch.util.Constants
 import com.example.thrivematch.util.Constants.AUTH_TOKEN
+import com.example.thrivematch.util.Constants.USER_ID
 import com.example.thrivematch.util.FormValidation
 import com.example.thrivematch.util.handleApiError
 import kotlinx.coroutines.launch
@@ -54,6 +55,7 @@ class LoginFragment : BaseFragment<AuthenticationViewModel,FragmentLoginBinding,
                     Toast.makeText(requireContext(),"Login Success", Toast.LENGTH_SHORT).show()
                     commonSharedPreferences.saveStringData(Constants.AUTHTOKEN, it.value.token)
                     AUTH_TOKEN = it.value.token
+                    if(it.value.user.id !=null){USER_ID = it.value.user.id!!}
                     Log.i("Token saved is", it.value.token)
                     Log.i("Login Success", it.toString())
                     // Todo: Check if the user is an Investor or Startup
