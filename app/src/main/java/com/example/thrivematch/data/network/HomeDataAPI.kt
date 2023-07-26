@@ -27,6 +27,8 @@ interface HomeDataAPI {
     suspend fun getInvestorCardData(
     ): InvestorResponseData
 
+
+
     // Mock responses
     @Mock
     @MockResponse(body = "{\"message\":\"Successfully Saved !!\",\"success\":true}")
@@ -45,8 +47,8 @@ interface HomeDataAPI {
 
     @Mock
     @POST("v1/getLikedCards")
-    @MockResponse(body = "[{\"imageURL\":\"https://img.freepik.com/free-vector/green-alternative-energy-power-logo_126523-2775.jpg?size=626&ext=jpg&ga=GA1.2.1090819380.1686834206&semt=ais\",\"name\":\"Bloom Energy\"}," +
-            "{\"imageURL\":\"https://cdn.dribbble.com/userupload/7733577/file/original-a2f0a453abc9ef61612d721aeb8a39da.jpg?compress=1&resize=2048x1536\",\"name\":\"BTech\"}]")
+    @MockResponse(body = "[{\"imageURL\":\"https://cdn.dribbble.com/userupload/7889038/file/original-8a3114ac067714ed900bb8437175ec7c.jpg?compress=1&resize=1504x1128\",\"name\":\"ArrowHealth\"}," +
+            "{\"imageURL\":\"https://cdn.dribbble.com/userupload/7733577/file/original-a2f0a453abc9ef61612d721aeb8a39da.jpg?compress=1&resize=2048x1536\",\"name\":\"Drivable\"}]")
     @MockBehavior(durationMillis = 0, durationDeviation = 0)
     suspend fun getMatchedCards(): MutableList<PendingMatchModel>
 
