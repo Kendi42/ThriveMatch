@@ -131,6 +131,7 @@ class HomeFragment:BaseFragment<HomeViewModel, FragmentHomeBinding,HomeRepositor
                     Log.i("Top Position SwipeRight", cardStackLayoutManager.topPosition.toString())
 
                     viewModel.saveLikedCard(cardItems[0])
+
                     binding.ivRightSwipeIndicator.setBackgroundResource(R.drawable.right_swipe_indicator_shape)
                 }
                 viewModel.alterUnseenCards()

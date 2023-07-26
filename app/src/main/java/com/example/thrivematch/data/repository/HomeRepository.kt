@@ -106,6 +106,7 @@ class HomeRepository(
 
     // Liking
 
+
      suspend fun saveLikedCard(savedCard: CardSwipeItemModel) {
          Log.i("In liked repo", "In liked repo")
 //         val response= api.saveLikedCard(savedCard)
@@ -140,8 +141,6 @@ class HomeRepository(
                      launch(Dispatchers.IO) {
                          api.startupLikeInvestor(startupID = startupID, investorID = investorID)
                      }                 }
-
-
              }
 
          }}
@@ -151,25 +150,65 @@ class HomeRepository(
              Log.i("Error", e.toString())
          }
          Log.i("End of liked repo", "End of liked repo")
-
      }
 
 
      suspend fun getLikedCards(): MutableList<PendingMatchModel>{
          var returnValue = mutableListOf<PendingMatchModel>()
-         withContext(Dispatchers.IO){
-             individualInvestor= appDatabase.userDao().getCurrentUser()!!.hasCreatedIndividualInvestor
-             investor= appDatabase.userDao().getCurrentUser()!!.hasCreatedInvestor
-             startup= appDatabase.userDao().getCurrentUser()!!.hasCreatedStartUp
+         Log.i("Return value", "Inside get liked")
 
-             returnValue = if (individualInvestor || investor) {
-                 api.getLikedCards()
+         withContext(Dispatchers.IO) {
 
-             } else if (startup) {
-                 api.getLikedInvestorCards()
-             } else{
-                 returnValue
+             individualInvestor = appDatabase.userDao().getCurrentUser()!!.hasCreatedIndividualInvestor
+             investor = appDatabase.userDao().getCurrentUser()!!.hasCreatedInvestor
+             startup = appDatabase.userDao().getCurrentUser()!!.hasCreatedStartUp
+             val investorData = api.getInvestorDetails()
+             Log.i("Return value", " Investor Data $investorData")
+
+             val startupData = api.getStartupDetails()
+        try{
+            Log.i("Return value", "Inside try")
+
+            if (individualInvestor || investor) {
+                Log.i("Return value", "Investor found")
+
+                val matchingInvestor = investorData.investorDetailsList.find { investor ->
+                     investor.userId == USER_ID
+                 }
+                 if (matchingInvestor != null) {
+                     Log.i("Return value", "Matching Investor Not null")
+                     val investorID = matchingInvestor.id
+                     Log.i("Return value", " Investor ID $investorID")
+                     returnValue = api.getInvestorsLikedCards(investorID)
+                     Log.i("Return value, first if", returnValue.toString())
+
+
+                 }
              }
+            else if (startup) {
+                Log.i("Return value", "Startup found")
+
+                val matchingStartup = startupData.startUpDetailsList.find { startup ->
+                     startup.userId == USER_ID
+                 }
+                 if (matchingStartup != null) {
+                     Log.i("Return value", "Matching Startup Not null")
+
+                     val startupID = matchingStartup.id
+                     Log.i("Return value", "Startup ID $startupID")
+                     returnValue = api.getStartupsLikedCards(startupID)
+                     Log.i("Return value, else if", returnValue.toString())
+
+                 }
+             } else {
+                 Log.i("Return value, else", returnValue.toString())
+                 returnValue = returnValue
+
+             }
+         }catch (e: Exception) {
+            e.printStackTrace()
+            // Handle any exceptions that may occur during the API calls.
+        }
          }
          return returnValue
 

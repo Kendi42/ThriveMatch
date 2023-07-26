@@ -44,14 +44,16 @@ class LikedFragment : BaseFragment<HomeViewModel, FragmentLikedBinding, HomeRepo
         super.onViewCreated(view, savedInstanceState)
         binding= FragmentLikedBinding.bind(view)
         recyclerView = binding.rvPendingMatches
+        adapter = PendingMatchRecyclerViewAdapter(likedList, this)
+        recyclerView.adapter = adapter
+        recyclerView.layoutManager = LinearLayoutManager(requireContext())
+
         viewModel.likedCardsList.observe(viewLifecycleOwner, Observer {likedCards->
             likedCards?.let {
                 Log.i("LikedCardsFragm", likedCards.toString())
-                likedList= likedCards as ArrayList<PendingMatchModel>
-                adapter = PendingMatchRecyclerViewAdapter(likedList, this)
+                likedList.clear()
+                likedList.addAll(likedCards)
                 adapter.notifyDataSetChanged()
-                recyclerView.adapter = adapter
-                recyclerView.layoutManager = LinearLayoutManager(requireContext())
             }
         })
 

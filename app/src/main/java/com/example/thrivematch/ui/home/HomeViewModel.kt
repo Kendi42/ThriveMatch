@@ -79,6 +79,13 @@ class HomeViewModel(private val repository: HomeRepository,
     fun saveLikedCard(savedCard: CardSwipeItemModel) = viewModelScope.launch{
         Log.i("In liked viewmodel", "In liked viewmodel")
         repository.saveLikedCard(savedCard)
+        Log.i("Liked Cards List Before", likedCardsList.value.toString())
+        viewModelScope.launch {
+            Log.i("In coroutine scope", "scope")
+            likedCardsList.value = getLikedCards()
+        }
+        Log.i("Liked Cards List After", likedCardsList.value.toString())
+
     }
     suspend fun getLikedCards(): MutableList<PendingMatchModel>{
         Log.i("Inside getlikedvm", "Inside get liked cards vm")
