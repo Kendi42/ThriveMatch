@@ -18,9 +18,11 @@ import com.example.thrivematch.ui.base.BaseViewModel
 import com.example.thrivematch.util.CommonSharedPreferences
 import com.example.thrivematch.util.Constants
 import com.google.gson.Gson
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.cancellable
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import okhttp3.internal.notifyAll
 
 class HomeViewModel(private val repository: HomeRepository,
@@ -49,6 +51,9 @@ class HomeViewModel(private val repository: HomeRepository,
     val cardLoadingResponse: LiveData<Resource<List<CardSwipeItemModel>>>
         get()= _cardLoadingResponse
 
+    private val _likedLoadingState = MutableLiveData<Boolean>()
+    val likedLoadingState: LiveData<Boolean>
+        get() = _likedLoadingState
 
     private fun getAllCards(): LiveData<MutableList<CardSwipeItemModel>>{
         viewModelScope.launch {
@@ -74,15 +79,18 @@ class HomeViewModel(private val repository: HomeRepository,
 
     // Liked Fragment Functions
     fun saveLikedCard(savedCard: CardSwipeItemModel) = viewModelScope.launch{
-        Log.i("liked list before call", likedCardsList.value.toString())
         repository.saveLikedCard(savedCard)
-        Log.i("Whats in liked list", likedCardsList.value.toString())
     }
-    suspend fun getLikedCards(): MutableList<PendingMatchModel>{
-       // Log.i("Whats in get liked", repository.getLikedCards().toString())
-        _likedCardsList.value = repository.getLikedCards()
-        return repository.getLikedCards()
-
+    suspend fun getLikedCards(): MutableList<PendingMatchModel>? {
+        viewModelScope.launch {
+            _likedLoadingState.value = true
+            withContext(Dispatchers.IO) {
+                val likedCards = repository.getLikedCards()
+                _likedCardsList.postValue(likedCards)
+            }
+            _likedLoadingState.value = false
+        }
+        return _likedCardsList.value
     }
 
 

@@ -102,8 +102,6 @@ class HomeRepository(
 
     // Liked Cards Functionality
      suspend fun saveLikedCard(savedCard: CardSwipeItemModel) {
-         Log.i("In liked repo", "In liked repo")
-
          try{
          withContext(Dispatchers.IO) {
              individualInvestor = appDatabase.userDao().getCurrentUser()!!.hasCreatedIndividualInvestor
@@ -136,7 +134,6 @@ class HomeRepository(
                      launch(Dispatchers.IO) {
                          api.startupLikeInvestor(startupID = startupID, investorID = investorID)
                          likedCardsList.add(PendingMatchModel(name = savedCard.name, imageURL = savedCard.imageURL))
-
                      }}
              }
 
@@ -144,10 +141,8 @@ class HomeRepository(
          catch (e: Exception) {
              // Handle any exceptions that may occur during the API calls
              e.printStackTrace()
-             Log.i("Error", e.toString())
+             Log.e("Error", e.toString())
          }
-        Log.i("Liked Cards List in save", likedCardsList.toString())
-        Log.i("End of liked repo", "End of liked repo")
      }
 
 
@@ -213,7 +208,6 @@ class HomeRepository(
          Log.i("Liked Cards List end of get", likedCardsList.toString())
 
          return likedCardsList
-
     }
 
     // Matched Cards Functionality

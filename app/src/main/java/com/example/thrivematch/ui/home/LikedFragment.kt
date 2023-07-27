@@ -1,5 +1,6 @@
 package com.example.thrivematch.ui.home
 
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -8,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.SearchView
 import android.widget.Toast
+import androidx.core.view.isVisible
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
@@ -42,12 +44,19 @@ class LikedFragment : BaseFragment<HomeViewModel, FragmentLikedBinding, HomeRepo
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding= FragmentLikedBinding.bind(view)
-        recyclerView = binding.rvPendingMatches
+        // Progress Bar
+        binding.likedProgressBar.isVisible= false
+        viewModel.likedLoadingState.observe(viewLifecycleOwner, Observer {
+            binding.likedProgressBar.isVisible = it
+        })
 
+        // Recycler View
+        recyclerView = binding.rvPendingMatches
         adapter = PendingMatchRecyclerViewAdapter(likedList, this)
         adapter.notifyDataSetChanged()
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
+
         lifecycleScope.launch {
             viewModel.getLikedCards()
         }
