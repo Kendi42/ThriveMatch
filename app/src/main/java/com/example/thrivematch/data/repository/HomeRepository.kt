@@ -27,16 +27,13 @@ class HomeRepository(
     private val commonSharedPreferences: CommonSharedPreferences
 
 ) : BaseRepository(){
-    private var likedCardsList: MutableList<CardSwipeItemModel> = mutableListOf()
+    private var likedCardsList: MutableList<PendingMatchModel> = mutableListOf()
 
     private var individualInvestor: Boolean = false
     private var investor: Boolean = false
     private var startup: Boolean = false
 
-
-
-
-
+    // Home Screen Cards
     suspend fun getCardData(): Flow<Resource<List<CardSwipeItemModel>>> {
         return withContext(Dispatchers.IO){
             individualInvestor= appDatabase.userDao().getCurrentUser()!!.hasCreatedIndividualInvestor
@@ -99,23 +96,20 @@ class HomeRepository(
         commonSharedPreferences.saveLongData(Constants.LAST_UPDATED_TIME, currentTime)
     }
 
-
      private fun getLastUpdateTime(): Long {
         return commonSharedPreferences.getLongData(Constants.LAST_UPDATED_TIME)
     }
 
-    // Liking
-
-
+    // Liked Cards Functionality
      suspend fun saveLikedCard(savedCard: CardSwipeItemModel) {
          Log.i("In liked repo", "In liked repo")
-//         val response= api.saveLikedCard(savedCard)
-//        Log.i("Save Response", response.toString())
+
          try{
          withContext(Dispatchers.IO) {
              individualInvestor = appDatabase.userDao().getCurrentUser()!!.hasCreatedIndividualInvestor
              investor = appDatabase.userDao().getCurrentUser()!!.hasCreatedInvestor
              startup = appDatabase.userDao().getCurrentUser()!!.hasCreatedStartUp
+
              val investorData = api.getInvestorDetails()
              val startupData = api.getStartupDetails()
              if(individualInvestor || investor){
@@ -128,7 +122,8 @@ class HomeRepository(
 
                      launch(Dispatchers.IO) {
                          api.investorLikeStartup(startupID = startupID, investorID = investorID)
-                     }                 }
+                         likedCardsList.add(PendingMatchModel(name = savedCard.name, imageURL = savedCard.imageURL))
+                     }}
 
              }else if(startup){
                  val matchingStartup = startupData.startUpDetailsList.find { startup ->
@@ -140,7 +135,9 @@ class HomeRepository(
 
                      launch(Dispatchers.IO) {
                          api.startupLikeInvestor(startupID = startupID, investorID = investorID)
-                     }                 }
+                         likedCardsList.add(PendingMatchModel(name = savedCard.name, imageURL = savedCard.imageURL))
+
+                     }}
              }
 
          }}
@@ -149,12 +146,14 @@ class HomeRepository(
              e.printStackTrace()
              Log.i("Error", e.toString())
          }
-         Log.i("End of liked repo", "End of liked repo")
+        Log.i("Liked Cards List in save", likedCardsList.toString())
+        Log.i("End of liked repo", "End of liked repo")
      }
 
 
      suspend fun getLikedCards(): MutableList<PendingMatchModel>{
          var returnValue = mutableListOf<PendingMatchModel>()
+         Log.i("Liked Cards List start of get", likedCardsList.toString())
          Log.i("Return value", "Inside get liked")
 
          withContext(Dispatchers.IO) {
@@ -210,10 +209,14 @@ class HomeRepository(
             // Handle any exceptions that may occur during the API calls.
         }
          }
-         return returnValue
+         likedCardsList = returnValue
+         Log.i("Liked Cards List end of get", likedCardsList.toString())
+
+         return likedCardsList
 
     }
 
+    // Matched Cards Functionality
     suspend fun getMatchedCards(): MutableList<MatchedModel> {
         var returnValue = mutableListOf<MatchedModel>()
         withContext(Dispatchers.IO){

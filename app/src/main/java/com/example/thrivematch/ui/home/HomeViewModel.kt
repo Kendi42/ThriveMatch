@@ -21,17 +21,19 @@ import com.google.gson.Gson
 import kotlinx.coroutines.flow.cancellable
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
+import okhttp3.internal.notifyAll
 
 class HomeViewModel(private val repository: HomeRepository,
                     private val sharedPreferences: CommonSharedPreferences
                     ): BaseViewModel(repository) {
-    var likedCardsList: MutableLiveData<MutableList<PendingMatchModel>?> = MutableLiveData()
+    private var _likedCardsList: MutableLiveData<MutableList<PendingMatchModel>?> = MutableLiveData()
+    val likedCardsList: LiveData<MutableList<PendingMatchModel>?>
+        get()= _likedCardsList
+
     var matchedCardsList: MutableLiveData<MutableList<MatchedModel>?> = MutableLiveData()
-
-
     init {
         viewModelScope.launch {
-            likedCardsList.value = getLikedCards()
+           // _likedCardsList.value = getLikedCards()
             matchedCardsList.value = getMatchedCards()
 
         }
@@ -52,11 +54,9 @@ class HomeViewModel(private val repository: HomeRepository,
         viewModelScope.launch {
             repository.getCardData().collect{resource->
                 _cardLoadingResponse.value = resource
-                Log.i("Whats in resource", resource.toString())
                 when (resource) {
                     is Resource.Success->{
                         _cardItems.value = resource.value.toMutableList()
-                        Log.i("Whats in _cardItems", _cardItems.value.toString())
                     }
                     is Resource.Loading ->{
                     }
@@ -69,27 +69,20 @@ class HomeViewModel(private val repository: HomeRepository,
     }
 
     fun alterUnseenCards(){
-        Log.i("Unseen Cards Altered", "Position to be removed: 0")
-        // Todo: Instead of just removing the card from here, we need to make a call to the backend
         unseenCardItems.value?.removeAt(0)
-        Log.i("Unseen Cards Altered", "New unseen Cards ${unseenCardItems.value}")
     }
 
     // Liked Fragment Functions
     fun saveLikedCard(savedCard: CardSwipeItemModel) = viewModelScope.launch{
-        Log.i("In liked viewmodel", "In liked viewmodel")
+        Log.i("liked list before call", likedCardsList.value.toString())
         repository.saveLikedCard(savedCard)
-        Log.i("Liked Cards List Before", likedCardsList.value.toString())
-        viewModelScope.launch {
-            Log.i("In coroutine scope", "scope")
-            likedCardsList.value = getLikedCards()
-        }
-        Log.i("Liked Cards List After", likedCardsList.value.toString())
-
+        Log.i("Whats in liked list", likedCardsList.value.toString())
     }
     suspend fun getLikedCards(): MutableList<PendingMatchModel>{
-        Log.i("Inside getlikedvm", "Inside get liked cards vm")
+       // Log.i("Whats in get liked", repository.getLikedCards().toString())
+        _likedCardsList.value = repository.getLikedCards()
         return repository.getLikedCards()
+
     }
 
 

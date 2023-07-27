@@ -10,6 +10,7 @@ import android.widget.SearchView
 import android.widget.Toast
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.thrivematch.ui.adapters.PendingMatchRecyclerViewAdapter
@@ -22,17 +23,15 @@ import com.example.thrivematch.data.roomdb.database.AppDatabase
 import com.example.thrivematch.databinding.FragmentLikedBinding
 import com.example.thrivematch.ui.base.BaseFragment
 import com.example.thrivematch.util.CommonSharedPreferences
+import kotlinx.coroutines.launch
 import java.util.*
 import java.util.Locale.ROOT
 import java.util.Locale.filter
 import kotlin.collections.ArrayList
 
 class LikedFragment : BaseFragment<HomeViewModel, FragmentLikedBinding, HomeRepository>(),
-
     PendingMatchRecyclerViewAdapter.OnItemClickListener{
     override fun onItemClick(item: PendingMatchModel) {
-//        viewModel.setSelectedCard(CardSwipeItemModel(item.name))
-
     }
 
     private lateinit var recyclerView: RecyclerView
@@ -44,19 +43,26 @@ class LikedFragment : BaseFragment<HomeViewModel, FragmentLikedBinding, HomeRepo
         super.onViewCreated(view, savedInstanceState)
         binding= FragmentLikedBinding.bind(view)
         recyclerView = binding.rvPendingMatches
+
         adapter = PendingMatchRecyclerViewAdapter(likedList, this)
+        adapter.notifyDataSetChanged()
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
+        lifecycleScope.launch {
+            viewModel.getLikedCards()
+        }
 
+        // Observing Changes to the Liked Cards List
         viewModel.likedCardsList.observe(viewLifecycleOwner, Observer {likedCards->
+            Log.i("Whats in LikedCardsFragm", likedCards.toString())
             likedCards?.let {
                 Log.i("LikedCardsFragm", likedCards.toString())
-                likedList.clear()
-                likedList.addAll(likedCards)
-                adapter.notifyDataSetChanged()
+                likedList= likedCards as ArrayList<PendingMatchModel>
+                adapter.setFilteredList(likedList)
             }
         })
 
+        // Search View
         binding.searchView.setOnClickListener {
             binding.searchView.isIconified = false
             binding.searchView.requestFocus()
@@ -72,10 +78,9 @@ class LikedFragment : BaseFragment<HomeViewModel, FragmentLikedBinding, HomeRepo
                 return true
             }
         }
-
         )
-
     }
+    // Filtering List for Search view
     private fun filterList(newText: String?) {
         if( newText!=null){
             val filteredList = ArrayList<PendingMatchModel>()
