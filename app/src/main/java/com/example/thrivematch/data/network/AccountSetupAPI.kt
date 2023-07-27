@@ -39,29 +39,6 @@ interface AccountSetupAPI {
     ): AccountSetupResponse
 
 
-    //
-//    @Mock
-//    @MockResponse(body ="{\"message\":\"Account Setup Successfully !!\",\"success\":true}" )
-//    @POST("v1/investorAccountSetup")
-//    suspend fun investorAccountSetup(
-//        @Body accountSetupRequest: InvestorModel
-//    ): AccountSetupResponse
-
-
-//    @Mock
-//    @MockResponse(body ="{\"message\":\"Account Setup Successfully !!\",\"success\":true}" )
-//    @POST("v1/investorAccountSetup")
-//    suspend fun investorAccountSetup(
-//        @Body accountSetupRequest: InvestorModel
-//    ): AccountSetupResponse
-//
-//    @Mock
-//    @MockResponse(body ="{\"message\":\"Account Setup Successfully !!\",\"success\":true}" )
-//
-//    @POST("v1/businessAccountSetup")
-//    suspend fun businessAccountSetup(
-//        @Body accountSetupRequest: BusinessModel
-//    ): AccountSetupResponse
 
 
 }

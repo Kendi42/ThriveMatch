@@ -36,11 +36,8 @@ class AccountSetupRepository(
 
         if(apiResponse.success){
             if (currentUser != null && currentUser.hasCreatedIndividualInvestor != true) {
-                Log.i("Conditions Met", "If Conditions met")
                 currentUser.hasCreatedIndividualInvestor = apiResponse.success
-                Log.i("Current User Updated", currentUser.toString())
                 appDatabase.userDao().updateUser(currentUser)
-                Log.i("After DB update", "After DB update")
                 appDatabase.accountSetupDao().insertInvestorAccountData(investorData)
             }
 
@@ -61,18 +58,14 @@ class AccountSetupRepository(
             industry = businessData.industry.toRequestBody("multipart/form-data".toMediaTypeOrNull()),
             dateFounded = businessData.dateFounded.toRequestBody("multipart/form-data".toMediaTypeOrNull()),
             companyDescription = businessData.companyDescription.toRequestBody("multipart/form-data".toMediaTypeOrNull()),
-//            phoneNumber = businessData.phoneNumber.toRequestBody("multipart/form-data".toMediaTypeOrNull()),
             email = businessData.email.toRequestBody("multipart/form-data".toMediaTypeOrNull()),
             address=businessData.address.toRequestBody("multipart/form-data".toMediaTypeOrNull()),
             poBox = businessData.poBox.toRequestBody("multipart/form-data".toMediaTypeOrNull()))
         if(apiResponse.success){
             var currentUser = appDatabase.userDao().getCurrentUser()
             if (currentUser != null && currentUser.hasCreatedStartUp != true) {
-                Log.i("Conditions Met", "If Conditions met")
                 currentUser.hasCreatedStartUp = apiResponse.success
-                Log.i("Current User Updated", currentUser.toString())
                 appDatabase.userDao().updateUser(currentUser)
-                Log.i("After DB update", "After DB update")
             appDatabase.accountSetupDao().insertBusinessAccountData(businessData)
             }
         }

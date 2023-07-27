@@ -58,7 +58,6 @@ class LoginFragment : BaseFragment<AuthenticationViewModel,FragmentLoginBinding,
                     if(it.value.user.id !=null){USER_ID = it.value.user.id!!}
                     Log.i("Token saved is", it.value.token)
                     Log.i("Login Success", it.toString())
-                    // Todo: Check if the user is an Investor or Startup
                     val startupAccount = it.value.user.hasCreatedStartUp
                     val investorAccount = it.value.user.hasCreatedInvestor
                     val individualInvestorAccount = it.value.user.hasCreatedIndividualInvestor

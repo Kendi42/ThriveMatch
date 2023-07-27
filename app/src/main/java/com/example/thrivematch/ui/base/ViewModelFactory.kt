@@ -21,7 +21,6 @@ class ViewModelFactory (
             modelClass.isAssignableFrom(AuthenticationViewModel::class.java)-> AuthenticationViewModel(repository as AuthRepository) as T
             modelClass.isAssignableFrom(SharedAccountSetupViewModel::class.java)-> SharedAccountSetupViewModel(repository as AccountSetupRepository) as T
             modelClass.isAssignableFrom(HomeViewModel::class.java)-> HomeViewModel(repository as HomeRepository, sharedPreferences) as T
-
             else-> throw IllegalArgumentException("ViewModel Class Not Found")
         }
 

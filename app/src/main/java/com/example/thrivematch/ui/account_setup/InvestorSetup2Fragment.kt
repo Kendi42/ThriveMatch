@@ -49,7 +49,6 @@ class InvestorSetup2Fragment : Fragment(R.layout.fragment_investor_setup2) {
         }
 
 
-        //Todo: This should probably be done differently
         val tags = arrayOf(
             "Agriculture", "Technology", "Construction",
             "Energy", "Transportation", "Ecommerce",

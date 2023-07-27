@@ -48,7 +48,6 @@ class HomeFragment:BaseFragment<HomeViewModel, FragmentHomeBinding,HomeRepositor
         super.onViewCreated(view, savedInstanceState)
         binding=FragmentHomeBinding.bind(view)
         binding.homeProgressBar.isVisible= false
-        //Todo: Finish
         viewModel.cardLoadingResponse.observe(viewLifecycleOwner, Observer {
             binding.homeProgressBar.isVisible= false
             when(it){
@@ -74,7 +73,6 @@ class HomeFragment:BaseFragment<HomeViewModel, FragmentHomeBinding,HomeRepositor
             setOnCardItemClicked(newcardSwipeItem)
         }
 
-        Log.i("Top Position", cardStackLayoutManager.topPosition.toString())
         binding.cardStackView.adapter = adapter
         updateCardView()
 
@@ -121,15 +119,11 @@ class HomeFragment:BaseFragment<HomeViewModel, FragmentHomeBinding,HomeRepositor
             }
 
             override fun onCardSwiped(direction: Direction?) {
-                Log.i("Top Position CardSwiped", cardStackLayoutManager.topPosition.toString())
-
                 if(direction == Direction.Left){
                     binding.ivLeftSwipeIndicator.setBackgroundResource(R.drawable.left_swipe_indicator_shape)
                 }
                 // Saving liked cards
                 else if(direction == Direction.Right){
-                    Log.i("Top Position SwipeRight", cardStackLayoutManager.topPosition.toString())
-
                     viewModel.saveLikedCard(cardItems[0])
 
                     binding.ivRightSwipeIndicator.setBackgroundResource(R.drawable.right_swipe_indicator_shape)
@@ -160,8 +154,6 @@ class HomeFragment:BaseFragment<HomeViewModel, FragmentHomeBinding,HomeRepositor
         // Business Cards
         viewModel.unseenCardItems.observe(viewLifecycleOwner, Observer{ newCardItems ->
             cardItems = newCardItems
-            Log.i("Card Items (HF)", cardItems.toString())
-            Log.i("newCard Items (HF)", newCardItems.toString())
             adapter.setCardSwipeItems(newCardItems)
         })
     }

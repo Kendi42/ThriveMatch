@@ -11,7 +11,6 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.viewbinding.ViewBinding
 import com.example.thrivematch.data.network.RemoteDataSource
-import com.example.thrivematch.data.network.UserApi
 import com.example.thrivematch.data.repository.BaseRepository
 import com.example.thrivematch.util.CommonSharedPreferences
 import com.example.thrivematch.util.Constants

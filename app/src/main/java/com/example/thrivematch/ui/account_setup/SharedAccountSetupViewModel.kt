@@ -23,19 +23,14 @@ class SharedAccountSetupViewModel(private val repository: AccountSetupRepository
     var investorData = MutableLiveData<InvestorModel>()
     fun setInvestorData(submittedInvestorData: InvestorModel) = viewModelScope.launch {
         investorData.value = submittedInvestorData
-        Log.i("Investor Data", investorData.value.toString())
         _accountSetupResponse.value = repository.investorSetup(submittedInvestorData)
-        Log.i("Account Setup Response", _accountSetupResponse.value.toString())
     }
 
     //Business Account Setup
     var businessData = MutableLiveData<BusinessModel>()
     fun setBusinessData(submittedBusinessData: BusinessModel) = viewModelScope.launch {
         businessData.value = submittedBusinessData
-        Log.i("Business Data", businessData.value.toString())
         _accountSetupResponse.value = repository.businessSetup(submittedBusinessData)
-        Log.i("Account Setup Response", _accountSetupResponse.value.toString())
-
     }
 
 

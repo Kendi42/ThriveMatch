@@ -115,6 +115,7 @@
     <string name="whatsapp_net">\@s.whatsapp.net</string>
     <string name="market_com_whatsapp">market://details?id=com.whatsapp</string>
     <string name="whatsApp_not_installed">WhatsApp not Installed</string>
+    <string name="pendingmatch">Pending Matches</string>
 
 
 </resources>

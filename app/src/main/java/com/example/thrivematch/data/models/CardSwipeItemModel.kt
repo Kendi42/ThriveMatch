@@ -17,11 +17,3 @@ data class CardSwipeItemModel(
     @SerializedName("imageURL")
     val imageURL: String
 )
-
-//data class CardSwipeItemModel(
-////    val id: String,
-//    val name: String,
-//    val industry: String,
-//    val description: String,
-//    val imageURL: String
-//)

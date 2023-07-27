@@ -3,7 +3,6 @@ package com.example.thrivematch.data.repository
 import android.util.Log
 import co.infinum.retromock.Retromock
 import com.example.thrivematch.data.network.Resource
-import com.example.thrivematch.data.network.UserApi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import retrofit2.HttpException

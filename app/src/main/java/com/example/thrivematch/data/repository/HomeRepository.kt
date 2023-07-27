@@ -46,7 +46,6 @@ class HomeRepository(
             },
             fetch = {
                     if (individualInvestor || investor) {
-                        Log.i("Investor trueeee","Investor trueeee" )
                         api.getStartupCardData().startups.map { startup ->
                             CardSwipeItemModel(
                                 cardID = startup.id,
@@ -57,7 +56,6 @@ class HomeRepository(
                             )
                         }
                     } else if (startup) {
-                        Log.i("Startup trueeee","Startup trueeee" )
                         api.getInvestorCardData().investors.map { investor ->
                             CardSwipeItemModel(
                                 cardID = investor.id,
@@ -68,7 +66,6 @@ class HomeRepository(
                             )
                         }
                     } else {
-                        Log.i("Neither trueeee","Neither trueeee" )
                         emptyList()
                     }
 
@@ -79,13 +76,9 @@ class HomeRepository(
             },
             shouldFetch = {cachedCards->
                 val currentTime = System.currentTimeMillis()
-                Log.i("Current Time", currentTime.toString())
                 val lastUpdateTime = getLastUpdateTime() // Implement this function to get the last update time from SharedPreferences
-                Log.i("Last Updated Time", lastUpdateTime.toString())
                 val elapsedTimeMinutes = TimeUnit.MILLISECONDS.toMinutes(currentTime - lastUpdateTime)
-                Log.i("Elapsed Time", elapsedTimeMinutes.toString())
                 val isStale = elapsedTimeMinutes >= Companion.UPDATE_INTERVAL_MINUTES
-                Log.i("isStale", isStale.toString())
                 isStale
             }
         ).flowOn(Dispatchers.Main)
@@ -148,8 +141,6 @@ class HomeRepository(
 
      suspend fun getLikedCards(): MutableList<PendingMatchModel>{
          var returnValue = mutableListOf<PendingMatchModel>()
-         Log.i("Liked Cards List start of get", likedCardsList.toString())
-         Log.i("Return value", "Inside get liked")
 
          withContext(Dispatchers.IO) {
 
@@ -157,45 +148,30 @@ class HomeRepository(
              investor = appDatabase.userDao().getCurrentUser()!!.hasCreatedInvestor
              startup = appDatabase.userDao().getCurrentUser()!!.hasCreatedStartUp
              val investorData = api.getInvestorDetails()
-             Log.i("Return value", " Investor Data $investorData")
 
              val startupData = api.getStartupDetails()
         try{
-            Log.i("Return value", "Inside try")
 
             if (individualInvestor || investor) {
-                Log.i("Return value", "Investor found")
 
                 val matchingInvestor = investorData.investorDetailsList.find { investor ->
                      investor.userId == USER_ID
                  }
                  if (matchingInvestor != null) {
-                     Log.i("Return value", "Matching Investor Not null")
                      val investorID = matchingInvestor.id
-                     Log.i("Return value", " Investor ID $investorID")
                      returnValue = api.getInvestorsLikedCards(investorID)
-                     Log.i("Return value, first if", returnValue.toString())
-
 
                  }
              }
             else if (startup) {
-                Log.i("Return value", "Startup found")
-
                 val matchingStartup = startupData.startUpDetailsList.find { startup ->
                      startup.userId == USER_ID
                  }
                  if (matchingStartup != null) {
-                     Log.i("Return value", "Matching Startup Not null")
-
                      val startupID = matchingStartup.id
-                     Log.i("Return value", "Startup ID $startupID")
                      returnValue = api.getStartupsLikedCards(startupID)
-                     Log.i("Return value, else if", returnValue.toString())
-
                  }
              } else {
-                 Log.i("Return value, else", returnValue.toString())
                  returnValue = returnValue
 
              }
@@ -205,8 +181,6 @@ class HomeRepository(
         }
          }
          likedCardsList = returnValue
-         Log.i("Liked Cards List end of get", likedCardsList.toString())
-
          return likedCardsList
     }
 

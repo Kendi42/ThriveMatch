@@ -49,7 +49,7 @@ class RemoteDataSource() {
             .addConverterFactory(GsonConverterFactory.create())
             .build()
 
-        // Create Retromock instance and wrap the Retrofit instance
+        // Creating Retromock instance
         val retromock = Retromock.Builder()
             .retrofit(retrofit)
             .build()

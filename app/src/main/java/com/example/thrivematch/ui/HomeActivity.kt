@@ -17,7 +17,6 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI.setupWithNavController
 import androidx.navigation.ui.setupActionBarWithNavController
 import com.example.thrivematch.R
-import com.example.thrivematch.data.network.UserApi
 import com.example.thrivematch.databinding.ActivityHomeBinding
 import com.example.thrivematch.ui.authentication.AuthenticationViewModel
 import com.example.thrivematch.ui.base.BaseViewModel

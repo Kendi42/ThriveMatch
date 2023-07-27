@@ -20,8 +20,8 @@ object Constants {
 
 
     const val AUTHTOKEN= "auth_token"
-     var AUTH_TOKEN= ""
-     var USER_ID =0
+    var AUTH_TOKEN= ""
+    var USER_ID =0
 
 
 

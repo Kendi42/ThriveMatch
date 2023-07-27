@@ -12,8 +12,6 @@ interface UserDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun createNewUser(user: User)
 
-
-
     @Query("SELECT * FROM UserData WHERE uid=$ROOM_DB_CURRENT_USER_ID")
     fun getCurrentUser(): User?
 

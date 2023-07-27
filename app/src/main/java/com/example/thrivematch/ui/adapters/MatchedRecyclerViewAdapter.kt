@@ -42,7 +42,6 @@ class MatchedRecyclerViewAdapter(private var itemList: ArrayList<MatchedModel>, 
         val phoneNumber= item.phoneNumber
 
         holder.itemView.setOnClickListener {
-            Log.i("Phone number is", phoneNumber)
             openWhatsAppChat(phoneNumber)
 
 

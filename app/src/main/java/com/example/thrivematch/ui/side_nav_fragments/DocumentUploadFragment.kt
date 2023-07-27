@@ -128,9 +128,9 @@ class DocumentUploadFragment : Fragment(R.layout.fragment_document_upload),
         val storageDir: File? = requireContext().getExternalFilesDir(Environment.DIRECTORY_PICTURES)
         return try {
             File.createTempFile(
-                "PDF_${timeStamp}_", /* prefix */
-                ".pdf", /* suffix */
-                storageDir /* directory */
+                "PDF_${timeStamp}_",
+                ".pdf",
+                storageDir
             )
         } catch (e: Exception) {
             Log.e("InvestorSetup3Fragment", "Failed to create PDF file: ${e.message}", e)
