@@ -43,7 +43,8 @@ class AuthRepository(
     }
 
     suspend fun signup (name: String, email: String, password: String) = safeApiCall{
-        val apiResponse= api.signup(SignupRequest(username =name, password = password, email =  email))
+        val apiResponse= api.
+        signup(SignupRequest(username =name, password = password, email =  email))
         if(apiResponse.success){
             Log.i("Success true", apiResponse.success.toString())
             val currentUser = appDatabase.userDao().getCurrentUser()

@@ -66,7 +66,6 @@ class InvestorSetup1Fragment : Fragment(R.layout.fragment_investor_setup1) {
         val isDataFilled = binding.autocompleteInvestorType.text.isNotBlank() &&
                 binding.etInvestorName.text.toString().isNotBlank() &&
                 binding.etInvestorDescription.text.toString().isNotBlank()
-
         binding.btnNextInvestor1.isEnabled = isDataFilled
     }
 
